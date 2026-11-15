@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Бланк умельца</title>
+<style>
+:root{--bg:#141210;--panel:#1d1a17;--line:#3a332c;--ink:#e8dfd0;--dim:#9a8f80;--acc:#c9a24a;--red:#b8483a;--ok:#6f9a5a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 "PT Serif",Georgia,serif}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5}
+header h1{margin:0 8px 0 0;font-size:20px;letter-spacing:.15em;text-transform:uppercase;color:var(--acc)}
+button,select,input,textarea{font:inherit;color:var(--ink);background:#262220;border:1px solid var(--line);border-radius:4px;padding:4px 8px}
+button{cursor:pointer}button:hover{border-color:var(--acc)}
+input,textarea{width:100%}textarea{min-height:70px;resize:vertical}
+main{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;padding:12px 16px;max-width:1400px;margin:0 auto}
+section{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+h2{margin:0 0 8px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);border-bottom:1px solid var(--line);padding-bottom:4px}
+h3{margin:8px 0 4px;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+label{display:block;font-size:12px;color:var(--dim);margin-top:6px}
+.row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.box{width:20px;height:20px;border:1px solid var(--dim);display:inline-block;cursor:pointer;border-radius:2px;vertical-align:middle}
+.box.on{background:var(--acc);border-color:var(--acc)}
+.box.red.on{background:var(--red);border-color:var(--red)}
+.dot{width:14px;height:14px;border:1px solid var(--dim);border-radius:50%;display:inline-block;cursor:pointer}
+.dot.on{background:var(--ink)}
+.dot.first{box-shadow:0 0 0 2px var(--line)}
+.act{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:6px;padding:2px 0}
+.attr{font-size:16px;color:var(--acc)}
+.small{font-size:12px;color:var(--dim)}
+.warn{color:var(--red)}.good{color:var(--ok)}
+.item{display:flex;gap:6px;align-items:flex-start;padding:2px 0}
+.item input{width:auto;margin-top:3px}
+.talent{border-top:1px solid var(--line);padding:5px 0}
+.talent p{margin:2px 0 0 22px;font-size:12px;color:var(--dim)}
+.tri{cursor:pointer;width:22px;display:inline-block;text-align:center}
+.harm{display:grid;grid-template-columns:22px 1fr 1fr 110px;gap:4px;align-items:center;margin:3px 0}
+.harm.l3{grid-template-columns:22px 2fr 110px}
+[hidden]{display:none!important}
+.tabs{margin-right:auto;display:flex;gap:4px}.tabs .on{border-color:var(--acc);color:var(--acc)}
+.cell{background:#262220;border:1px solid var(--line);border-radius:4px;padding:4px 8px}
+.inv.off{opacity:.55}.inv .on{border-color:var(--acc);color:var(--acc)}
+.inv.head{font-size:11px;color:var(--dim);margin-bottom:0}.inv.head span{text-align:center}.inv.head span:nth-child(2){text-align:left}
+.inv .take{border-color:var(--acc);color:var(--acc)}.inv .ovr{color:var(--red);border-color:var(--red)}
+.money{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}.money .row,.money .small{grid-column:1/-1}
+dialog{background:var(--panel);color:var(--ink);border:1px solid var(--acc);border-radius:8px;width:min(640px,92vw);padding:14px}dialog::backdrop{background:rgba(0,0,0,.65)}dialog h3{margin:0 0 8px;color:var(--acc)}#noteText{min-height:320px}#propsToggle.on{border-color:var(--acc);color:var(--acc)}#propsPanel{border:1px solid var(--line);border-radius:6px;padding:10px}.note.has{color:var(--acc);border-color:var(--acc)}
+#coins{grid-template-columns:1fr}.notes{display:grid;grid-template-columns:260px 1fr;gap:14px;min-height:65vh}.notes aside{display:flex;flex-direction:column;gap:4px;border-right:1px solid var(--line);padding-right:12px}#cardList{display:grid;gap:4px}.ci{width:100%;text-align:left;display:grid;gap:2px;padding:8px 10px;background:transparent;border:1px solid transparent;border-radius:6px}.ci:hover{background:#262220}.ci.on{border-color:var(--acc);background:#262220}.ci *{pointer-events:none}.ci .cp{font-size:12px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#cardEd{display:flex;flex-direction:column;gap:8px}.ci .cpi{font-size:11px;color:var(--acc)}.ntabs,.ptool{display:flex;gap:4px;align-items:center;flex-wrap:wrap}.ntabs button.on,.ptool button.on{border-color:var(--acc);color:var(--acc)}.ptool .sep{width:1px;height:22px;background:var(--line);margin:0 4px}.ptool button{min-width:30px}.pfl{display:flex;gap:4px;flex-wrap:wrap}.pwrap{flex:1;min-height:55vh;display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--panel)}#planSvg{flex:1;min-height:55vh;display:block;touch-action:none;cursor:crosshair;outline:none;user-select:none}#planSvg.sel{cursor:grab}#planSvg.sel g[data-i]{cursor:move}#pinfo{min-height:20px;white-space:pre-wrap}#pinfo button{padding:1px 8px;margin-left:6px}.gal{display:flex;gap:8px;flex-wrap:wrap}.gal img{height:110px;max-width:220px;object-fit:cover;border:1px solid var(--line);border-radius:6px;cursor:zoom-in}#imgDlg{width:auto;max-width:94vw}#imgBig{max-width:90vw;max-height:78vh;display:block;margin:0 auto 10px}.edt{font-size:18px;font-weight:bold;padding:6px 10px}.edx{flex:1;min-height:55vh;line-height:1.55;padding:10px 12px}@media(max-width:700px){.notes{grid-template-columns:1fr}.notes aside{border-right:0;padding-right:0}.edx{min-height:40vh}}
+.ctr{border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin:10px 0;display:grid;gap:8px}.ctr .row>*{min-width:0}.ctr input,.ctr select{width:auto}.ctr [data-ctrn],.ctr select{flex:1;width:0;min-width:0}.ctr button{padding:4px 7px}.ctr .cv{min-width:44px;text-align:center;font-weight:bold}.ctr [data-ctrmax]{width:52px!important}.rest{display:flex;gap:6px;margin-bottom:10px}.rest button{flex:1;padding:4px 2px;font-size:13px}.ctr.spec{border-color:var(--acc)}.ctr .on{border-color:var(--acc);color:var(--acc)}
+.dz{position:relative}.dz .ctr{padding-left:26px}.grip{position:absolute;left:8px;top:21px;cursor:grab;color:var(--dim);user-select:none;z-index:1;font-size:16px}.grip:hover{color:var(--acc)}.dz.over .ctr{border-color:var(--ok);box-shadow:0 0 0 1px var(--ok)}.dz.dragging{opacity:.4}
+.inv.prodrow{grid-template-columns:24px 1fr 130px 56px 34px 34px 34px}.prog{display:flex;gap:4px;align-items:center}.prog input{width:56px}.inv.prodrow.done input[data-prodn]{border-color:var(--ok);color:var(--ok)}
+.mini{padding:0 6px;font-size:12px;margin-left:4px}
+.props{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.props label{display:grid;gap:3px;margin:0;color:var(--dim)}.props .wide{grid-column:1/-1}.props .chk{display:flex;align-items:center;gap:6px;color:var(--ink)}.props .chk input{width:auto;padding:0;margin:0}.props .row{gap:4px 14px}.props .row input:not([type=checkbox]){width:70px}.propline{margin:-2px 0 4px 30px}
+.rules{display:grid;gap:6px;margin:8px 0}.rules.off{opacity:.45}.rules .chk,#settings .chk{display:flex;gap:8px;align-items:center;color:var(--ink);margin:0}#settings .chk input{width:auto}.sub2{margin-left:28px;color:var(--dim);display:flex;gap:6px;align-items:center;flex-wrap:wrap}#settings h3{margin-top:16px}#settings section{max-width:760px}#tipsBtn.on{border-color:var(--acc);color:var(--acc)}body.tips [data-tip]{cursor:help;position:relative;text-decoration:underline dotted var(--dim);text-underline-offset:3px}body.tips [data-tip]:hover::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 4px);z-index:60;width:max-content;max-width:min(380px,80vw);background:#2a2520;color:var(--ink);border:1px solid var(--acc);border-radius:6px;padding:7px 9px;font:12px/1.45 'PT Serif',Georgia,serif;letter-spacing:0;text-transform:none;font-weight:normal;white-space:normal;text-align:left;box-shadow:0 4px 14px rgba(0,0,0,.5);pointer-events:none}body.tips .rest [data-tip]:hover::after,body.tips #ctrs [data-tip]:hover::after{left:auto;right:0}
+#rulebook{grid-template-columns:1fr}#rulebook section{width:100%;max-width:1400px;justify-self:center}.rbbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.rbgrid{display:grid;grid-template-columns:320px 1fr;gap:14px;height:calc(100vh - 170px)}#rbside,#rbtext{overflow:auto}#rbside{border-right:1px solid var(--line);padding-right:10px}.rbt{display:block;padding:5px 8px;border-radius:5px;cursor:pointer;color:var(--ink);text-decoration:none}.rbt:hover{background:#262220}.rbt.l1{font-weight:bold;color:var(--acc);margin-top:8px}.rbt.l2{padding-left:18px;font-size:13px}.rbt span{float:right;color:var(--dim);font-size:12px}#rbtext{padding:0 14px}.rbpage{max-width:780px;margin:0 auto;font-size:16px;line-height:1.7}.rbhead{display:flex;justify-content:space-between;color:var(--dim);font-size:12px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--line);padding:4px 0 8px;margin-bottom:12px;position:sticky;top:0;background:var(--panel)}#rbtext h4{color:var(--acc);margin:22px 0 8px;font-size:14px;letter-spacing:.14em;border-bottom:1px solid var(--line);padding-bottom:4px}#rbtext p{margin:0 0 12px}#rbtext ul{list-style:none;padding:0;margin:0 0 12px}#rbtext li{position:relative;padding-left:22px;margin:4px 0}#rbtext li::before{content:'◆';position:absolute;left:2px;top:1px;color:var(--acc);font-size:11px}.rbrow{display:flex;gap:6px;align-items:baseline;color:var(--ink);text-decoration:none;cursor:pointer;padding:1px 0}.rbrow i{flex:1;border-bottom:1px dotted var(--dim)}.rbrow:hover{color:var(--acc)}.rbnav{display:flex;justify-content:space-between;align-items:center;margin:24px 0 10px;padding-top:12px;border-top:1px solid var(--line);color:var(--dim);font-size:13px}.rbt.cur{background:#262220;border-left:3px solid var(--acc)}*{scrollbar-color:#3a332c transparent;scrollbar-width:thin}::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#3a332c;border-radius:4px}::-webkit-scrollbar-track{background:transparent}mark{background:var(--acc);color:#141210;border-radius:2px}@media(max-width:800px){.rbgrid{grid-template-columns:1fr;height:auto}}
+.fold{padding:2px 0}.fold.empty{opacity:.35}.subrow{display:grid;grid-template-columns:64px 1fr 34px;gap:4px}.subrow.band{grid-template-columns:64px 1fr}.subrow input{font-size:13px;padding:2px 8px}.subadd{justify-self:start;font-size:12px;padding:2px 8px}.inv.grp input[data-bookn]{border-left:3px solid var(--acc);font-weight:bold}.sub{border-left:1px dashed var(--acc);padding-left:8px}.sub{margin:0 0 6px 30px;display:grid;gap:3px}.sub .cell{font-size:13px;padding:2px 8px}.sub input{width:100%}.sub.off{opacity:.55}
+.inv{display:grid;grid-template-columns:24px 1fr 52px 84px 52px 34px 34px;gap:6px;align-items:center;margin:3px 0}
+.clock{width:56px;height:56px;cursor:pointer}
+@media print{header button{display:none}body{background:#fff;color:#000}section{border-color:#999}}
+</style>
+<script>document.write('<script src="rulebook.js?v='+Date.now()+'"><\/script>')</script>
+</head>
+<body>
+<header>
+  <h1>Умелец</h1>
+  <input data-k="name" placeholder="Имя" style="width:220px">
+  <input data-k="alias" placeholder="Кличка" style="width:140px">
+  <span id="dayBox" class="row" style="gap:4px" data-tip="Игровой день. «Новый день» прибавляет 1, число можно поправить.">День<input type="number" min="1" data-k="day" style="width:62px"></span>
+  <span class="tabs"><button data-tab="sheet">Бланк</button><button data-tab="gear">Снаряжение</button><button data-tab="prod">Мастерская</button><button data-tab="coins">Заметки</button><button data-tab="bio">Биография</button><button data-tab="rulebook">Рулбук</button></span>
+  <button data-tab="settings" title="Настройки">⚙</button><button id="tipsBtn" title="подсказки по правилам при наведении">?</button>
+  <button id="export">Экспорт</button>
+  <label style="margin:0"><button type="button" onclick="this.nextElementSibling.click()">Импорт</button><input type="file" id="import" accept=".json" hidden></label>
+  <button onclick="print()">Печать</button>
+  <button id="reset">Сброс</button>
+</header>
+<main id="sheet">
+  <section>
+    <h2 data-tip="Кубиков = уровень навыка. Характеристика = число навыков группы с точкой; ею кидают испытания (стресс = 6 − лучший кубик).">Навыки</h2>
+    <div class="small" id="skillInfo"></div>
+    <div id="actions"></div>
+    <h3 data-tip="Опыт: отчаянная проверка — +1 в её характеристику. В конце встречи 1 (или 2) в любую шкалу за: особый опыт бланка, убеждения/происхождение/прошлое, проблемы из-за страсти или травм. Характеристика 6 клеток — +1 навык; таланты 8 — новый талант (стр. 61).">Опыт талантов <span id="xpTalent"></span></h3>
+  </section>
+
+  <section>
+    <h2 data-tip="Стартовый талант — из своего бланка. Необычные (из других бланков) берутся при развитии по шкале талантов (стр. 61). Свой талант — пункт «✎ свой талант».">Таланты</h2>
+    <div id="talents"></div>
+  </section>
+
+  <section>
+    <h2 data-tip="Любые счётчики: ±, максимум, когда сбрасывать. Заготовки по талантам создаются сами. Кнопки отдыха сбрасывают счётчики своего типа. ⠿ — перетащить.">Счётчики</h2>
+    <div class="rest">
+      <button data-rest="day" data-tip="Сбрасывает счётчики «день» и прибавляет день.">Новый день</button>
+      <button data-rest="downtime" data-tip="Передышка (стр. 167): сбрасывает счётчики «день» и «передышка» (например, особую защиту).">Передышка</button>
+      <button data-rest="score" data-tip="Новое дело: выбор нагрузки, ячейки доспеха восстанавливаются (стр. 43), сброс счётчиков «дело».">Новое дело</button>
+    </div>
+    <div class="small" id="restMsg"></div>
+    <div id="ctrs"></div>
+    <select id="addCtr" style="width:100%"></select>
+  </section>
+
+  <section>
+    <h2 data-tip="Стресс (стр. 18): особое усилие +2, содействие +1, испытание 6 − лучший кубик. Заполнил последнюю ячейку — травма, стресс обнуляется. 4-я травма — уход на покой.">Стресс и травмы</h2>
+    <div class="row" id="stress"></div>
+    <div id="stressMsg" class="small"></div>
+    <label>Травмы (4-я — уход на покой)</label>
+    <div id="trauma" class="row"></div>
+    <h2 style="margin-top:14px" data-tip="Повреждения (стр. 40): 3 — беспомощность, 2 — −1 кубик, 1 — ниже эффективность. Ряд заполнен — пишешь уровнем выше. Лечение: 4 деления → все раны −1 уровень.">Повреждения</h2>
+    <div class="harm l3"><b>3</b><input data-k="h3"><span class="small">беспомощность</span></div>
+    <div class="harm"><b>2</b><input data-k="h2a"><input data-k="h2b"><span class="small">−d6</span></div>
+    <div class="harm"><b>1</b><input data-k="h1a"><input data-k="h1b"><span class="small">сниж. эффект.</span></div>
+    <div class="row" style="margin-top:8px">
+      <svg class="clock" id="heal" viewBox="-1.1 -1.1 2.2 2.2"></svg>
+      <div><b>Лечение</b><div class="small">4 деления → все раны −1 уровень</div></div>
+    </div>
+    <h3 data-tip="Защита (стр. 43): отметь ячейку, чтобы ослабить последствие без стресса. Доспех — любой предмет с «ячейками защиты» (свойства ⚙). Восстанавливается на «Новом деле».">Защита</h3>
+    <div class="row" id="armor"></div>
+  </section>
+</main>
+<main id="gear" hidden>
+  <section>
+    <h2>Снаряжение</h2>
+    <h3 data-tip="По книге: монеты при себе (до 4) и заначка (40, определяет жизнь после ухода на покой); 1 монета = нагрузка 1 (стр. 54). Свою валюту включают в ⚙.">Деньги <span class="small" id="rateLbl"></span></h3>
+    <div id="moneyBook">
+      <div class="row"><span class="small" style="width:70px">Монеты</span><span id="coin" class="row"></span></div>
+      <div class="row" style="margin-top:6px;align-items:flex-start"><span class="small" style="width:70px">Заначка</span><span id="stash" class="row" style="flex:1;gap:3px"></span></div>
+      <div class="small" id="stashInfo"></div>
+    </div>
+    <div class="money" id="moneyCustom">
+      <label><span id="lblMaj"></span><input type="number" min="0" data-k="dr"></label>
+      <label><span id="lblMin"></span><input type="number" min="0" data-k="drm"></label>
+      <div class="small" id="moneyTotal"></div>
+      <div class="row"><button id="breakDr">Разменять 1</button><button id="joinDr">Собрать 1</button></div>
+      <div class="row small">Калькулятор: <input type="number" id="cDr" style="width:80px"> <span id="cLblMaj"></span> = <input type="number" id="cDrm" style="width:90px"> <span id="cLblMin"></span></div>
+    </div>
+    <div class="row">
+      <select data-k="load" id="loadSel" data-tip="Нагрузка (стр. 72): лёгкая 3 — неприметен; нормальная 5 — выглядишь готовым к неприятностям; тяжёлая 6 — движения стеснены. Предметы отмечаешь по ходу дела."><option value="3">лёгкая</option><option value="5">нормальная</option><option value="6">тяжёлая</option></select>
+      <span id="loadUsed"></span>
+    </div>
+    <h3>Предметы</h3>
+    <div id="inv"></div>
+    <select id="addItem" style="width:100%;margin-top:6px"></select>
+  </section>
+</main>
+<main id="prod" hidden>
+  <section>
+    <h2 data-tip="Изделия в работе и готовые: прогресс, количество, состав и свойства. «→» переносит изделие в снаряжение (на базу). Изготовление: действие передышки, бросок Ремесла, качество = ранг ± результат (стр. 270).">Мастерская</h2>
+    <div id="prodList"></div>
+    <select id="addProd" style="width:100%;margin-top:6px"></select>
+  </section>
+</main>
+<main id="settings" hidden>
+  <section>
+    <h2>Настройки</h2>
+    <h3>Правила</h3>
+    <div class="row"><label class="chk"><input type="radio" name="mode" data-r="mode" value="book"> По книге</label><label class="chk"><input type="radio" name="mode" data-r="mode" value="custom"> Свои правила</label></div>
+    <div class="small" id="modeInfo"></div>
+    <div id="customRules" class="rules">
+      <div class="small">Галочка — официальная механика из книги. Сними, чтобы включить свою.</div>
+      <label class="chk"><input type="checkbox" data-r="money"> Деньги по книге: монеты (до 4 при себе) и заначка (стр. 54)</label>
+      <div class="sub2" id="moneyOpts">Своя валюта: крупная <input data-r="major" style="width:120px"> мелкая <input data-r="minor" style="width:130px"> курс <input type="number" min="1" data-r="rate" style="width:70px"></div>
+      <label class="chk"><input type="checkbox" data-r="stress"> Стресс по книге: 9 ячеек, +1 за «Уцелевшего» (стр. 18)</label>
+      <div class="sub2" id="stressOpts">Ячеек стресса <input type="number" min="1" max="20" data-r="stressN" style="width:70px"></div>
+      <label class="chk"><input type="checkbox" data-r="band"> Перевязь по книге: вещества из книги, пополняется в передышку (стр. 103)</label>
+      <label class="chk"><input type="checkbox" data-r="presets"> Только книжные заготовки счётчиков (без своих, например доз Ядовитости)</label>
+      <label class="chk"><input type="checkbox" data-r="day"> Счётчик дней и кнопка «Новый день»</label>
+      <label class="chk"><input type="checkbox" data-r="rest2"> Своя передышка: на выбор +1 лечение и −1 стресс, или −2 стресса</label>
+    </div>
+    <h3>Навыки</h3>
+    <select data-r="stage" style="width:100%">
+      <option value="creation">Создание персонажа: 7 точек, максимум 2 в навыке (стр. 69)</option>
+      <option value="play">В игре: максимум 3</option>
+      <option value="mastery">В игре, у команды «Вершины мастерства»: максимум 4 (стр. 111)</option>
+      <option value="free">Без лимитов (присоединился к идущей игре)</option>
+    </select>
+    <h3>Команда</h3>
+    <label class="row" style="color:var(--ink)">Ранг команды <input type="number" min="0" max="6" data-r="tier" style="width:70px"></label>
+    <div class="small">Качество вещи обычно равно рангу команды; добротная +1; при изготовлении бросок Ремесла сдвигает его: 1-3 −1, 4-5 ±0, 6 +1, 6&amp;6 +2 (стр. 32, 270).</div>
+    <h3>Подсказки</h3>
+    <label class="chk"><input type="checkbox" data-ui="tips"> Показывать подсказки по правилам при наведении (кнопка ? в шапке)</label>
+    <h3>Резервная копия</h3>
+    <div class="row"><button id="restoreBackup">Восстановить резервную копию</button><span class="small" id="backupInfo"></span></div>
+  </section>
+</main>
+<main id="rulebook" hidden>
+  <section>
+    <div class="rbbar">
+      <input id="rbq" placeholder="Поиск по рулбуку: слово или фраза…" style="flex:1;min-width:200px">
+      <span class="small" id="rbcount"></span>
+      <button id="rbprev" title="предыдущая страница">←</button><span class="small">стр.</span><input type="number" id="rbpage" style="width:70px"><button id="rbnext" title="следующая страница">→</button>
+    </div>
+    <div class="rbgrid"><aside id="rbside"></aside><article id="rbtext"></article></div>
+  </section>
+</main>
+<main id="coins" hidden>
+  <section>
+    <h2>Заметки</h2>
+    <div class="notes"><aside><button id="addCard">+ новая карточка</button><div id="cardList"></div></aside><div id="cardEd"></div></div><input type="file" id="imgFile" accept="image/*" multiple hidden>
+  </section>
+</main>
+<main id="bio" hidden>
+  <section>
+    <h2>Внешность</h2>
+    <textarea data-k="look" placeholder="пол, телосложение, одежда, приметы"></textarea>
+    <label>Происхождение</label>
+    <div class="row"><input data-k="heritage" data-opts="heritages" list="dl-heritages" placeholder="из книги или своё" style="width:200px"><input data-k="heritageNote" style="flex:1" placeholder="детали семьи"></div>
+    <label>Прошлое</label>
+    <div class="row"><input data-k="background" data-opts="backgrounds" list="dl-backgrounds" placeholder="из книги или своё" style="width:200px"><input data-k="backgroundNote" style="flex:1" placeholder="детали"></div>
+    <label>Страсть / благодетель</label>
+    <div class="row"><input data-k="vice" data-opts="vices" list="dl-vices" placeholder="из книги или своё" style="width:200px"><input data-k="viceNote" style="flex:1" placeholder="кто и где"></div>
+  </section>
+  <section>
+    <h2>Друзья и недруги</h2>
+    <div class="small">клик: ▲ друг · ▼ недруг</div>
+    <div id="friends"></div>
+  </section>
+</main>
+
+<dialog id="imgDlg"><img id="imgBig" alt=""><div class="row" style="justify-content:flex-end"><button id="imgDel">Удалить</button><button id="imgClose">Закрыть</button></div></dialog>
+<dialog id="noteDlg"><div class="row" style="flex-wrap:nowrap;justify-content:space-between"><h3 id="noteTitle" style="margin:0"></h3><button id="propsToggle" title="свойства предмета">⚙</button></div><div class="small" id="propSum" style="margin:4px 0 8px"></div><div class="props" id="propsPanel" hidden><label>Тип<select data-prop="type"><option value="">обычный</option><option>алхимия</option><option>магия</option><option>искровой</option></select></label><label>Качество<select data-prop="q"><option value="">как ранг команды</option><option value="0">0</option><option value="1">I</option><option value="2">II</option><option value="3">III</option><option value="4">IV</option><option value="5">V</option><option value="6">VI</option></select></label><label class="chk"><input type="checkbox" data-prop="good"> добротный (+1)</label><label>Применений: осталось / всего<span class="row" style="flex-wrap:nowrap"><input type="number" min="0" data-prop="left"><span>/</span><input type="number" min="0" data-prop="uses" placeholder="∞"></span></label><label>Ячейки защиты<input type="number" id="noteArmor" min="0" max="5" title="сколько ячеек защиты даёт предмет, когда он с собой"></label><label class="wide">Даёт<input data-prop="gives" placeholder="например: +d6 к Ремеслу при работе с замками"></label><div class="wide"><span class="small">Недостатки (стр. 271)</span><div class="row"><label class="chk"><input type="checkbox" data-flaw="ненадёжное"> ненадёжное</label><label class="chk"><input type="checkbox" data-flaw="опасное"> опасное</label><label class="chk"><input type="checkbox" data-flaw="подозрительное"> подозрительное</label><label class="chk"><input type="checkbox" data-flaw="расходное"> расходное</label><label class="chk"><input type="checkbox" data-flaw="редкое"> редкое</label><label class="chk"><input type="checkbox" data-flaw="сложное"> сложное</label></div></div></div><textarea id="noteText" placeholder="заметка: откуда взял, как работает, кому должен..."></textarea><div class="row" style="justify-content:flex-end;margin-top:8px"><button id="noteClose">Готово</button></div></dialog>
+<script>
+const D = {
+  heritages:['','Акорос','Ирувия','Кинжальные острова','Сиверос','Сковлан','Тихерос'],
+  backgrounds:['','Аристократ','Военный','Законник','Рабочий','Торговец','Учёный','Шпана'],
+  vices:['','Азартные игры','Беспамятство','Долг','Наслаждения','Потустороннее','Религия','Роскошь'],
+  attrs:{'Чутьё':['Изучение','Охота','Разведка','Ремесло'],'Удаль':['Драка','Проникновение','Разрушение','Сноровка'],'Воля':['Манипулирование','Общение','Приказ','Резонанс']},
+  traumas:['Визионер','Маньяк','Параноик','Псих','Раздолбай','Садист','Социопат','Тряпка'],
+  friends:['Стация, аптекарь','Вельдрен, психонавт','Экерд, похититель трупов','Джул, торговец кровью','Малиста, жрица'],
+  talents:{
+   'Умелец':{
+    'Алхимик':'+1 к результативности при изобретении/создании алхимии. Сразу знаешь один рецепт.',
+    'Аналитик':'В передышку — 2 доп. деления на долгосрочные проекты-расследования или новые рецепты/схемы.',
+    'Врач':'Лечишь ремеслом, изучаешь болезни и трупы. Вся команда +d6 к лечению. Первая помощь — раны игнорируются пару часов.',
+    'Инженер':'+1 к результативности при изобретении/создании искровой инженерии. Сразу знаешь одну схему.',
+    'Призрачный барьер':'Мистическими веществами делаешь область (комната, несколько дней) запретной или притягательной для призраков.',
+    'Саботажник':'Разрушаешь тихо; ущерб незаметен при беглом осмотре.',
+    'Стойкость':'Особая защита: отменить последствия утомления/слабости/химии ИЛИ особое усилие с техникой/химией без стресса.',
+    'Ядовитость':'Иммунитет к одному яду/наркотику из перевязи; выделяешь его кожей, слюной или паром (особым усилием).'},
+   'Артист':{
+    'Рокировка':'2 стресса: применяешь свой лучший навык вместо нужного. Опиши, как приспосабливаешь его.',
+    'Гипнотизёр':'Манипулируя кем-то, можешь заставить забыть разговор до вашей следующей встречи.',
+    'Доверься мне':'+d6 к любым действиям против того, с кем у тебя близкие отношения.',
+    'Изворотливость':'Особая защита: отменить последствия подозрений/переговоров ИЛИ особое усилие при обмане без стресса.',
+    'Обмани меня':'Ты всегда знаешь, лгут тебе или говорят правду.',
+    'Плащ и кинжал':'В маскировке +d6 к избеганию подозрений и обману; сбросив маскировку, действуешь первым.',
+    'Призрачный голос':'Общаешься с призраком или демоном как с человеком; козырь при общении со сверхъестественным.',
+    'Халтурка':'В конце каждой передышки +2 монеты в заначку.'},
+   'Головорез':{
+    'Прирождённый боец':'Особая защита: снизить повреждения в схватке на 1 ИЛИ особое усилие в бою без стресса.',
+    'Истребитель призраков':'Руки/оружие заряжены мистической энергией: козырь против сверхъестественного, можешь схватить призрака.',
+    'Как на собаке':'Первое деление счётчика лечения заполнено навсегда; +d6 к проверкам лечения тебя.',
+    'Лидер':'Подручные под твоим приказом в бою не выходят из строя до 4-го уровня, +1 эффективности и 1 ячейка защиты.',
+    'Мул':'Пределы нагрузки: лёгкая 5, нормальная 7, тяжёлая 8.',
+    'Не шути со мной':'Особым усилием: почти сверхчеловеческое физическое действие или бой с мелкой шайкой (до 6) на равных.',
+    'Свирепость':'Твоё насилие пугает всех вокруг; +d6, когда приказываешь испуганному.',
+    'Телохранитель':'Прикрывая товарища, +d6 к испытанию; +1 эффективности при поиске скрытых угроз.'},
+   'Ищейка':{
+    'Меткий стрелок':'Особым усилием: выстрел на огромное расстояние или подавляющий огонь по мелкой шайке.',
+    'Мстительность':'Доп. опыт: караешь того, кто навредил тебе или близкому.',
+    'Несгибаемость':'Штрафы от повреждений на ступень ниже (3-й уровень не делает беспомощным). 4-й всё ещё смертелен.',
+    'Призрачная гончая':'Твой ловчий зверь получает козырь против сверхъестественного и одно волшебное свойство.',
+    'Разведчик':'+1 эффективности при поиске цели; +d6 к скрытности на подготовленной позиции или в маскировке.',
+    'Собранность':'Особая защита: отменить последствия неожиданностей/ужаса/потери следа ИЛИ особое усилие при стрельбе/выслеживании.',
+    'Уцелевший':'Невосприимчив к ядам мёртвых земель, можешь питаться их флорой и фауной. 10 ячеек стресса вместо 9.'},
+   'Кукловод':{
+    'Предвидение':'Дважды за дело содействуешь без стресса, объясняя, как всё предусмотрел.',
+    'Комбинатор':'Особая защита: прикрыть товарища (даже издалека) ИЛИ особое усилие при сборе информации/проекте.',
+    'Контролируемая страсть':'Утоляя страсть, меняешь результат на ±1–2; союзники в компании тоже.',
+    'Ниточки':'+d6 к общению при сборе информации о цели и +d6 к проверке расклада этого дела.',
+    'Призрачный договор':'Нарушивший твой договор получает повреждение 3-го уровня «Проклятие».',
+    'Расчётливость':'+1 действие передышки себе или товарищу (или флешбэк на следующем деле).',
+    'Связи':'+1 к результативности при приобретении ресурса и отводе подозрений.',
+    'Сиделец':'В тюрьме розыск −1, ранг команды +1, +1 к отношениям с организацией.'},
+   'Мистик':{
+    'Принуждение':'Резонансом призываешь местного призрака и приказываешь ему; не боишься своих духов.',
+    'Буря':'Особым усилием: удар молнией как оружием или шторм вокруг.',
+    'Железная воля':'Не боишься сверхъестественного; +d6 к испытаниям воли.',
+    'Магическая защита':'Особая защита: ослабить сверхъестественные последствия ИЛИ особое усилие с магией/против неё.',
+    'Призрачный разум':'Всегда чувствуешь сверхъестественное рядом; +d6 к сбору информации о нём.',
+    'Оккультист':'Общаешься с древними силами и демонами; +d6, приказывая их почитателям.',
+    'Ритуал':'Изучаешь и создаёшь оккультные ритуалы. Сразу знаешь один.',
+    'Странные методы':'+1 к результативности при изобретении/создании магических изделий. Сразу знаешь один рецепт.'},
+   'Проныра':{
+    'Диверсант':'Обходя системы безопасности, игнорируешь качество и ранг противника.',
+    'Быстрая реакция':'Если вопрос, кто действует первым, — это ты.',
+    'Дьявольская ловкость':'Особым усилием: сверхчеловеческая атлетика или враги бьют друг друга.',
+    'Засада':'+d6, атакуя из засады или ставя ловушку.',
+    'Призрачность':'2 стресса: на миг становишься бесплотной тенью (+1 стресс за длительность/невидимость/полёт).',
+    'Сорвиголова':'+d6 к отчаянной проверке, если согласен на −d6 к испытаниям от её последствий.',
+    'Тень':'Особая защита: отменить последствия от охраны/обнаружения ИЛИ особое усилие в беге, прыжках, лазании, скрытности.',
+    'Эксперт':'Выбери навык: руководя группой в нём, получаешь не больше 1 стресса.'}
+  },
+  special:[['Добротные инструменты механика',1],['Добротные инструменты для сноса',2],['Духовая трубка',0],['Перевязь алхимика',1],['Вторая перевязь алхимика',1],['Устройство',1],['Устройство',1],['Устройство',1],['Дротики (под алхимию)',0],['Пустые шприцы',0]],
+  common:[['Клинок или два',1],['Метательные ножи',1],['Пистолет',1],['Второй пистолет',1],['Большое оружие',2],['Необычное оружие',1],['Доспех',2],['+Тяжёлый доспех',3],['Документы',1],['Инструменты для сноса',2],['Инструменты механика',1],['Магические приспособления',1],['Светильник',1],['Снаряжение верхолаза',2],['Снаряжение взломщика',1],['Средства перевоплощения',1],['Оберег против духов',0]],
+  contents:{
+    s0:['Набор инструментов для работы с механизмами','Ювелирная лупа','Измерительные приборы'],
+    s1:['Маленькое, но мощное сверло','Молоток и стальные клинья','Фомка','Электроплазменный аккумулятор, зажимы, проволока','Ёмкости с кислотой','Искровой резак и канистра топлива'],
+    c6:['Толстая кожаная куртка','Укреплённые сапоги и перчатки'],
+    c7:['Кольчуга','Металлические пластины','Шлем'],
+    c8:['Реестр аристократов, офицеров стражи и важных горожан','Чистая бумага, чернила, перо','Полезные карты'],
+    c9:['Кувалда','Железные клинья','Тяжёлый бур','Лом'],
+    c10:['Лупа','Пинцет','Молоточек','Плоскогубцы','Отвёртка'],
+    c11:['Флакон со ртутью','Мешочек с чёрной солью','Якорь для духов (камешек)','Духоловная бутылка','Флакон с электроплазмой (разбивается при ударе)'],
+    c12:['Масляный светильник или электроплазменная лампа'],
+    c13:['Большой моток верёвки','Малый моток верёвки','Кошка','Мешочек с мелом','Страховочный пояс с петлями и кольцами','Крюки и молоток'],
+    c14:['Набор отмычек','Маленькая фомка','Масло для скрипучих петель','Моток проволоки и крючки','Мешочек с песком'],
+    c15:['Театральный гримёрный набор','Бланки документов для подделки','Бижутерия','Двусторонний плащ и приметная шляпа','Фальшивый значок стражника']
+  },
+  subs:{'':'','Анестезия (доза)':'моё: из крови, шприцем в вену — беспамятство','Боевой концентрат':'моё: на дротик/клинок, действует с задержкой','Спирт':'обеззаразить рану, разжечь огонь, плеснуть в глаза','Нюхательная соль':'привести в чувство (нашатырь)','Кровоостанавливающее':'квасцы/травы — остановить кровь','Негашёная известь':'в глаза — жжёт и слепит; сушит','Перцовый порошок':'в лицо — кашель, слёзы, ослепляет','Лампадное масло':'поджечь, смазать петли, скользкая лужа','Кислота':'из набора для сноса: растворить замок, петли, верёвку','Алкагест':'книга (у мастера редкость): III/1 — прерывает любое алхимическое снадобье','Головняк':'книга (у мастера редкость): яд III/1 — жуткие мигрени','Граната':'книга (у мастера редкость): бомба III/2 — осколки','Дымовая шашка':'книга (у мастера редкость): бомба II/2 — едкий дым','Искра':'книга (у мастера редкость): наркотик I/3 — прилив сил','Левитационное масло':'книга (у мастера редкость): III/1 — предмет парит час','Огненное масло':'книга (у мастера редкость): III/3 — вспыхивает на воздухе','Порошок утопленника':'книга (у мастера редкость): яд III/2 — выводит из строя','Ртуть':'книга (у мастера редкость): IV/1 — +d6 к резонансу, рана 2 «отстранённый»','Связующее масло':'книга (у мастера редкость): III/1 — навсегда склеивает','Слепилка':'книга (у мастера редкость): яд III/3 — временная слепота','Тормоз':'книга (у мастера редкость): яд IV/1 — временный паралич','Трансовый порошок':'книга (у мастера редкость): наркотик I/3 — приятный транс'}
+};
+const ALL = Object.values(D.attrs).flat();
+// how many of a custom item are carried: qty>1 -> take, else toggle
+const bQty=id=>S.bqty[id]||1,bTake=id=>bQty(id)>1?Math.min(S.btake[id]||0,bQty(id)):(S.base.includes(id)?0:1);
+// sub entries: plain string, or {n,q} once a quantity is set
+const subN=x=>typeof x==='object'&&x?x.n:(x??''),subQ=x=>typeof x==='object'&&x?x.q:'';
+// per-item notes: custom -> c.note, book -> S.itemNotes[id]
+const obj=k=>k[0]==='u'?S.custom[+k.slice(1)]:k[0]==='p'?S.prod[+k.slice(1)]:null;
+const noteGet=k=>obj(k)?obj(k).note||'':S.itemNotes[k]||'';
+const noteSet=(k,v)=>{if(obj(k))obj(k).note=v;else S.itemNotes[k]=v};
+const itemName=k=>obj(k)?obj(k).n:(S.nameOv[k]??(k[0]==='s'?D.special:D.common)[+k.slice(1)][0]);
+const BOOK_ARMOR={c6:1,c7:1}; // Доспех, +Тяжёлый доспех
+const armorOf=k=>obj(k)?(+obj(k).armor||0):(S.armorOv[k]??BOOK_ARMOR[k]??0);
+// properties: own/workshop items keep them on the object, book items in S.itemProps
+const P=k=>obj(k)||(S.itemProps[k]??={});
+const ROMAN=['0','I','II','III','IV','V','VI','VII','VIII','IX'];
+const propText=k=>{const p=P(k),b=[];if(p.type)b.push(p.type);b.push('качество '+(p.q!==''&&p.q!=null?ROMAN[+p.q]:'ранг ('+ROMAN[R().tier]+')'));if(p.good)b.push('добротный');if(p.uses!==''&&p.uses!=null||p.left!==''&&p.left!=null)b.push(`применений ${p.left??0}${p.uses!==''&&p.uses!=null?' / '+p.uses:''}`);if(armorOf(k))b.push('защита '+armorOf(k));if((p.flaws||[]).length)b.push(p.flaws.join(', '));if(p.gives)b.push('даёт: '+p.gives);return b.join(' · ')};
+const propLine=k=>{const p=P(k),bits=[];if(p.type)bits.push(p.type);if(p.q!==''&&p.q!=null)bits.push('качество '+ROMAN[+p.q]);if(p.good)bits.push('добротный');if(p.uses!==''&&p.uses!=null||p.left!==''&&p.left!=null)bits.push(`применений ${p.left??0}${p.uses!==''&&p.uses!=null?' / '+p.uses:''} <button class="mini" data-use="${k}" title="потратить одно">−1</button>`);if((p.flaws||[]).length)bits.push(p.flaws.join(', '));if(p.gives)bits.push('даёт: '+esc(p.gives));return bits.length?`<div class="propline small">${bits.join(' · ')}</div>`:''};
+const carried=c=>(c.qty||1)>1?Math.min(c.take||0,c.qty):(c.base?0:1);
+// contents of an item: custom -> c.sub, book -> S.subOv override or D.contents default; mk=true creates the editable copy
+const subArr=(k,mk)=>{const c=obj(k);if(c){if(mk&&!c.sub)c.sub=[];return c.sub}if(mk&&!S.subOv[k])S.subOv[k]=[...(D.contents[k]||[])];return S.subOv[k]||D.contents[k]};
+const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+// counters that appear automatically for a taken talent (value kept in S.tc[talent])
+const rid=()=>Math.random().toString(36).slice(2,9);
+const PRESET=t=>(TC[t]&&(TC[t].book||!R().bookPresets)?TC[t]:null)||(SPECIAL.includes(t)?{n:t+' (особая защита)',max:1,r:'downtime',h:'1 раз до передышки'}:null);
+const PRESET_T=()=>Object.values(D.talents).flatMap(o=>Object.keys(o)).filter(PRESET);
+const mkPreset=(t,v)=>{const p=PRESET(t);return{id:rid(),n:p.n,v,max:p.max,r:p.r,h:p.h||'',from:t}};
+// when a talent with a preset is taken, add its counter once (old S.tc / special-armor values migrate in)
+function presetSync(){for(const t of S.talents)if(PRESET(t)&&!S.presetDone.includes(t)){S.counters.push(mkPreset(t,SPECIAL.includes(t)?(S.armor.s?1:0):(S.tc[t]||0)));S.presetDone.push(t)}S.presetDone=S.presetDone.filter(t=>S.talents.includes(t))}
+const TC={'Ядовитость':{book:false,n:'Производство анестезии за день',max:'',r:'day',h:'1-е за день — 1 стресс, дальше по 2 (особое усилие)'},'Аналитик':{book:true,n:'Доп. деления на проекты',max:2,r:'downtime',h:'+2 деления на расследования / рецепты / схемы'},'Призрачный барьер':{book:true,n:'Барьер держится, дней',max:'',r:'none',h:'область размером с комнату, несколько дней'}};
+const SPECIAL=['Стойкость','Изворотливость','Прирождённый боец','Собранность','Комбинатор','Магическая защита','Тень'];
+const talentInfo=t=>{for(const [pb,ts] of Object.entries(D.talents)) if(t in ts) return [pb,ts[t]];return ['?','']};
+const fresh = () => ({name:'',alias:'',look:'',heritage:'',heritageNote:'',background:'',backgroundNote:'',vice:'',viceNote:'',
+  actions:Object.fromEntries(ALL.map(a=>[a,a==='Ремесло'?2:a==='Разрушение'?1:0])),
+  xp:{'Чутьё':0,'Удаль':0,'Воля':0,'Талант':0},stress:0,trauma:[],h3:'',h2a:'',h2b:'',h1a:'',h1b:'',heal:0,
+  armor:{a:0,h:0,s:0},coin:0,stash:0,talents:[],items:[],base:[],rbPage:1,rules:{mode:'book',money:true,stress:true,band:true,presets:true,day:false,rest2:false,major:'Драхмы',minor:'Драхмёныши',rate:20,stressN:9,stage:'creation',tier:0},tips:true,day:1,itemProps:{},customTalents:[],contacts:[],traumaExtra:[],armorOv:{},armorUsed:{},prod:[],cards:[],itemNotes:{},bqty:{},btake:{},loadOv:{},nameOv:{},subOv:{},open:['s3','s4'],load:'3',bandolier:['','','','','',''],custom:[],bandQ:{},counters:[],tc:{},ctrOrder:[],presetDone:[],dr:0,drm:0,friends:{},notes:''});
+const KEY='bitd-leech';
+// saves made before «Правила» existed belong to our homebrew table -> start them in «свои правила»
+const OUR_RULES={mode:'custom',money:false,stress:true,band:false,presets:false,day:true,rest2:true,major:'Драхмы',minor:'Драхмёныши',rate:20,stressN:9,stage:'free',tier:0};
+const loadRaw=t=>{const r=JSON.parse(t||'{}');if(Object.keys(r).length&&!r.rules)r.rules={...OUR_RULES};return Object.assign(fresh(),r,{rules:{...fresh().rules,...(r.rules||{})}})};
+let S; try{S=loadRaw(localStorage.getItem(KEY))}catch{S=fresh()}
+// effective rules: «по книге» forces every official mechanic on
+const R=()=>{const r=S.rules,b=r.mode==='book';return{book:b,bookMoney:b||r.money,bookStress:b||r.stress,bookBand:b||r.band,bookPresets:b||r.presets,showDay:!b&&r.day,rest2:!b&&r.rest2,stage:r.stage,tier:+r.tier||0}};
+S.items=S.items.filter(x=>x!=='s4'); // ponytail: 'Вторая перевязь' hidden (not in RU rulebook), kept in D.special so item ids don't shift
+// one-time migration: blowgun split into трубка + дротики + шприцы (load 0 each, as in the book)
+if(!S.mig1){S.mig1=1;delete S.loadOv?.s2;delete S.subOv?.s2;if(S.items.includes('s2'))S.items.push('s8','s9')}
+if(!S.cards.length&&S.notes){S.cards=[{t:'Заметки',x:S.notes}];S.notes=''}
+{const k=S.counters.findIndex(c=>c.n==='Производство анестезии за день');if(k>=0){S.tc['Ядовитость']=S.counters[k].v;S.counters.splice(k,1)}}
+S.counters.forEach(c=>{if(!c.id)c.id=rid()});
+presetSync();
+const backup=()=>{try{localStorage.setItem(KEY+'-backup',JSON.stringify({at:new Date().toLocaleString('ru'),data:S}))}catch{}};
+let saveWarn=0;const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch{if(Date.now()-saveWarn>60000){saveWarn=Date.now();alert('Не удалось сохранить: в памяти браузера кончилось место (обычно из-за картинок). Удали лишние картинки или сделай Экспорт, иначе последние изменения пропадут после закрытия.')}}};
+const $=s=>document.querySelector(s);
+const attr=a=>D.attrs[a].filter(x=>S.actions[x]>0).length;
+
+function boxes(n,val,cls,onClick){
+  return Array.from({length:n},(_,i)=>{const b=document.createElement('span');b.className='box '+cls+(i<val?' on':'');b.onclick=()=>onClick(i+1===val?i:i+1);return b});
+}
+function fill(el,nodes){el.replaceChildren(...nodes)}
+
+function render(){
+  // actions
+  const act=$('#actions');act.innerHTML='';
+  for(const [a,list] of Object.entries(D.attrs)){
+    const h=document.createElement('h3');h.innerHTML=`<span><span class="attr">${a}</span> <span class="attr">${attr(a)}</span></span>`;
+    const xp=document.createElement('span');xp.className='row';xp.style.gap='3px';
+    fill(xp,boxes(6,S.xp[a],'',v=>{S.xp[a]=v;upd()}));h.append(xp);act.append(h);
+    for(const x of list){
+      const r=document.createElement('div');r.className='act';
+      const dots=Array.from({length:4},(_,i)=>`<span class="dot${i<S.actions[x]?' on':''}${i===0?' first':''}" data-a="${x}" data-v="${i+1}"></span>`).join(' ');
+      r.innerHTML=`<span class="row" style="gap:4px">${dots}</span><span>${x}</span>`;
+      act.append(r);
+    }
+  }
+  fill($('#xpTalent'),boxes(8,S.xp['Талант'],'',v=>{S.xp['Талант']=v;upd()}));
+  // stress/trauma
+  const maxS=R().bookStress?(S.talents.includes('Уцелевший')?10:9):Math.max(1,+S.rules.stressN||9);
+  fill($('#stress'),boxes(maxS,S.stress,'red',v=>{S.stress=v;upd()}));
+  $('#stressMsg').innerHTML=S.stress>=maxS?'<span class="warn">Стресс заполнен — получи травму и обнули стресс.</span>':'';
+  $('#trauma').innerHTML=[...D.traumas,...S.traumaExtra].map(t=>`<label class="row" style="margin:0 8px 0 0;color:var(--ink)"><input type="checkbox" style="width:auto" data-trauma="${esc(t)}" ${S.trauma.includes(t)?'checked':''}>${esc(t)}${S.traumaExtra.includes(t)?`<button class="mini" data-untrauma="${esc(t)}" title="убрать свою травму">✕</button>`:''}</label>`).join('')+'<button id="addTrauma" class="mini" title="своя травма">+ своя</button>';
+  // heal clock
+  const seg=[...Array(4)].map((_,i)=>{const a0=i*Math.PI/2-Math.PI/2,a1=a0+Math.PI/2;
+    return `<path d="M0 0 L${Math.cos(a0)} ${Math.sin(a0)} A1 1 0 0 1 ${Math.cos(a1)} ${Math.sin(a1)} Z" fill="${i<S.heal?'var(--ok)':'#262220'}" stroke="var(--dim)" stroke-width=".04" data-heal="${i+1}"/>`}).join('');
+  $('#heal').innerHTML=seg;
+  // armor
+  // armor boxes come from any carried item with «ячейки защиты» (book Доспех / +Тяжёлый = 1 each by default)
+  const arm=[...S.items.map(id=>[id,bTake(id)>0]),...S.custom.map((c,j)=>['u'+j,carried(c)>0])].filter(([k,on])=>on&&armorOf(k)>0);
+  $('#armor').innerHTML=arm.map(([k])=>{const n=armorOf(k),u=S.armorUsed[k]||0;return `<div class="row" style="margin:3px 0">${Array.from({length:n},(_,j)=>`<span class="box${j<u?' on':''}" data-armu="${k}|${j}"></span>`).join('')}<span>${esc(itemName(k))}</span></div>`}).join('')||'<div class="small">Нет доспеха с собой. Добавь «Доспех» в снаряжение или задай предмету «ячейки защиты» в окне ✎.</div>';
+  // talents
+  $('#talents').innerHTML=(S.talents.map(t=>{const [pb,desc]=talentInfo(t);return `<div class="talent"><div class="row" style="justify-content:space-between"><b>${t}</b><span class="row"><span class="small">${pb==='Умелец'?'':'необычный · '+pb}</span><button data-untalent="${t}" title="убрать">✕</button></span></div><p style="margin-left:0">${desc}</p></div>`}).join('')||'')+S.customTalents.map((c,i)=>`<div class="talent"><div class="row" style="flex-wrap:nowrap"><input data-ctn="${i}" value="${esc(c.n)}" placeholder="название таланта" style="font-weight:bold"><span class="small">свой</span><button data-ctdel="${i}" title="убрать">✕</button></div><textarea data-ctx="${i}" placeholder="что даёт (как договорились с мастером)" style="min-height:60px;margin-top:4px">${esc(c.x)}</textarea></div>`).join('')+(S.talents.length||S.customTalents.length?'':'<div class="small" style="margin:6px 0">Пока не выбрано</div>')
+    +`<select id="addTalent" style="width:100%;margin-top:8px"><option value="">+ добавить талант…</option><option value="__custom">✎ свой талант</option>${Object.entries(D.talents).map(([pb,ts])=>`<optgroup label="${pb==='Умелец'?'Умелец':'Необычные — '+pb}">${Object.keys(ts).filter(t=>!S.talents.includes(t)).map(t=>`<option>${t}</option>`).join('')}</optgroup>`).join('')}</select>`;
+  // items
+  const bl=id=>S.loadOv[id]??(id[0]==='s'?D.special:D.common)[+id.slice(1)][1];
+  const used=S.items.reduce((s,id)=>s+bl(id)*bTake(id),0)+S.custom.reduce((s,c)=>s+(+c.l||0)*carried(c),0);
+  for(const k of ['dr','drm']){const el=$(`[data-k=${k}]`);if(document.activeElement!==el)el.value=+S[k]||0}
+  const rt=Math.max(1,+S.rules.rate||1),mj=S.rules.major||'Крупная',mn=S.rules.minor||'Мелкая',bm=R().bookMoney;
+  $('#moneyBook').hidden=!bm;$('#moneyCustom').hidden=bm;$('#rateLbl').textContent=bm?'':`1 = ${rt}`;
+  $('#lblMaj').textContent=mj;$('#lblMin').textContent=mn;$('#cLblMaj').textContent=mj;$('#cLblMin').textContent=mn;
+  $('#breakDr').title=`1 ${mj} → ${rt} ${mn}`;$('#joinDr').title=`${rt} ${mn} → 1 ${mj}`;
+  const totalM=(+S.dr||0)*rt+(+S.drm||0);$('#moneyTotal').textContent=`Всего: ${totalM} ${mn} = ${(totalM/rt).toFixed(2).replace(/\.?0+$/,'')} ${mj}`;
+  fill($('#coin'),boxes(4,S.coin,'',v=>{S.coin=v;upd()}));fill($('#stash'),boxes(40,S.stash,'',v=>{S.stash=v;upd()}));
+  $('#stashInfo').textContent=`Уровень жизни ${Math.floor(S.stash/10)} · на покое: ${S.stash<=10?'нищий':S.stash<=20?'бедняк':S.stash<40?'середнячок':'богач'}`;
+  const sel=Math.min(S.cardSel||0,Math.max(0,S.cards.length-1)),first=x=>(x||'').split('\n').find(l=>l.trim())||'';
+  $('#cardList').innerHTML=S.cards.map((c,i)=>`<button class="ci${i===sel?' on':''}" data-cardsel="${i}"><b class="ct">${esc(c.t)||'без названия'}</b>${c.plan||c.imgs?.length?`<span class="cpi">${c.plan?'▭ план':''}${c.plan&&c.imgs?.length?' · ':''}${c.imgs?.length?'🖼 '+c.imgs.length:''}</span>`:''}<span class="cp">${esc(first(c.x))||'пусто'}</span></button>`).join('');
+  const cc=S.cards[sel],pm=S.cardMode==='plan',memB=(localStorage.getItem(KEY)||'').length,mem=memB<1048576?Math.ceil(memB/1024)+' КБ':(memB/1048576).toFixed(1)+' МБ';
+  $('#cardEd').innerHTML=S.cards.length?`<div class="row" style="flex-wrap:nowrap"><input class="edt" data-cardt="${sel}" value="${esc(cc.t)}" placeholder="Заголовок"><button data-carddel="${sel}">Удалить</button></div>`+
+    `<div class="ntabs"><button data-cardmode="text" class="${pm?'':'on'}">Текст</button><button data-cardmode="plan" class="${pm?'on':''}">План</button><span style="flex:1"></span><span class="small" title="сколько занимает бланк в памяти браузера (предел около 5 МБ)">${mem}</span><button data-imgadd title="добавить картинку: выбрать файл, Ctrl+V из буфера или перетащить сюда">🖼 Картинка</button></div>`+
+    (pm?planHTML():`<textarea class="edx" data-cardx="${sel}" placeholder="Текст заметки. Для плана: этажи [ Первый этаж ], комнаты [[ Кабинет ]] — каждый на своей строке">${esc(cc.x)}</textarea>`+
+      (cc.imgs?.length?`<div class="gal">${cc.imgs.map((src,i)=>`<img src="${src}" data-imgview="${i}" title="открыть">`).join('')}</div>`:'')):'<div class="small" style="margin:auto">Заметок пока нет. Нажми «+ новая карточка».</div>';
+  if(S.cards.length&&pm)planMount();
+  const RN={day:'день',downtime:'передышка',score:'дело',none:'вручную'};
+  const ents=S.counters.map((c,i)=>['c:'+c.id,`<div class="ctr"><div class="row" style="flex-wrap:nowrap"><input data-ctrn="${i}" value="${esc(c.n)}" placeholder="название"><button data-ctrdel="${i}" title="удалить">✕</button></div>`
+    +`<div class="row" style="flex-wrap:nowrap"><button data-ctrm="${i}">−</button><span class="cell cv">${c.v}${c.max!==''?' / '+c.max:''}</span><button data-ctrp="${i}">+</button>`
+    +`<input type="number" min="0" data-ctrmax="${i}" value="${c.max}" placeholder="∞" title="максимум (пусто — без предела)" style="width:64px">`
+    +`<select data-ctrr="${i}" title="когда сбрасывать">${Object.entries(RN).map(([k,v])=>`<option value="${k}"${c.r===k?' selected':''}>↺ ${v}</option>`).join('')}</select></div>`
+    +`</div>`]);
+  $('#addCtr').innerHTML='<option value="">+ счётчик…</option><option value="blank">пустой</option>'+PRESET_T().map(t=>`<option value="p:${t}">по таланту: ${t}</option>`).join('');
+  const ord=S.ctrOrder.filter(k=>ents.some(e=>e[0]===k));ents.forEach(e=>{if(!ord.includes(e[0]))ord.push(e[0])});
+  $('#ctrs').innerHTML=ord.map(k=>`<div class="dz" data-ckey="${k}"><span class="grip" draggable="true" data-grip="${k}" title="перетащить">⠿</span>${ents.find(e=>e[0]===k)[1]}</div>`).join('')||'<div class="small">Счётчиков нет</div>';
+  // settings page + rule-dependent bits
+  const rr=R();
+  document.querySelectorAll('#settings [data-r]').forEach(el=>{const v=S.rules[el.dataset.r];if(el.type==='radio')el.checked=v===el.value;else if(el.type==='checkbox')el.checked=!!v;else if(document.activeElement!==el)el.value=v??''});
+  document.querySelectorAll('#settings [data-ui="tips"]').forEach(el=>el.checked=!!S.tips);
+  $('#customRules').classList.toggle('off',rr.book);$('#customRules').querySelectorAll('input').forEach(el=>el.disabled=rr.book);
+  $('#moneyOpts').hidden=rr.bookMoney;$('#stressOpts').hidden=rr.bookStress;
+  $('#modeInfo').textContent=rr.book?'Всё строго по рулбуку: монеты и заначка, 9 ячеек стресса, перевязь по книге, только книжные заготовки.':'Свои правила: ниже включай или отключай официальные механики.';
+  {let b=null;try{b=JSON.parse(localStorage.getItem(KEY+'-backup')||'null')}catch{}$('#backupInfo').textContent=b?'копия от '+b.at:'копии пока нет'}
+  $('#dayBox').hidden=!rr.showDay;$('[data-rest="day"]').hidden=!rr.showDay;
+  {const pts=ALL.reduce((a,x)=>a+S.actions[x],0),cap={creation:2,play:3,mastery:4}[rr.stage],over=cap&&ALL.filter(x=>S.actions[x]>cap);
+   $('#skillInfo').innerHTML=rr.stage==='creation'?`Создание: пунктов <b class="${pts>7||over.length?'warn':pts===7?'good':''}">${pts} / 7</b> · максимум 2${over.length?' — <span class="warn">больше 2: '+over.join(', ')+'</span>':''}`
+     :cap?`В игре: максимум ${cap}${over.length?' — <span class="warn">больше: '+over.join(', ')+'</span>':''}`:''}
+  $('#tipsBtn').classList.toggle('on',!!S.tips);
+  document.body.classList.toggle('tips',!!S.tips);
+  const lim=S.talents.includes('Мул')?{3:5,5:7,6:8}[S.load]:+S.load;
+  $('#loadUsed').innerHTML=`занято <b class="${used>lim?'warn':''}">${used}</b> / ${lim}`;
+  const tg=(key,at)=>`<button data-base="${key}" class="${at?'':'on'}" title="переключить">${at?'на базе':'с собой'}</button>`;
+  const isOpen=k=>obj(k)?!!obj(k).open:S.open.includes(k);
+  const fold=(k,has)=>`<button class="fold${has?'':' empty'}" data-fold="${k}" title="состав / сделать категорией">${isOpen(k)?'▾':'▸'}</button>`;
+  // bandolier slots pick from own items; show stock from the inventory
+  const bandInfo=v=>{if(!v)return '';if(R().bookBand)return (D.subs[v]||'').replace(/^книга[^:]*: /,'')||'своё снадобье';const c=S.custom.find(c=>c.n.trim()===v.trim());return c?`в запасе: ${c.qty||1}`:'нет в снаряжении — добавь как свой предмет'};
+  const band=(from)=>`<div class="small" data-tip="${R().bookBand?'Перевязь по книге (стр. 103): 3 склянки, вещества из списка или своё; в передышку пополняется бесплатно, если есть поставщик или мастерская.':'Перевязь по своим правилам: выбор из твоих предметов, бесплатно не пополняется.'}">перевязь: 3 слота</div>`+[0,1,2].map(k=>{const i=from+k,v=S.bandolier[i];
+    return `<div class="subrow band"><input type="number" min="0" data-bandq="${i}" value="${S.bandQ[i]??''}" title="количество"><input list="subsList" data-band="${i}" value="${esc(v)}" placeholder="пусто — выбери из своих предметов"></div><span class="small">${bandInfo(v)}</span>`}).join('');
+  const subList=k=>(subArr(k)||[]).map((x,j)=>`<div class="subrow"><input type="number" min="0" data-subq="${k}|${j}" value="${subQ(x)}" title="количество (не влияет на нагрузку)"><input data-subn="${k}|${j}" value="${esc(subN(x))}" placeholder="что внутри"><button data-subdel="${k}|${j}" title="убрать">✕</button></div>`).join('')
+    +`<button data-subadd="${k}" class="subadd">+ добавить внутрь</button>`;
+  const sub=k=>k==='s3'?band(0):k==='s4'?band(3):subList(k);
+  const hasSub=k=>k==='s3'||k==='s4'||(subArr(k)||[]).length>0;
+  const qtyCell=(c,i)=>`<input type="number" min="1" max="99" data-cusq="${i}" value="${c.qty||1}" title="сколько всего">`;
+  const carryCell=(c,i,k)=>(c.qty||1)>1?`<input type="number" min="0" max="${c.qty}" data-cust="${i}" value="${carried(c)}" class="take" title="сколько с собой, остальное на базе">`:tg(k,c.base);
+  const noteBtn=k=>`<button data-note="${k}" class="note${noteGet(k)?' has':''}" title="Заметка и свойства">✎</button>`;
+  const head=(S.items.length||S.custom.length)?'<div class="inv head"><span></span><span>предмет</span><span>всего</span><span>с собой</span><span>нагр.</span><span></span><span></span></div>':'';
+  $('#inv').innerHTML=head+(S.items.map(id=>{const [n]=(id[0]==='s'?D.special:D.common)[+id.slice(1)],at=bTake(id)===0,has=hasSub(id);
+    return `<div class="inv${at?' off':''}${has?' grp':''}">${fold(id,has)}<input data-bookn="${id}" value="${esc(S.nameOv[id]??n)}" placeholder="${esc(n)}" title="по книге: ${esc(n)}"><input type="number" min="1" max="99" data-bq="${id}" value="${bQty(id)}" title="сколько всего">${bQty(id)>1?`<input type="number" min="0" max="${bQty(id)}" data-bt="${id}" value="${bTake(id)}" class="take" title="сколько с собой, остальное на базе">`:tg(id,S.base.includes(id))}<input type="number" min="0" max="9" data-bookl="${id}" value="${bl(id)}" class="${bl(id)!==(id[0]==='s'?D.special:D.common)[+id.slice(1)][1]?'ovr':''}" title="нагрузка за 1 шт. (по книге: ${(id[0]==='s'?D.special:D.common)[+id.slice(1)][1]})">${noteBtn(id)}<button data-unitem="${id}" title="убрать">✕</button></div>`
+      +propLine(id)+(isOpen(id)?`<div class="sub${at?' off':''}">${S.nameOv[id]&&S.nameOv[id]!==n?`<div class="small">по книге: ${n}</div>`:''}${sub(id)}</div>`:'')}).join('')
+    +S.custom.map((c,i)=>{const k='u'+i,has=hasSub(k);return `<div class="inv${carried(c)?'':' off'}${has?' grp':''}">${fold(k,has)}<input data-cusn="${i}" value="${esc(c.n)}" placeholder="название">${qtyCell(c,i)}${carryCell(c,i,k)}<input type="number" min="0" max="9" data-cusl="${i}" value="${c.l}" title="нагрузка">${noteBtn(k)}<button data-cusdel="${i}" title="убрать">✕</button></div>`
+      +propLine(k)+(c.open?`<div class="sub${c.base?' off':''}">${sub(k)}</div>`:'')}).join(''))
+    ||'<div class="small" style="margin:6px 0">Пусто</div>';
+  // production tab: same row/sub/note machinery as own items, keys 'p'+i
+  $('#prodList').innerHTML=(S.prod.length?'<div class="inv prodrow head"><span></span><span>изделие</span><span>прогресс</span><span>шт.</span><span></span><span></span><span></span></div>':'')
+    +S.prod.map((c,i)=>{const k='p'+i,has=hasSub(k),done=c.m!==''&&c.m!=null&&+c.v>=+c.m;
+      return `<div class="inv prodrow${has?' grp':''}${done?' done':''}">${fold(k,has)}<input data-prodn="${i}" value="${esc(c.n)}" placeholder="что делаешь">`
+      +`<span class="prog"><input type="number" min="0" data-prodv="${i}" value="${c.v??''}" title="сделано"><span>/</span><input type="number" min="0" data-prodm="${i}" value="${c.m??''}" title="всего нужно"></span><input type="number" min="0" data-prodq="${i}" value="${c.q??1}" title="сколько штук (готовых или в работе)">`
+      +`${noteBtn(k)}<button data-prodmv="${i}" title="готово — перенести в снаряжение">→</button><button data-proddel="${i}" title="удалить">✕</button></div>`
+      +propLine(k)+(c.open?`<div class="sub">${sub(k)}</div>`:'')}).join('')||'<div class="small" style="margin:6px 0">Пока ничего не производишь</div>';
+  $('#addProd').innerHTML='<option value="">+ добавить изделие…</option><option value="new">✎ новое изделие</option>'
+    +(S.custom.length?`<optgroup label="перенести из снаряжения">${S.custom.map((c,i)=>`<option value="u${i}">${esc(c.n||'без названия')}</option>`).join('')}</optgroup>`:'');
+  $('#inv').insertAdjacentHTML('beforeend',`<datalist id="subsList">${(R().bookBand?Object.keys(D.subs).filter(k=>/^книга/.test(D.subs[k])):[...new Set(S.custom.map(c=>c.n.trim()).filter(Boolean))]).map(o=>`<option value="${esc(o)}">`).join('')}</datalist>`);
+  const opt=(list,pre)=>list.map((it,i)=>[pre+i,it]).filter(([id])=>!S.items.includes(id)&&id!=='s4').map(([id,[n,l]])=>`<option value="${id}">${n} [${l}]</option>`).join('');
+  $('#addItem').innerHTML=`<option value="">+ добавить предмет…</option><option value="custom">✎ свой предмет</option><optgroup label="Особые (умелец)">${opt(D.special,'s')}</optgroup><optgroup label="Обычные">${opt(D.common,'c')}</optgroup>`;
+  // friends
+  const tri=v=>({up:'▲',down:'▼'})[v]||'·';
+  $('#friends').innerHTML=D.friends.map(f=>`<div><span class="tri" data-friend="${f}">${tri(S.friends[f])}</span>${f}</div>`).join('')+S.contacts.map((c,i)=>`<div class="row" style="flex-wrap:nowrap;margin:2px 0"><span class="tri" data-cfr="${i}">${tri(c.rel)}</span><input data-cfn="${i}" value="${esc(c.n)}" placeholder="имя, кто такой"><button data-cfdel="${i}" title="убрать">✕</button></div>`).join('')+'<button id="addContact" class="subadd" style="margin-top:6px">+ свой контакт</button>';
+  // coin/stash
+}
+function upd(){save();render()}
+
+// text fields & selects
+document.querySelectorAll('[data-k]').forEach(el=>{
+  if(el.dataset.opts) el.insertAdjacentHTML('afterend',`<datalist id="dl-${el.dataset.opts}">${D[el.dataset.opts].filter(Boolean).map(o=>`<option value="${o}">`).join('')}</datalist>`);
+  el.value=S[el.dataset.k];
+  el.addEventListener('input',()=>{S[el.dataset.k]=el.value;save();if(el.id==='loadSel'||el.dataset.k==='dr'||el.dataset.k==='drm')render()});
+});
+
+document.addEventListener('click',e=>{
+  const t=e.target, d=t.dataset;
+  if(d.a){const v=+d.v;S.actions[d.a]=S.actions[d.a]===v?v-1:v;upd()}
+  else if(d.heal){S.heal=S.heal===+d.heal?+d.heal-1:+d.heal;upd()}
+  else if(d.armu){const [k,j]=d.armu.split('|'),u=S.armorUsed[k]||0;S.armorUsed[k]=+j<u?+j:+j+1;upd()}
+  else if(d.tab) showTab(d.tab);
+  else if(d.cusdel){S.custom.splice(+d.cusdel,1);upd()}
+  else if(d.fold){const k=d.fold;if(obj(k)){const c=obj(k);c.open=!c.open}else S.open=S.open.includes(k)?S.open.filter(x=>x!==k):[...S.open,k];upd()}
+  else if(d.subadd){subArr(d.subadd,true).push('');upd()}
+  else if(d.subdel){const [k,j]=d.subdel.split('|');subArr(k,true).splice(+j,1);upd()}
+  else if(d.note) openNote(d.note);
+  else if(d.ctrp){const c=S.counters[+d.ctrp];if(c.max===''||c.v<+c.max)c.v++;upd()}
+  else if(d.ctrm){const c=S.counters[+d.ctrm];if(c.v>0)c.v--;upd()}
+  else if(d.ctrdel){const c=S.counters[+d.ctrdel];if(confirm(`Удалить счётчик «${c.n||'без названия'}»?`)){S.counters.splice(+d.ctrdel,1);upd()}}
+  else if(d.rest) rest(d.rest);
+  else if(d.rest2){if(d.rest2==='heal'){S.heal=Math.min(4,(+S.heal||0)+1);S.stress=Math.max(0,S.stress-1)}else S.stress=Math.max(0,S.stress-2);upd();$('#restMsg').textContent=d.rest2==='heal'?'Передышка: +1 к лечению, −1 стресс':'Передышка: −2 стресса'}
+  else if(d.carddel){const c=S.cards[+d.carddel];if(!(c.t||c.x)||confirm(`Удалить карточку «${c.t||'без названия'}»?`)){S.cards.splice(+d.carddel,1);S.cardSel=Math.max(0,+d.carddel-1);upd()}}
+  else if(t.id==='addCard'){S.cards.push({t:'',x:''});S.cardSel=S.cards.length-1;upd();document.querySelector('.edt').focus()}
+  else if(d.cardsel){S.cardSel=+d.cardsel;upd()}
+  else if(d.prodmv){const c=S.prod.splice(+d.prodmv,1)[0];S.custom.push({n:c.n,l:c.l??1,qty:Math.max(1,c.q??1),take:0,base:true,sub:c.sub,note:c.note,open:c.open});upd()}
+  else if(d.proddel){const c=S.prod[+d.proddel];if(confirm(`Удалить «${c.n||'без названия'}»?`)){S.prod.splice(+d.proddel,1);upd()}}
+  else if(d.use){const pr=P(d.use);if(+pr.left>0){pr.left=+pr.left-1;upd()}}
+  else if(d.unitem){S.items=S.items.filter(x=>x!==d.unitem);S.base=S.base.filter(x=>x!==d.unitem);upd()}
+  else if(d.base){const b=d.base;if(b[0]==='u'){const c=S.custom[+b.slice(1)];c.base=!c.base}else S.base=S.base.includes(b)?S.base.filter(x=>x!==b):[...S.base,b];upd()}
+  else if(d.ctdel){const c=S.customTalents[+d.ctdel];if(!(c.n||c.x)||confirm(`Убрать талант «${c.n||'без названия'}»?`)){S.customTalents.splice(+d.ctdel,1);upd()}}
+  else if(d.cfr){const c=S.contacts[+d.cfr];c.rel=c.rel==='up'?'down':c.rel==='down'?'':'up';upd()}
+  else if(d.cfdel){S.contacts.splice(+d.cfdel,1);upd()}
+  else if(t.id==='addContact'){S.contacts.push({id:rid(),n:'',rel:''});upd();document.querySelector(`[data-cfn="${S.contacts.length-1}"]`).focus()}
+  else if(t.id==='addTrauma'){const n=(prompt('Название своей травмы')||'').trim();if(n&&!D.traumas.includes(n)&&!S.traumaExtra.includes(n)){S.traumaExtra.push(n);upd()}}
+  else if(d.untrauma){e.preventDefault();S.traumaExtra=S.traumaExtra.filter(x=>x!==d.untrauma);S.trauma=S.trauma.filter(x=>x!==d.untrauma);upd()}
+  else if(d.untalent){S.talents=S.talents.filter(t=>t!==d.untalent);upd()}
+  else if(d.friend){const c=S.friends[d.friend];S.friends[d.friend]=c==='up'?'down':c==='down'?'':'up';upd()}
+});
+document.addEventListener('change',e=>{
+  const d=e.target.dataset, tog=(arr,v)=>arr.includes(v)?arr.filter(x=>x!==v):[...arr,v];
+  if(d.trauma){S.trauma=tog(S.trauma,d.trauma);upd()}
+  if(e.target.id==='addTalent'&&e.target.value==='__custom'){S.customTalents.push({id:rid(),n:'',x:''});upd();document.querySelector(`[data-ctn="${S.customTalents.length-1}"]`).focus()}
+  else if(e.target.id==='addTalent'&&e.target.value){S.talents=[...S.talents,e.target.value];presetSync();upd()}
+  if(d.ctn){S.customTalents[+d.ctn].n=e.target.value;upd()}
+  if(d.ctx){S.customTalents[+d.ctx].x=e.target.value;upd()}
+  if(d.cfn){S.contacts[+d.cfn].n=e.target.value;upd()}
+  if(e.target.id==='addCtr'&&e.target.value){const v=e.target.value;if(v==='blank')S.counters.push({id:rid(),n:'',v:0,max:'',r:'day'});else S.counters.push(mkPreset(v.slice(2),0));upd();document.querySelector(`[data-ctrn="${S.counters.length-1}"]`).focus()}
+  if(e.target.id==='addItem'&&e.target.value){const v=e.target.value;if(v==='custom')S.custom.push({n:'',l:1});else S.items=[...S.items,v];upd()}
+  if(d.ctrn){S.counters[+d.ctrn].n=e.target.value;upd()}
+  if(d.ctrmax){const c=S.counters[+d.ctrmax];c.max=e.target.value===''?'':Math.max(0,+e.target.value);if(c.max!==''&&c.v>c.max)c.v=c.max;upd()}
+  if(d.ctrr){S.counters[+d.ctrr].r=e.target.value;upd()}
+  if(d.bandq){S.bandQ[+d.bandq]=e.target.value===''?'':+e.target.value;upd()}
+  if(d.band){S.bandolier[+d.band]=e.target.value;upd()}
+  if(d.cusn){S.custom[+d.cusn].n=e.target.value;upd()}
+  if(d.subn){const [k,j]=d.subn.split('|'),a=subArr(k,true),x=a[+j];a[+j]=typeof x==='object'&&x?{...x,n:e.target.value}:e.target.value;upd()}
+  if(d.subq){const [k,j]=d.subq.split('|'),a=subArr(k,true);a[+j]={n:subN(a[+j]),q:e.target.value===''?'':+e.target.value};upd()}
+  if(d.bookn){S.nameOv[d.bookn]=e.target.value;upd()}
+  if(d.bookl){S.loadOv[d.bookl]=+e.target.value||0;upd()}
+  if(d.bq){const id=d.bq,q=Math.max(1,+e.target.value||1);if(bQty(id)===1&&q>1)S.btake[id]=S.base.includes(id)?0:1;S.bqty[id]=q;S.btake[id]=Math.min(S.btake[id]||0,q);upd()}
+  if(d.bt){const id=d.bt;S.btake[id]=Math.max(0,Math.min(bQty(id),+e.target.value||0));upd()}
+  if(d.prodn){S.prod[+d.prodn].n=e.target.value;upd()}
+  if(d.prodv){S.prod[+d.prodv].v=e.target.value===''?'':+e.target.value;upd()}
+  if(d.prodq){S.prod[+d.prodq].q=Math.max(0,+e.target.value||0);upd()}
+  if(d.prodm){S.prod[+d.prodm].m=e.target.value===''?'':+e.target.value;upd()}
+  if(e.target.id==='addProd'&&e.target.value){const v=e.target.value;if(v==='new')S.prod.push({n:'',v:'',m:'',q:1});else{const c=S.custom.splice(+v.slice(1),1)[0],mm=/\s*\((\d+)\s*из\s*(\d+)\)/.exec(c.n||'');S.prod.push({n:mm?c.n.replace(mm[0],'').trim():c.n,v:mm?+mm[1]:'',m:mm?+mm[2]:'',q:c.qty||1,l:c.l,sub:c.sub,note:c.note,open:c.open})}upd()}
+  if(d.cusq){const c=S.custom[+d.cusq],q=Math.max(1,+e.target.value||1);if((c.qty||1)===1&&q>1)c.take=c.base?0:1;c.qty=q;c.take=Math.min(c.take||0,q);upd()}
+  if(d.cust){const c=S.custom[+d.cust];c.take=Math.max(0,Math.min(c.qty||1,+e.target.value||0));upd()}
+  if(d.cusl){S.custom[+d.cusl].l=+e.target.value||0;upd()}
+});
+
+
+// money: exchange buttons + two-way calculator (rate 20 small = 1 drachma)
+const RT=()=>Math.max(1,+S.rules.rate||1);
+$('#breakDr').onclick=()=>{if((+S.dr||0)>0){S.dr=+S.dr-1;S.drm=(+S.drm||0)+RT();upd()}};
+$('#joinDr').onclick=()=>{if((+S.drm||0)>=RT()){S.drm=+S.drm-RT();S.dr=(+S.dr||0)+1;upd()}};
+$('#cDr').oninput=e=>{$('#cDrm').value=e.target.value===''?'':+e.target.value*RT()};
+$('#cDrm').oninput=e=>{$('#cDr').value=e.target.value===''?'':+e.target.value/RT()};
+let noteKey=null;
+function openNote(k){noteKey=k;const name=itemName(k)||'Предмет',pr=P(k);$('#noteDlg [data-prop="q"]').placeholder='ранг '+R().tier;$('#noteArmor').value=armorOf(k);
+  document.querySelectorAll('#noteDlg [data-prop]').forEach(el=>{const v=pr[el.dataset.prop];if(el.type==='checkbox')el.checked=!!v;else el.value=v??''});
+  document.querySelectorAll('#noteDlg [data-flaw]').forEach(el=>el.checked=(pr.flaws||[]).includes(el.dataset.flaw));
+  $('#noteTitle').textContent=name;$('#propSum').textContent=propText(k);$('#propsPanel').hidden=true;$('#propsToggle').classList.remove('on');$('#propsToggle').textContent='⚙';$('#noteText').value=noteGet(k);const g=$('#noteDlg');g.showModal?g.showModal():g.setAttribute('open','');$('#noteText').focus()}
+$('#noteText').oninput=e=>{if(noteKey){noteSet(noteKey,e.target.value);save()}};
+// item properties in the ✎ dialog (same for book, own and workshop items)
+$('#noteDlg').addEventListener('input',e=>{if(!noteKey)return;const el=e.target,pr=P(noteKey);if(el.dataset.prop){pr[el.dataset.prop]=el.type==='checkbox'?el.checked:(el.type==='number'||el.dataset.prop==='q')?(el.value===''?'':+el.value):el.value;save()}$('#propSum').textContent=propText(noteKey);if(el.dataset.flaw){const f=new Set(pr.flaws||[]);el.checked?f.add(el.dataset.flaw):f.delete(el.dataset.flaw);pr.flaws=[...f];save()}});
+$('#propsToggle').onclick=()=>{const pp=$('#propsPanel');pp.hidden=!pp.hidden;$('#propsToggle').classList.toggle('on',!pp.hidden);$('#propsToggle').textContent=pp.hidden?'⚙':'−'};
+$('#noteArmor').oninput=e=>{if(!noteKey)return;const v=Math.max(0,+e.target.value||0);if(obj(noteKey))obj(noteKey).armor=v;else S.armorOv[noteKey]=v;save();$('#propSum').textContent=propText(noteKey)};
+$('#noteClose').onclick=()=>{const g=$('#noteDlg');g.close?g.close():g.removeAttribute('open');noteKey=null;render()};
+$('#noteDlg').addEventListener('close',()=>{noteKey=null;render()});
+// card edits save on every keystroke without re-render (keeps focus)
+document.addEventListener('input',e=>{const d=e.target.dataset;const li=k=>document.querySelector(`[data-cardsel="${k}"]`);if(d.cardt){S.cards[+d.cardt].t=e.target.value;save();li(d.cardt).querySelector('.ct').textContent=e.target.value||'без названия'}if(d.cardx){S.cards[+d.cardx].x=e.target.value;save();li(d.cardx).querySelector('.cp').textContent=(e.target.value.split('\n').find(l=>l.trim())||'пусто')}});
+// rests: day < downtime (also special armor) ; score resets armor boxes (load is chosen anew)
+function rest(kind){const kinds={day:['day'],downtime:['day','downtime'],score:['score']}[kind];if(kind==='day')S.day=(+S.day||0)+1;
+  const done=S.counters.filter(c=>kinds.includes(c.r)&&c.v).map(c=>c.n||'без названия');S.counters.forEach(c=>{if(kinds.includes(c.r))c.v=0});
+  if(kind==='score'&&Object.values(S.armorUsed).some(Boolean)){S.armorUsed={};done.push('доспех')}
+  upd();$('#restMsg').textContent=done.length?'Сброшено: '+done.join(', '):'Сбрасывать нечего';
+  if(kind==='downtime'&&R().rest2)$('#restMsg').insertAdjacentHTML('beforeend','<div class="row" style="margin-top:6px" id="rest2"><span>Передышка:</span><button data-rest2="heal">+1 лечение, −1 стресс</button><button data-rest2="stress">−2 стресса</button></div>')}
+// drag & drop reorder of counter cards (desktop HTML5 DnD; order kept in S.ctrOrder)
+let dragKey=null;const ctrsEl=$('#ctrs');
+ctrsEl.addEventListener('dragstart',e=>{const g=e.target.closest&&e.target.closest('[data-grip]');if(!g)return;dragKey=g.dataset.grip;const card=g.parentElement;card.classList.add('dragging');if(e.dataTransfer){e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',dragKey);if(e.dataTransfer.setDragImage)e.dataTransfer.setDragImage(card,14,14)}});
+ctrsEl.addEventListener('dragover',e=>{const z=e.target.closest&&e.target.closest('.dz');if(!z||!dragKey)return;e.preventDefault();ctrsEl.querySelectorAll('.over').forEach(x=>x.classList.remove('over'));z.classList.add('over')});
+ctrsEl.addEventListener('drop',e=>{const z=e.target.closest&&e.target.closest('.dz');if(!z||!dragKey)return;e.preventDefault();const tk=z.dataset.ckey;if(tk===dragKey){dragKey=null;render();return}const keys=[...ctrsEl.querySelectorAll('.dz')].map(x=>x.dataset.ckey).filter(k=>k!==dragKey);let at=keys.indexOf(tk);const r=z.getBoundingClientRect();if(e.clientY>r.top+r.height/2)at++;keys.splice(at,0,dragKey);S.ctrOrder=keys;dragKey=null;upd()});
+ctrsEl.addEventListener('dragend',()=>{dragKey=null;ctrsEl.querySelectorAll('.over,.dragging').forEach(x=>x.classList.remove('over','dragging'))});
+// settings page: data-r -> S.rules, data-ui -> S.tips
+document.addEventListener('change',e=>{const el=e.target;if(el.dataset.r){S.rules[el.dataset.r]=el.type==='checkbox'?el.checked:el.type==='number'?(+el.value||0):el.value;upd()}if(el.dataset.ui==='tips'){S.tips=el.checked;upd()}});
+// rulebook tab: local rulebook.js (window.RULEBOOK), full-text search, table of contents, page reader
+const RB=window.RULEBOOK||null,rbNorm=x=>x.toLowerCase().replace(/ё/g,'е');
+const rbPages=RB?RB.pages.map(pg=>({...pg,n:rbNorm(pg.t)})):[];
+let rbQ='',rbTimer=null;
+function rbHl(text,q){const n=rbNorm(text);if(!q)return esc(text);let out='',i=0,j;while((j=n.indexOf(q,i))>=0){out+=esc(text.slice(i,j))+'<mark>'+esc(text.slice(j,j+q.length))+'</mark>';i=j+q.length}return out+esc(text.slice(i))}
+function rbBody(pg){let html='',ul=false;const close=()=>{if(ul){html+='</ul>';ul=false}};
+  for(const l of pg.t.split('\n')){const toc=/^(.+?)[\s.]{3,}(\d{1,3})$/.exec(l);
+    if(l.startsWith('## ')){close();html+=`<h4>${rbHl(l.slice(3),rbQ)}</h4>`}
+    else if(toc&&/\.{3}/.test(l)){close();html+=`<a class="rbrow" data-rbp="${toc[2]}"><span>${rbHl(toc[1].replace(/[.\s]+$/,''),rbQ)}</span><i></i><span>${toc[2]}</span></a>`}
+    else if(l.startsWith('◆')){if(!ul){html+='<ul>';ul=true}html+=`<li>${rbHl(l.slice(1).trim(),rbQ)}</li>`}
+    else{close();html+=`<p>${rbHl(l,rbQ)}</p>`}}
+  close();return html}
+function rbShow(b){if(!RB)return;const pg=rbPages.find(x=>x.b===+b)||rbPages[0];S.rbPage=pg.b;save();$('#rbpage').value=pg.b;
+  const cur=RB.toc.filter(t=>t.p<=pg.p),ch=[...cur].reverse().find(t=>t.lvl===1),sec=cur[cur.length-1];
+  const lb=b=>b>0?'стр. '+b:'PDF '+(b+5),last=rbPages[rbPages.length-1].b;
+  const nav=`<div class="rbnav">${pg.p>1?`<button data-rbp="${pg.b-1}">← ${lb(pg.b-1)}</button>`:'<span></span>'}<span>${lb(pg.b)}${pg.b>0?' · PDF '+pg.p:''}</span>${pg.b<last?`<button data-rbp="${pg.b+1}">${lb(pg.b+1)} →</button>`:'<span></span>'}</div>`;
+  $('#rbtext').innerHTML=`<div class="rbpage"><div class="rbhead"><span>${ch?esc(ch.h):'Рулбук'}</span><span>${lb(pg.b)}</span></div>${rbBody(pg)}${nav}</div>`;
+  document.querySelectorAll('#rbside .rbt.cur').forEach(x=>x.classList.remove('cur'));
+  if(rbQ.length>=2){const h=document.querySelector(`#rbside .hit[data-rbp="${pg.b}"]`);if(h){h.classList.add('cur');if(h.scrollIntoView)h.scrollIntoView({block:'nearest'})}}
+  if(rbQ.length<2&&sec){const a=[...document.querySelectorAll('#rbside .rbt')].filter(x=>+x.dataset.rbp<=pg.b).pop();if(a){a.classList.add('cur');if(a.scrollIntoView)a.scrollIntoView({block:'nearest'})}}
+  const m=$('#rbtext mark');if(m&&m.scrollIntoView)m.scrollIntoView({block:'center'});else $('#rbtext').scrollTop=0}
+function rbSide(){if(!RB){$('#rbside').innerHTML='<div class="small">Нет файла <b>rulebook.js</b> рядом с бланком.</div>';return}
+  if(rbQ.length<2){$('#rbcount').textContent='';$('#rbside').innerHTML='<div class="small" style="margin-bottom:6px">Оглавление</div>'+RB.toc.map(t=>`<a class="rbt l${t.lvl}" data-rbp="${t.p-5}">${esc(t.h)}<span>${t.p-5>0?t.p-5:''}</span></a>`).join('');return}
+  const hits=[];for(const pg of rbPages){let i=pg.n.indexOf(rbQ),c=0,first=i;while(i>=0){c++;i=pg.n.indexOf(rbQ,i+rbQ.length)}if(c)hits.push({pg,c,first})}
+  $('#rbcount').textContent=hits.length?`страниц: ${hits.length}`:'ничего не найдено';
+  $('#rbside').innerHTML=hits.slice(0,200).map(({pg,c,first})=>{const a=Math.max(0,first-50),snip=(a?'…':'')+pg.t.slice(a,first+rbQ.length+70).replace(/\n## /g,' · ').replace(/\n/g,' ')+'…';
+    return `<a class="rbt hit" data-rbp="${pg.b}" tabindex="0" onclick="rbShow(${pg.b})"><b>стр. ${pg.b>0?pg.b:'PDF '+pg.p}</b>${c>1?` <span class="small">×${c}</span>`:''}<div class="small">${rbHl(snip,rbQ)}</div></a>`}).join('')}
+$('#rbq').oninput=e=>{clearTimeout(rbTimer);rbTimer=setTimeout(()=>{rbQ=rbNorm(e.target.value.trim());rbSide();const h=$('#rbside .hit');if(h)rbShow(h.dataset.rbp);else rbShow(S.rbPage)},180)};
+$('#rbside').addEventListener('click',e=>{const a=e.target.closest('[data-rbp]');if(a)rbShow(a.dataset.rbp)});
+$('#rbtext').addEventListener('click',e=>{const a=e.target.closest('[data-rbp]');if(a)rbShow(a.dataset.rbp)});
+$('#rbprev').onclick=()=>rbShow((+S.rbPage||1)-1);$('#rbnext').onclick=()=>rbShow((+S.rbPage||1)+1);
+$('#rbpage').onchange=e=>rbShow(e.target.value);
+rbSide();rbShow(S.rbPage??1);
+function planHTML(){const p=planOf(curCard());
+  const tools=[['sel','↖','выбор: двигать, растягивать, двойной щелчок — переименовать'],['room','▭','комната: тяни прямоугольник'],['wall','━','стена (Shift — ровно)'],['door','┅','дверь / проход (Shift — ровно)'],['pen','✎','карандаш'],['text','T','подпись'],['mark',PL.glyph,'метка']];
+  return `<div class="ptool"><span class="pfl">${p.floors.map((f,i)=>`<button class="${i===p.f?'on':''}" data-pfloor="${i}" title="двойной щелчок — переименовать или удалить">${esc(f.n)}</button>`).join('')}<button data-pfadd title="добавить этаж">+</button></span><i class="sep"></i>`+
+    tools.map(([k,ic,tip])=>`<button class="${PL.tool===k?'on':''}" data-ptool="${k}" title="${tip}">${esc(ic)}</button>`).join('')+
+    `<select data-pglyph title="значок метки">${['✕','!','?','●','★','☠','⚑'].map(g=>`<option${g===PL.glyph?' selected':''}>${g}</option>`).join('')}</select><i class="sep"></i>`+
+    `<button data-pundo title="отменить (Ctrl+Z)">⟲</button><button data-pdel title="удалить выделенное (Delete)">🗑</button><button data-pzoom="1.25" title="приблизить">+</button><button data-pzoom="0.8" title="отдалить">−</button><button data-pfit title="показать всё">⤢</button><i class="sep"></i>`+
+    `<button data-pfromtext title="создать этажи и комнаты из заголовков текста: [ Этаж ] и [[ Комната ]]">из текста</button><button data-ppng title="сохранить этаж картинкой PNG">PNG</button></div>`+
+    `<div class="pwrap"><svg id="planSvg" tabindex="0"></svg></div><div id="pinfo" class="small"></div>`}
+// notes: floor-plan editor (SVG shapes per card and floor) + images (paste / upload / drop)
+const PL={tool:'sel',glyph:'✕',sel:null,undo:[],drag:null,ck:null},GRID=20,snap=(v,g=GRID)=>Math.round(v/g)*g;
+const curIdx=()=>Math.min(S.cardSel||0,Math.max(0,S.cards.length-1)),curCard=()=>S.cards[curIdx()];
+const planOf=c=>c.plan??={f:0,floors:[{n:'1 этаж',s:[]}],v:{x:40,y:40,z:1}};
+const floorOf=p=>p.floors[Math.min(p.f,p.floors.length-1)];
+function pal(){const cs=getComputedStyle(document.documentElement),g=n=>cs.getPropertyValue(n).trim()||'#888';
+  return{bg:g('--panel'),line:g('--line'),ink:g('--ink'),dim:g('--dim'),acc:g('--acc'),red:g('--red'),font:getComputedStyle(document.body).fontFamily}}
+function shBox(s){if(s.k==='r'||s.k==='i')return{x:s.x,y:s.y,w:s.w,h:s.h};
+  if(s.k==='l')return{x:Math.min(s.x1,s.x2),y:Math.min(s.y1,s.y2),w:Math.abs(s.x2-s.x1),h:Math.abs(s.y2-s.y1)};
+  if(s.k==='p'){const xs=s.pts.map(q=>q[0]),ys=s.pts.map(q=>q[1]),x=Math.min(...xs),y=Math.min(...ys);return{x,y,w:Math.max(...xs)-x,h:Math.max(...ys)-y}}
+  if(s.k==='t'){const w=(s.t||'').length*8;return{x:s.x,y:s.y-14,w,h:18}}
+  return{x:s.x-12,y:s.y-12,w:24,h:24}}
+function allBox(list){const b=list.map(shBox),x=Math.min(...b.map(q=>q.x)),y=Math.min(...b.map(q=>q.y));
+  return{x,y,w:Math.max(...b.map(q=>q.x+q.w))-x,h:Math.max(...b.map(q=>q.y+q.h))-y}}
+function shMove(s,o,dx,dy){if('x1'in o){s.x1=o.x1+dx;s.x2=o.x2+dx;s.y1=o.y1+dy;s.y2=o.y2+dy}
+  else if(o.pts)s.pts=o.pts.map(q=>[q[0]+dx,q[1]+dy]);else{s.x=o.x+dx;s.y=o.y+dy}}
+function shSvg(s,i,P,on,z){const F=`font-family="${esc(P.font)}"`;let h='';
+  if(s.k==='i')h=`<image href="${s.src}" x="${s.x}" y="${s.y}" width="${s.w}" height="${s.h}" preserveAspectRatio="none"/>`;
+  else if(s.k==='r')h=`<rect x="${s.x}" y="${s.y}" width="${s.w}" height="${s.h}" fill="${P.acc}" fill-opacity=".08" stroke="${P.ink}" stroke-width="2"/>`+
+    (s.t?`<text x="${s.x+s.w/2}" y="${s.y+s.h/2}" text-anchor="middle" dominant-baseline="middle" fill="${P.ink}" font-size="14" ${F}>${esc(s.t)}</text>`:'');
+  else if(s.k==='l'){const a=`x1="${s.x1}" y1="${s.y1}" x2="${s.x2}" y2="${s.y2}"`;
+    h=`<line ${a} stroke="transparent" stroke-width="14"/><line ${a} stroke="${s.d?P.acc:P.ink}" stroke-width="${s.d?3:5}" stroke-linecap="round"${s.d?' stroke-dasharray="7 6"':''}/>`}
+  else if(s.k==='p'){const pts=s.pts.map(q=>q.join(',')).join(' ');
+    h=`<polyline points="${pts}" fill="none" stroke="transparent" stroke-width="12"/><polyline points="${pts}" fill="none" stroke="${P.red}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`}
+  else if(s.k==='t')h=`<text x="${s.x}" y="${s.y}" fill="${P.ink}" font-size="15" ${F}>${esc(s.t)}</text>`;
+  else if(s.k==='m')h=`<circle cx="${s.x}" cy="${s.y}" r="12" fill="${P.bg}" stroke="${P.red}" stroke-width="2"/><text x="${s.x}" y="${s.y+1}" text-anchor="middle" dominant-baseline="middle" fill="${P.red}" font-size="14" font-weight="bold">${esc(s.g)}</text>`+
+    (s.t?`<text x="${s.x}" y="${s.y+28}" text-anchor="middle" fill="${P.ink}" font-size="12" ${F}>${esc(s.t)}</text>`:'');
+  if(on){const b=shBox(s),q=6/z;h+=`<rect x="${b.x-q}" y="${b.y-q}" width="${b.w+2*q}" height="${b.h+2*q}" fill="none" stroke="${P.acc}" stroke-width="${1.5/z}" stroke-dasharray="${5/z} ${4/z}"/>`;
+    if(s.k==='r'||s.k==='i')h+=`<rect data-h="${i}" x="${s.x+s.w-6/z}" y="${s.y+s.h-6/z}" width="${12/z}" height="${12/z}" fill="${P.acc}" style="cursor:nwse-resize"/>`}
+  return `<g data-i="${i}">${h}</g>`}
+const gridDef=P=>`<defs><pattern id="pg" width="${GRID}" height="${GRID}" patternUnits="userSpaceOnUse"><path d="M${GRID} 0H0V${GRID}" fill="none" stroke="${P.line}" stroke-width=".7"/></pattern></defs>`;
+function planDraw(){const svg=$('#planSvg'),c=curCard();if(!svg||!c)return;const p=planOf(c),v=p.v,P=pal();
+  svg.classList.toggle('sel',PL.tool==='sel');
+  svg.innerHTML=gridDef(P)+`<g transform="translate(${v.x} ${v.y}) scale(${v.z})"><rect x="-5000" y="-5000" width="10000" height="10000" fill="url(#pg)"/>`+
+    floorOf(p).s.map((s,i)=>shSvg(s,i,P,i===PL.sel,v.z)).join('')+'</g>';planInfo()}
+// text under a "[[ Room ]]" heading, up to the next [ … ] / [[ … ]] heading
+function roomText(c,name){const L=(c.x||'').split('\n'),h=new RegExp('^\\s*\\[\\[\\s*'+name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*\\]\\]\\s*$','i'),i=L.findIndex(l=>h.test(l));
+  if(i<0)return null;const out=[];for(const l of L.slice(i+1)){if(/^\s*\[.*\]\s*$/.test(l))break;out.push(l)}return out.join('\n').trim()}
+function planInfo(){const el=$('#pinfo'),c=curCard();if(!el||!c)return;const s=PL.sel!=null&&floorOf(planOf(c)).s[PL.sel];
+  if(s&&s.k==='r'&&s.t){const t=roomText(c,s.t);el.innerHTML=`<b>${esc(s.t)}</b>${t==null?' · в тексте нет заголовка [[ '+esc(s.t)+' ]]':t?': '+esc(t):' · описания пока нет'} <button data-pgotext="${esc(s.t)}">в тексте →</button>`;return}
+  el.textContent='Тяни пустое место — двигать план · колесо — масштаб · двойной щелчок — переименовать · Delete — удалить · Ctrl+Z — отменить · Ctrl+V — вставить картинку'}
+function planPush(){const p=planOf(curCard());PL.undo.push(JSON.stringify(p.floors));if(PL.undo.length>60)PL.undo.shift()}
+function planUndo(){const p=planOf(curCard()),u=PL.undo.pop();if(!u)return;p.floors=JSON.parse(u);p.f=Math.min(p.f,p.floors.length-1);PL.sel=null;upd()}
+function planDel(){const f=floorOf(planOf(curCard()));if(PL.sel==null||!f.s[PL.sel])return;planPush();f.s.splice(PL.sel,1);PL.sel=null;save();planDraw()}
+function planZoom(k,mx,my){const svg=$('#planSvg'),v=planOf(curCard()).v;if(!svg)return;mx??=svg.clientWidth/2;my??=svg.clientHeight/2;
+  const z=Math.min(5,Math.max(.15,v.z*k));v.x=mx-(mx-v.x)*z/v.z;v.y=my-(my-v.y)*z/v.z;v.z=z;planDraw();clearTimeout(PL.zt);PL.zt=setTimeout(save,400)}
+function planFit(){const svg=$('#planSvg'),p=planOf(curCard()),f=floorOf(p);if(!svg)return;
+  if(!f.s.length){p.v={x:40,y:40,z:1}}else{const b=allBox(f.s),W=svg.clientWidth||800,H=svg.clientHeight||500,z=Math.min(1.5,Math.max(.15,Math.min((W-60)/Math.max(b.w,1),(H-60)/Math.max(b.h,1))));
+    p.v={z,x:(W-b.w*z)/2-b.x*z,y:(H-b.h*z)/2-b.y*z}}save();planDraw()}
+function planFromText(){const c=curCard(),p=planOf(c);planPush();let fi=null,added=0;const want=new Map();
+  for(const l of (c.x||'').split('\n')){let m;
+    if((m=/^\s*\[\[\s*(.+?)\s*\]\]\s*$/.exec(l))){fi??=p.f;if(!want.has(fi))want.set(fi,[]);want.get(fi).push(m[1])}
+    else if((m=/^\s*\[\s*(.+?)\s*\]\s*$/.exec(l))){let i=p.floors.findIndex(f=>f.n.toLowerCase()===m[1].toLowerCase());
+      if(i<0){if(p.floors.length===1&&!p.floors[0].s.length&&p.floors[0].n==='1 этаж'&&!want.size){p.floors[0].n=m[1];i=0}else{p.floors.push({n:m[1],s:[]});i=p.floors.length-1}}fi=i}}
+  for(const [i,names] of want){const f=p.floors[i],have=new Set(f.s.filter(s=>s.k==='r').map(s=>(s.t||'').toLowerCase()));
+    const y0=f.s.length?allBox(f.s).y+allBox(f.s).h+40:0;let n=0;
+    for(const t of names){if(have.has(t.toLowerCase()))continue;have.add(t.toLowerCase());f.s.push({k:'r',x:(n%4)*200,y:y0+Math.floor(n/4)*140,w:180,h:120,t});n++;added++}}
+  if(!added&&!want.size){PL.undo.pop();alert('В тексте нет заголовков. Пиши этажи как [ Первый этаж ], комнаты как [[ Кабинет ]] — каждый на своей строке.');return}
+  PL.sel=null;upd();planFit();$('#pinfo').textContent=added?`Добавлено комнат: ${added}. Растяни и расставь их как надо.`:'Все комнаты из текста уже есть на плане.'}
+function planPng(){const c=curCard(),p=planOf(c),f=floorOf(p),P=pal();if(!f.s.length){alert('План пуст');return}
+  const b=allBox(f.s),pad=30,x=b.x-pad,y=b.y-pad,w=b.w+2*pad,h=b.h+2*pad,sc=2;
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w*sc}" height="${h*sc}" viewBox="${x} ${y} ${w} ${h}">${gridDef(P)}<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${P.bg}"/><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="url(#pg)"/>${f.s.map((s,i)=>shSvg(s,i,P,false,1)).join('')}</svg>`;
+  const im=new Image();im.onload=()=>{const cv=document.createElement('canvas');cv.width=w*sc;cv.height=h*sc;cv.getContext('2d').drawImage(im,0,0);
+    const a=document.createElement('a');a.download=`${c.t||'план'} - ${f.n}.png`.replace(/[\\/:*?"<>|]/g,'_');a.href=cv.toDataURL('image/png');a.click()};
+  im.onerror=()=>alert('Не удалось сохранить картинку');im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}
+function planMount(){const svg=$('#planSvg'),ci=curIdx();if(!svg)return;if(PL.ck!==ci){PL.ck=ci;PL.sel=null;PL.undo=[]}planDraw();
+  const W=e=>{const r=svg.getBoundingClientRect(),v=planOf(curCard()).v;return[(e.clientX-r.left-v.x)/v.z,(e.clientY-r.top-v.y)/v.z]};
+  svg.onpointerdown=e=>{if(e.button>0)return;svg.focus();const f=floorOf(planOf(curCard())),[x,y]=W(e),hd=e.target.closest('[data-h]'),g=e.target.closest('[data-i]');
+    const t=PL.tool==='sel'||(e.target.closest('[data-h]')&&PL.tool!=='pen')?'sel':PL.tool;
+    if(t==='sel'){if(hd){planPush();const i=+hd.dataset.h;PL.drag={k:'size',i,o:{...f.s[i]}}}
+      else if(g){PL.sel=+g.dataset.i;planPush();PL.drag={k:'move',i:PL.sel,x,y,o:JSON.parse(JSON.stringify(f.s[PL.sel]))}}
+      else{PL.sel=null;const v=planOf(curCard()).v;PL.drag={k:'pan',cx:e.clientX,cy:e.clientY,vx:v.x,vy:v.y}}}
+    else if(t==='text'||t==='mark'){const txt=t==='text'?prompt('Подпись:'):'';if(t==='text'&&!txt)return;planPush();
+      f.s.push(t==='text'?{k:'t',x:snap(x,5),y:snap(y,5),t:txt}:{k:'m',x:snap(x,5),y:snap(y,5),g:PL.glyph,t:''});PL.sel=f.s.length-1;save();planDraw();return}
+    else{planPush();const s=t==='room'?{k:'r',x:snap(x),y:snap(y),w:0,h:0,t:''}:t==='pen'?{k:'p',pts:[[Math.round(x),Math.round(y)]]}:{k:'l',d:t==='door'?1:0,x1:snap(x),y1:snap(y),x2:snap(x),y2:snap(y)};
+      f.s.push(s);PL.drag={k:'new',s,x0:snap(x),y0:snap(y)}}
+    try{svg.setPointerCapture(e.pointerId)}catch{}planDraw()};
+  svg.onpointermove=e=>{const d=PL.drag;if(!d)return;const p=planOf(curCard()),f=floorOf(p),[x,y]=W(e);
+    if(d.k==='pan'){p.v.x=d.vx+e.clientX-d.cx;p.v.y=d.vy+e.clientY-d.cy}
+    else if(d.k==='move'){const s=f.s[d.i],st=s.k==='r'||s.k==='l'?GRID:5;shMove(s,d.o,snap(x-d.x,st),snap(y-d.y,st))}
+    else if(d.k==='size'){const s=f.s[d.i];s.w=Math.max(GRID,s.k==='i'?Math.round(x-s.x):snap(x)-s.x);s.h=s.k==='i'?Math.round(s.w*d.o.h/d.o.w):Math.max(GRID,snap(y)-s.y)}
+    else{const s=d.s;if(s.k==='r'){const X=snap(x),Y=snap(y);s.x=Math.min(d.x0,X);s.y=Math.min(d.y0,Y);s.w=Math.abs(X-d.x0);s.h=Math.abs(Y-d.y0)}
+      else if(s.k==='l'){let X=snap(x),Y=snap(y);if(e.shiftKey){if(Math.abs(X-s.x1)>Math.abs(Y-s.y1))Y=s.y1;else X=s.x1}s.x2=X;s.y2=Y}
+      else{const q=s.pts[s.pts.length-1];if(Math.hypot(x-q[0],y-q[1])>2)s.pts.push([Math.round(x),Math.round(y)])}}
+    planDraw()};
+  svg.onpointerup=svg.onpointercancel=()=>{const d=PL.drag;PL.drag=null;if(!d)return;const f=floorOf(planOf(curCard()));
+    if(d.k==='new'){const s=d.s,tiny=s.k==='r'?s.w<GRID||s.h<GRID:s.k==='l'?s.x1===s.x2&&s.y1===s.y2:s.pts.length<2;
+      if(tiny){f.s.pop();PL.undo.pop()}else{PL.sel=f.s.length-1;if(s.k==='r'){const t=prompt('Название комнаты (можно оставить пустым):','');if(t)s.t=t.trim()}}}
+    else if((d.k==='move'||d.k==='size')&&JSON.stringify(f.s[d.i])===JSON.stringify(d.o))PL.undo.pop();
+    save();planDraw()};
+  svg.onwheel=e=>{e.preventDefault();const r=svg.getBoundingClientRect();planZoom(e.deltaY<0?1.12:1/1.12,e.clientX-r.left,e.clientY-r.top)};
+  svg.ondblclick=e=>{const g=e.target.closest('[data-i]');if(!g)return;const f=floorOf(planOf(curCard())),s=f.s[+g.dataset.i];
+    if(!['r','t','m'].includes(s.k))return;const t=prompt(s.k==='m'?'Подпись к метке:':'Название:',s.t||'');if(t==null)return;
+    planPush();if(s.k==='t'&&!t.trim())f.s.splice(+g.dataset.i,1);else s.t=t.trim();PL.sel=null;save();planDraw()}}
+document.addEventListener('keydown',e=>{if($('#coins').hidden||S.cardMode!=='plan'||!$('#planSvg'))return;const a=document.activeElement;if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))return;
+  if((e.ctrlKey||e.metaKey)&&e.code==='KeyZ'){e.preventDefault();planUndo()}else if(e.key==='Delete'||e.key==='Backspace'){if(PL.sel!=null){e.preventDefault();planDel()}}
+  else if(e.key==='Escape'){PL.sel=null;PL.tool='sel';render()}});
+// images: shrink to ≤1600 px WebP (JPEG fallback) so localStorage holds more of them
+function imgShrink(file,max=1600){return new Promise((res,rej)=>{const u=URL.createObjectURL(file),im=new Image();
+  im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height)),w=Math.round(im.width*k),h=Math.round(im.height*k),cv=document.createElement('canvas');
+    cv.width=w;cv.height=h;cv.getContext('2d').drawImage(im,0,0,w,h);URL.revokeObjectURL(u);let src=cv.toDataURL('image/webp',.8);
+    if(!src.startsWith('data:image/webp'))src=cv.toDataURL('image/jpeg',.82);res({src,w,h})};
+  im.onerror=()=>{URL.revokeObjectURL(u);rej()};im.src=u})}
+async function addImages(files){const c=curCard();if(!c)return;let n=0;
+  for(const file of files){if(!/^image\//.test(file.type))continue;let r;try{r=await imgShrink(file)}catch{alert('Не удалось прочитать картинку');continue}
+    if(S.cardMode==='plan'){const p=planOf(c),f=floorOf(p),svg=$('#planSvg'),Wd=svg?.clientWidth||800,Hd=svg?.clientHeight||500,v=p.v;
+      const k=Math.min(1,Wd*.6/v.z/r.w,Hd*.6/v.z/r.h),w=Math.round(r.w*k),h=Math.round(r.h*k);planPush();
+      f.s.unshift({k:'i',x:Math.round((Wd/2-v.x)/v.z-w/2),y:Math.round((Hd/2-v.y)/v.z-h/2),w,h,src:r.src});PL.sel=0;PL.tool='sel'}
+    else(c.imgs??=[]).push(r.src);n++}
+  if(n)upd()}
+let imgIdx=null;
+document.addEventListener('click',e=>{const t=e.target.closest('button,img,select');if(!t)return;const d=t.dataset;
+  if(d.cardmode){S.cardMode=d.cardmode;PL.sel=null;upd()}
+  else if(d.imgadd!=null)$('#imgFile').click();
+  else if(d.imgview!=null){imgIdx=+d.imgview;$('#imgBig').src=curCard().imgs[imgIdx];const g=$('#imgDlg');g.showModal?g.showModal():g.setAttribute('open','')}
+  else if(d.ptool){PL.tool=d.ptool;if(d.ptool!=='sel')PL.sel=null;render()}
+  else if(d.pfloor!=null&&e.detail<2){const p=planOf(curCard());if(p.f!==+d.pfloor){p.f=+d.pfloor;PL.sel=null;PL.undo=[];upd()}}
+  else if(d.pfadd!=null){const p=planOf(curCard());p.floors.push({n:`${p.floors.length+1} этаж`,s:[]});p.f=p.floors.length-1;PL.sel=null;PL.undo=[];upd()}
+  else if(d.pundo!=null)planUndo();else if(d.pdel!=null)planDel();else if(d.pzoom)planZoom(+d.pzoom);else if(d.pfit!=null)planFit();
+  else if(d.pfromtext!=null)planFromText();else if(d.ppng!=null)planPng();
+  else if(d.pgotext){const c=curCard(),L=(c.x||'').split('\n'),i=L.findIndex(l=>new RegExp('^\\s*\\[\\[\\s*'+d.pgotext.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*\\]\\]','i').test(l));
+    S.cardMode='text';upd();const ta=$('.edx');if(ta&&i>=0){const at=L.slice(0,i).join('\n').length+(i?1:0);ta.focus();ta.setSelectionRange(at,at+L[i].length);ta.scrollTop=Math.max(0,i*parseFloat(getComputedStyle(ta).lineHeight||'22')-40)}}});
+document.addEventListener('dblclick',e=>{const b=e.target.closest('[data-pfloor]');if(!b)return;const p=planOf(curCard()),i=+b.dataset.pfloor,f=p.floors[i];
+  const n=prompt('Название этажа (пусто — удалить этаж):',f.n);if(n==null)return;
+  if(n.trim())f.n=n.trim();else if(p.floors.length>1&&(!f.s.length||confirm(`Удалить этаж «${f.n}» со всем, что на нём нарисовано?`))){p.floors.splice(i,1);p.f=Math.max(0,Math.min(p.f,p.floors.length-1));PL.undo=[]}
+  PL.sel=null;upd()});
+document.addEventListener('change',e=>{if(e.target.dataset.pglyph!=null){PL.glyph=e.target.value;PL.tool='mark';render()}});
+$('#imgFile').onchange=e=>{addImages([...e.target.files]);e.target.value=''};
+document.addEventListener('paste',e=>{if($('#coins').hidden||!S.cards.length)return;
+  const fs=[...(e.clipboardData?.items||[])].filter(i=>i.kind==='file'&&/^image\//.test(i.type)).map(i=>i.getAsFile()).filter(Boolean);if(!fs.length)return;e.preventDefault();addImages(fs)});
+document.addEventListener('dragover',e=>{if(e.target.closest&&e.target.closest('#cardEd')&&[...(e.dataTransfer?.types||[])].includes('Files'))e.preventDefault()});
+document.addEventListener('drop',e=>{if(!(e.target.closest&&e.target.closest('#cardEd'))||!e.dataTransfer?.files?.length)return;e.preventDefault();addImages([...e.dataTransfer.files])});
+$('#imgClose').onclick=()=>{const g=$('#imgDlg');g.close?g.close():g.removeAttribute('open')};
+$('#imgDel').onclick=()=>{const c=curCard();if(imgIdx==null||!confirm('Удалить картинку?'))return;c.imgs.splice(imgIdx,1);if(!c.imgs.length)delete c.imgs;imgIdx=null;$('#imgClose').click();upd()};
+// file io
+$('#export').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download=(S.name||'умелец')+'.json';a.click()};
+$('#import').onchange=e=>{const f=e.target.files[0];if(!f)return;if(!confirm('Заменить текущего персонажа данными из файла? Текущий сохранится в резервную копию (⚙ → Восстановить).')){e.target.value='';return}f.text().then(t=>{try{const n=loadRaw(t);backup();S=n;save();location.reload()}catch{alert('Не удалось прочитать файл')}})};
+$('#reset').onclick=()=>{if(confirm('Очистить бланк? Текущий персонаж сохранится в резервную копию (⚙ → Восстановить).')){backup();S=fresh();save();location.reload()}};
+$('#restoreBackup').onclick=()=>{let b;try{b=JSON.parse(localStorage.getItem(KEY+'-backup')||'null')}catch{}if(!b){alert('Резервной копии нет');return}if(confirm(`Восстановить копию от ${b.at}? Текущий персонаж станет новой резервной копией.`)){const cur=S;S=loadRaw(JSON.stringify(b.data));localStorage.setItem(KEY+'-backup',JSON.stringify({at:new Date().toLocaleString('ru'),data:cur}));save();location.reload()}};
+$('#tipsBtn').onclick=()=>{S.tips=!S.tips;upd()};
+function showTab(t){if(t==='rulebook'&&typeof rbShow==='function')setTimeout(()=>rbShow(S.rbPage??1));for(const id of ['sheet','gear','prod','coins','bio','settings','rulebook']) document.getElementById(id).hidden=id!==t;
+  document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));try{localStorage.setItem(KEY+'-tab',t)}catch{}}
+let tab0='sheet';try{tab0=localStorage.getItem(KEY+'-tab')||'sheet'}catch{}
+render();showTab(tab0);
+</script>
+</body>
+</html>

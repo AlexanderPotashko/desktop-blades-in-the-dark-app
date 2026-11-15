@@ -1,0 +1,10 @@
+# Rulebook text and PDFs are copyrighted: personal use only, never published.
+# rulebook.js is built locally: python tools/mkrulebook.py rulebook.txt rulebook.js
+*.pdf
+rulebook.txt
+rulebook.js
+
+# Our home game: characters, GM rulings, images, player-assistant instructions
+private-game/
+CLAUDE.md
+AGENTS.md
