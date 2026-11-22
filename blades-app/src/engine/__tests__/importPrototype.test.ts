@@ -243,7 +243,7 @@ describe('importPrototype: reference character', () => {
 
   it('rules: the table settings', () => {
     expect(rules).toMatchObject({
-      mode: 'custom', stress: { book: true, boxes: 9 }, playbookXpBoxes: 16, load: true, bandolier: 'own-items',
+      mode: 'custom', stress: { book: true, boxes: 9 }, playbookXpBoxes: 16, specialArmor: 'shared', load: true, bandolier: 'own-items',
       presets: 'book+own', dayCounter: true, skillStage: 'free', crewTier: 0, foreignTalentCost: 1,
       talentPresets: { venomous: { name: 'Производство анестезии за день', reset: 'day', hint: P.TALENT_PRESETS['Ядовитость'].h } },
     });

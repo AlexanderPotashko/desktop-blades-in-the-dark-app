@@ -12,6 +12,7 @@ export function effectiveRules(r: TableRules): TableRules {
     money: { ...r.money, book: true },
     stress: { ...r.stress, book: true },
     playbookXpBoxes: 8,
+    specialArmor: 'shared',
     load: true,
     bandolier: 'book',
     presets: 'book',

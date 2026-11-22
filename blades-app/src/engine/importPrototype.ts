@@ -25,7 +25,7 @@ const str = (v: unknown): string => (v == null ? '' : String(v));
 const empty = (v: unknown) => v === '' || v == null;
 
 // prototype fresh() and OUR_RULES, verbatim
-const freshRules = () => ({ mode: 'book', money: true, stress: true, carry: true, band: true, presets: true, day: false, rest2: false, major: 'Драхмы', minor: 'Драхмёныши', rate: 20, stressN: 9, talentXP: 8, stage: 'creation', tier: 0 });
+const freshRules = () => ({ mode: 'book', money: true, stress: true, carry: true, specOne: true, band: true, presets: true, day: false, rest2: false, major: 'Драхмы', minor: 'Драхмёныши', rate: 20, stressN: 9, talentXP: 8, stage: 'creation', tier: 0 });
 const OUR_RULES = { mode: 'custom', money: false, stress: true, band: false, presets: false, day: true, rest2: true, major: 'Драхмы', minor: 'Драхмёныши', rate: 20, stressN: 9, stage: 'free', tier: 0 };
 const fresh = (): Raw => ({
   name: '', alias: '', look: '', bioNote: '', heritage: '', heritageNote: '', background: '', backgroundNote: '', vice: '', viceNote: '',
@@ -317,6 +317,7 @@ export function importPrototype(input: unknown, opts: { playbookId?: string } = 
     money: { book: !!R.money, major: str(R.major), minor: str(R.minor), rate: int(R.rate, 'rules.rate', 1, 1) },
     stress: { book: !!R.stress, boxes: int(R.stressN, 'rules.stressN', 9, 1, 20) },
     playbookXpBoxes: int(R.talentXP, 'rules.talentXP', 8, 1, 40),
+    specialArmor: R.specOne === false ? 'per-talent' : 'shared',
     load: !!R.carry,
     bandolier: R.band ? 'book' : 'own-items',
     presets: R.presets ? 'book' : 'book+own',
@@ -347,6 +348,7 @@ export function importPrototype(input: unknown, opts: { playbookId?: string } = 
     stress: int(S.stress, 'stress', 0), trauma, customTraumas,
     harm: { l3: str(S.h3), l2: [str(S.h2a), str(S.h2b)], l1: [str(S.h1a), str(S.h1b)] },
     healing: int(S.heal, 'heal', 0, 0, 4), armorUsed, specialArmorUsed,
+    specialArmorShared: S.specUsed === undefined ? Object.values(specialArmorUsed).some(Boolean) : !!S.specUsed,
     money: { coins: int(S.coin, 'coin', 0, 0, 4), stash: int(S.stash, 'stash', 0, 0, 40), major: int(S.dr, 'dr', 0), minor: int(S.drm, 'drm', 0) },
     load: load ?? 'light',
     items: [...bookGear, ...ownGear, ...extraItems, ...workshop],

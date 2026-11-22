@@ -4,7 +4,7 @@ export type RestKind = 'day' | 'downtime' | 'score';
 
 const RESETS: Record<RestKind, CounterReset[]> = { day: ['day'], downtime: ['day', 'downtime'], score: ['score'] };
 
-/** New document plus what was reset (counter ids with a value, special-armor talents, armor). */
+/** New document plus what was reset (counter ids with a value, special armor: '*' for the shared box or talent ids, armor). */
 export interface RestResult { doc: Character; counters: string[]; specialArmor: string[]; armor: boolean }
 
 /**
@@ -14,13 +14,14 @@ export interface RestResult { doc: Character; counters: string[]; specialArmor: 
 export function rest(doc: Character, kind: RestKind): RestResult {
   const kinds = RESETS[kind];
   const counters = doc.counters.filter(c => kinds.includes(c.reset) && c.value > 0).map(c => c.id);
-  const specialArmor = kind === 'downtime' ? Object.keys(doc.specialArmorUsed).filter(k => doc.specialArmorUsed[k]) : [];
+  const specialArmor = kind !== 'downtime' ? [] : [...(doc.specialArmorShared ? ['*'] : []), ...Object.keys(doc.specialArmorUsed).filter(k => doc.specialArmorUsed[k])];
   const armor = kind === 'score' && Object.values(doc.armorUsed).some(Boolean);
   return {
     doc: {
       ...doc,
       day: kind === 'day' ? doc.day + 1 : doc.day,
       counters: doc.counters.map(c => (kinds.includes(c.reset) ? { ...c, value: 0 } : c)),
+      specialArmorShared: kind === 'downtime' ? false : doc.specialArmorShared,
       specialArmorUsed: kind === 'downtime' ? {} : doc.specialArmorUsed,
       armorUsed: kind === 'score' ? {} : doc.armorUsed,
     },

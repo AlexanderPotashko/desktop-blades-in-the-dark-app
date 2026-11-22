@@ -80,35 +80,47 @@ check('2. clicking a skill dot changes S.actions and the attribute display', () 
 });
 
 // ---------- 3. Стойкость special armor plate ----------
-check('3. Стойкость: plate in #specs, toggled by click, cleared by Передышка', () => {
+check('3. special armor: one shared box (book), per-talent boxes in house rules, cleared by Передышка', () => {
   const { $, $$, click, change, state, errors } = base;
   change($('#addTalent'), 'Стойкость');
-  assert.ok(state().talents.includes('Стойкость'), 'talent not added');
-  const box = $('#specs [data-spec="Стойкость"]');
-  assert.ok(box, '#specs has no [data-spec] box for Стойкость');
-  assert.ok(box.classList.contains('box'), 'data-spec element should be the .box');
+  change($('#addTalent'), 'Изворотливость');
+  assert.equal($$('#prot [data-spec]').length, 1, 'book: exactly one special-armor box for all talents');
+  const box = $('#prot [data-spec="*"]');
+  assert.match(box.parentElement.textContent, /Стойкость, Изворотливость/, 'box should list its talents');
   click(box);
-  assert.equal(state().spec['Стойкость'], true, 'S.spec not set');
-  assert.ok($('#specs [data-spec="Стойкость"]').classList.contains('on'), 'box not drawn on');
+  assert.equal(state().specUsed, true, 'S.specUsed not set');
+  assert.ok($('#prot [data-spec="*"]').classList.contains('on'), 'box not drawn on');
   click($('[data-rest="downtime"]'));
-  assert.ok(!state().spec['Стойкость'], 'Передышка did not clear S.spec');
-  assert.equal($('#specs [data-spec="Стойкость"]').classList.contains('on'), false, 'box still on after rest');
-  assert.match($('#restMsg').textContent, /Стойкость/, 'rest message should name the cleared armor');
-  assert.deepEqual(errors, []);
+  assert.equal(state().specUsed, false, 'Передышка did not clear special armor');
+  assert.match($('#restMsg').textContent, /особая защита/);
+  const o = open({ talents: ['Стойкость', 'Изворотливость'], rules: { mode: 'custom', specOne: false } });
+  assert.equal(o.$$('#prot [data-spec]').length, 2, 'house rule: one box per talent');
+  o.click(o.$('#prot [data-spec="Стойкость"]'));
+  assert.equal(o.state().spec['Стойкость'], true);
+  assert.deepEqual(errors, []); assert.deepEqual(o.errors, []);
 });
 
 // ---------- 4. legacy migration of special armor counter ----------
-check('4. legacy Стойкость counter migrates to S.spec', () => {
+check('4. legacy Стойкость counter migrates into the shared special-armor box', () => {
   const seed = {
     talents: ['Стойкость'],
     counters: [{ id: 'x', n: 'Стойкость (особая защита)', v: 1, max: 1, r: 'downtime', from: 'Стойкость' }],
   };
   const o = open(seed);
   assert.deepEqual(o.errors, []);
-  const s = o.state();
-  assert.ok(!s.counters.some(c => c.from === 'Стойкость'), 'legacy counter still present');
-  assert.equal(o.w.eval('S.spec["Стойкость"]'), true, 'S.spec["Стойкость"] !== true');
-  assert.ok(o.$('#specs [data-spec="Стойкость"]').classList.contains('on'), 'plate not drawn on');
+  assert.ok(!o.state().counters.some(c => c.from === 'Стойкость'), 'legacy counter still present');
+  assert.equal(o.state().specUsed, true, 'used mark lost in migration');
+  assert.ok(o.$('#prot [data-spec="*"]').classList.contains('on'), 'box not drawn on');
+});
+
+check('10. armor: book armor + heavy shown in #prot, cleared by Новое дело', () => {
+  const o = open({ items: ['c6', 'c7'] });
+  assert.equal(o.$$('#prot [data-armu]').length, 2, 'armor + heavy = 2 boxes');
+  o.click(o.$('#prot [data-armu^="c6"]'));
+  assert.ok(o.$('#prot [data-armu^="c6"]').classList.contains('on'));
+  o.click(o.$('[data-rest="score"]'));
+  assert.ok(!o.$('#prot [data-armu^="c6"]').classList.contains('on'), 'score did not restore armor');
+  assert.deepEqual(o.errors, []);
 });
 
 // ---------- 5. anesthesia preset is created once and survives reload ----------

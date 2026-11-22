@@ -14,6 +14,7 @@ const iruviaRules: Rules = {
   money: { book: false, major: 'Драхмы', minor: 'Драхмёныши', rate: 20 },
   stress: { book: true, boxes: 9 },
   playbookXpBoxes: 8,
+  specialArmor: 'shared',
   load: true,
   bandolier: 'own-items',
   presets: 'book+own',

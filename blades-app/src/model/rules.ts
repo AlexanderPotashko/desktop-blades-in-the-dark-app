@@ -20,6 +20,7 @@ const fields = {
   }),
   stress: z.strictObject({ book: z.boolean(), boxes: z.int().min(1).max(20) }), // book: 9 (+1 Survivor)
   playbookXpBoxes: z.int().min(1).max(40), // book: 8
+  specialArmor: z.enum(['shared', 'per-talent']), // book: one box for all special-armor talents (p. 68)
   load: z.boolean(), // book: light 3 / normal 5 / heavy 6 (p. 72); false = carry anything, load not counted
   bandolier: z.enum(['book', 'own-items']),
   presets: z.enum(['book', 'book+own']),
@@ -47,6 +48,7 @@ export const BOOK_RULES: TableRules = {
   money: { book: true, major: '', minor: '', rate: 1 },
   stress: { book: true, boxes: 9 },
   playbookXpBoxes: 8,
+  specialArmor: 'shared',
   load: true,
   bandolier: 'book',
   presets: 'book',

@@ -34,7 +34,7 @@ const custom: TableRules = {
   ...BOOK_RULES, mode: 'custom',
   money: { book: false, major: 'Драхмы', minor: 'Драхмёныши', rate: 20 },
   stress: { book: false, boxes: 12 },
-  playbookXpBoxes: 16, load: false, bandolier: 'own-items', presets: 'book+own', dayCounter: true,
+  playbookXpBoxes: 16, specialArmor: 'per-talent', load: false, bandolier: 'own-items', presets: 'book+own', dayCounter: true,
   downtime: { book: false, options: [{ id: id(), name: '+1 лечение, −1 стресс', healing: 1, stressRelief: 1 }] },
   skillStage: 'free', crewTier: 2, foreignTalentCost: 2,
 };
@@ -132,7 +132,17 @@ describe('armor', () => {
       customTalents: [{ id: ct, name: 'Своя защита', specialArmor: true }, { id: id(), name: 'Без защиты' }],
       specialArmorUsed: { fortitude: true },
     });
-    expect(specialArmor(d, DEFS)).toEqual([{ talent: 'fortitude', used: true }, { talent: ct, used: false }]);
+    expect(specialArmor(d, DEFS, { specialArmor: 'per-talent' })).toEqual([
+      { talents: ['fortitude'], used: true, shared: false }, { talents: [ct], used: false, shared: false }]);
+  });
+  it('book: one shared special-armor box for all talents (p. 68)', () => {
+    const ct = id();
+    const d = doc({ talents: ['fortitude'], customTalents: [{ id: ct, name: 'Своя защита', specialArmor: true }], specialArmorShared: true });
+    expect(specialArmor(d, DEFS, BOOK_RULES)).toEqual([{ talents: ['fortitude', ct], used: true, shared: true }]);
+    expect(specialArmor(doc({ talents: ['physicker'] }), DEFS, BOOK_RULES)).toEqual([]);
+    const r = rest(d, 'downtime');
+    expect(r.doc.specialArmorShared).toBe(false);
+    expect(r.specialArmor).toEqual(['*']);
   });
 });
 

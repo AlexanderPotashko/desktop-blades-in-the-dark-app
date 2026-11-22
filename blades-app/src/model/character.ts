@@ -168,7 +168,8 @@ export const Character = z.strictObject({
   }).default(() => ({ l3: '', l2: ['', ''] as [string, string], l1: ['', ''] as [string, string] })),
   healing: z.int().min(0).max(4).default(0),
   armorUsed: z.record(Uuid, z.int().min(0)).default(() => ({})), // item id → used boxes; cleared on a new score
-  specialArmorUsed: z.record(EntityRef, z.boolean()).default(() => ({})), // talent id → used; cleared by downtime
+  specialArmorShared: z.boolean().default(false), // the one book box (p. 68); cleared by downtime
+  specialArmorUsed: z.record(EntityRef, z.boolean()).default(() => ({})), // per-talent boxes (rule specialArmor: 'per-talent'); cleared by downtime
 
   // Both book and custom money are kept; rules.money.book picks which one is shown.
   money: z.strictObject({

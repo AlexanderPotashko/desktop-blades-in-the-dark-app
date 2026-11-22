@@ -200,7 +200,8 @@ Character { id, schemaVersion, playbookId, name, alias, look, day,        // cam
             talents: talentId[], customTalents: {id,name,text}[],
             stress, trauma: string[], customTraumas: {id,name,text}[],
             harm:{l3,l2:[,],l1:[,]}, healing:0..4, armorUsed: Record<itemId,n>,
-            specialArmorUsed: Record<talentId,boolean>,       // checkboxes above counters, from any playbook's (or custom) special-armor talents; cleared by downtime
+            specialArmorShared: boolean,                      // book: ONE box for all special-armor talents (p. 68); cleared by downtime
+            specialArmorUsed: Record<talentId,boolean>,       // per-talent boxes when rules.specialArmor = 'per-talent'
             money:{coins,stash}|{major,minor}, load:'light'|'normal'|'heavy',
             items: Item[], workshop: WorkItem[], counters: Counter[], cards: Card[],
             rulesOverride?: Partial<TableRules> }             // a sheet without a campaign keeps its own rules

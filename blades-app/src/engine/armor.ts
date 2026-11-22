@@ -1,4 +1,4 @@
-import type { Character } from '../model';
+import type { Character, TableRules } from '../model';
 import { specialArmorTalents, type TalentDefs } from './talents';
 
 export interface ArmorRow { itemId: string; boxes: number; used: number }
@@ -12,6 +12,12 @@ export function armorAvailable(doc: Character, bookArmor: Record<string, number 
   });
 }
 
-/** Special-armor checkboxes: one per taken talent that has it. */
-export const specialArmor = (doc: Character, defs: TalentDefs): { talent: string; used: boolean }[] =>
-  specialArmorTalents(doc, defs).map(talent => ({ talent, used: !!doc.specialArmorUsed[talent] }));
+export interface SpecialArmorBox { talents: string[]; used: boolean; shared: boolean }
+
+/** Book: one box covering every special-armor talent (p. 68); house rule: one box per talent. */
+export function specialArmor(doc: Character, defs: TalentDefs, rules: Pick<TableRules, 'specialArmor'>): SpecialArmorBox[] {
+  const talents = specialArmorTalents(doc, defs);
+  if (!talents.length) return [];
+  if (rules.specialArmor === 'per-talent') return talents.map(t => ({ talents: [t], used: !!doc.specialArmorUsed[t], shared: false }));
+  return [{ talents, used: doc.specialArmorShared, shared: true }];
+}
