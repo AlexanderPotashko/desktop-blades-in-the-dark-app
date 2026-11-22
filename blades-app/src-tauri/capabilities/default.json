@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Least privilege: core window + file dialogs only (no fs plugin).",
+  "windows": ["main"],
+  "permissions": ["core:window:default", "dialog:allow-open", "dialog:allow-save"]
+}

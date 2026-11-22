@@ -77,6 +77,7 @@ The Russian text belongs to Studio 101, the original to One Seven Design (SRD un
 7. Import/export: character, campaign, whole library; **import from the prototype** (`bitd-leech` localStorage, exported JSON, `rulebook.js`); print to PDF.
 8. **History and undo:** Ctrl+Z / Ctrl+Y within a session; "as it was yesterday" — roll a character back to an earlier revision.
 9. **Languages:** a switch in ⚙ (defaults to the system language). Changes the UI and the names of book entities; custom items/abilities stay as written. Version 1.0: **Russian and English**; a new language = a folder of translations, no code changes. Next, by availability of official editions (terminology is taken from them): **wave 2** — Spanish (Nosolorol, 2019), Italian (Grumpy Bear Stuff + Pendragon, 2020), French (500 Nuances de Geek, revised 2023), German (System Matters); **wave 3** — Polish, Portuguese (Brazil), Korean, Japanese (active communities / translations, edition to be confirmed); others (Chinese, Dutch, Czech…) on request, fan translations exist.
+10. **AI agent via MCP (code mode):** opt-in in ⚙. A local MCP server lets an agent (Claude Desktop, Claude Code, any MCP client) read and edit characters, notes and plans. Code mode: two tools — `sheet_api` (typed API description) and `sheet_execute` (agent-written JS against the sheet) — instead of dozens of small tools. Every agent write is one undoable step with a revision saved before it. Already working in the prototype (`tools/mcp/`).
 
 **Non-functional**
 - **Fully offline**, no accounts, no internet.
@@ -105,6 +106,7 @@ The Russian text belongs to Studio 101, the original to One Seven Design (SRD un
 | Tests | **Vitest** (engine, schemas), **cargo test** (DB: migrations, backup, search), **Playwright** via Tauri WebDriver (e2e, screenshots; supported on Windows) | replaces the prototype's jsdom tests and headless Edge |
 | Styles | CSS variables (prototype tokens) + CSS Modules | keep the current look without heavy UI libraries |
 | Languages | dictionaries `locales/<lang>.json` + own `t()` (~30 lines) with typed keys; plurals, numbers and dates via built-in `Intl.PluralRules` / `Intl.NumberFormat` / `Intl.DateTimeFormat` | TypeScript catches missing translations; Russian plural forms without a library. Switch to i18next if outside translators and their tooling are needed |
+| AI agent (MCP) | **MCP server inside the app** (Rust, official `rmcp` SDK), Streamable HTTP on `127.0.0.1` with a per-install token; for clients that only speak stdio — a tiny sidecar `blades-mcp` that forwards stdio to the app. Code mode runs agent code in **QuickJS** (embedded via `rquickjs`): no file or network access, memory and time limits | the app owns the data, so the server lives there (no WebSocket bridge as in the prototype); QuickJS is a real sandbox, unlike `node:vm` |
 | Installer | **macOS:** `.dmg`, universal build (Apple Silicon + Intel), ad-hoc signed, not notarized · **Windows:** NSIS, unsigned | own group only: no paid Apple ($99/yr) or Windows certificate needed |
 | Build | the Mac build is made **on a Mac** (Tauri cannot build macOS from Windows): on the player's MacBook or a macOS GitHub Actions runner; Windows on a PC | both builds from one codebase; `npm run build:mac` / `npm run build:win` |
 | Updates | manual: install the new `.dmg` / installer over the old one (database and backups are kept). Updater plugin later, if this gets tedious | simplest for a small group |
@@ -151,6 +153,7 @@ blades-app/
 6. **Book and custom are equal.** Custom items, abilities, counters, contacts, traumas, heritages and creations work through **the same mechanics** as book ones.
 7. **Help stays out of the way.** Tips on hover (the ? toggle), "p. N" links open the Rulebook tab.
 8. **Least privilege.** The window can call only its own commands and the system Save/Open dialog; no general disk access (`fs`). Strict CSP, no remote content. Rulebook text is rendered as text, never as HTML.
+9. **UI first, agent second.** Every feature is built in the UI first, so a person can do it by hand. The MCP agent (code mode) is a second path to the same operations, never the only one: the agent API exposes no action that the UI lacks, and its helpers mirror UI actions (create a note, add a floor, add a room…). A feature is not done until it works by hand.
 
 **Save flow**
 ```
@@ -197,6 +200,7 @@ Character { id, schemaVersion, campaignId?, playbookId, name, alias, look, day,
             talents: talentId[], customTalents: {id,name,text}[],
             stress, trauma: string[], customTraumas: string[],
             harm:{l3,l2:[,],l1:[,]}, healing:0..4, armorUsed: Record<itemId,n>,
+            specialArmorUsed: Record<talentId,boolean>,       // checkboxes above counters, from any playbook's (or custom) special-armor talents; cleared by downtime
             money:{coins,stash}|{major,minor}, load:'light'|'normal'|'heavy',
             items: Item[], workshop: WorkItem[], counters: Counter[], cards: Card[],
             rulesOverride?: Partial<TableRules> }             // a sheet without a campaign keeps its own rules
@@ -256,6 +260,7 @@ Models: **Opus 5.5** (`claude-opus-5-5`) — architecture, complex logic, anythi
 | 13 | Sync (optional) | import with "newer/older" choice → a PocketBase server with revisions if needed | **Opus 5.5** (conflicts) → **Sonnet 5.5** | main data-loss risk | two devices edit one character without loss |
 | 14 | Documentation | help, README, "Table rules" guide | **Haiku 5.5** | writing from finished work | help covers every screen |
 | L | Languages (v1.0: ru + en) | `t()` and dictionaries from phase 5 on (no literal UI strings in components); `content/en/` from the English SRD (CC BY 3.0, may ship with attribution); dictionary completeness checked in tests; search stemmer follows the rulebook's language | dictionaries and `content/en` — **Sonnet 5.5**, completeness check — **Haiku 5.5** | translation needs game terminology; the check is mechanical | switching ru ↔ en changes the whole UI and book names, characters stay intact |
+| A | AI agent (MCP, code mode) | MCP server in the app, token pairing screen in ⚙, QuickJS sandbox, typed API generated from the Zod schemas (`sheet_api`), `sheet_execute` as one undoable transaction + revision, activity log («что агент поменял») | design and sandbox — **Opus 5.5**, implementation — **Sonnet 5.5** | security boundary and data writes | an agent edits a character and a plan through Claude Desktop and Claude Code; the change can be undone; agent code cannot touch files or network |
 | R | **Review after each phase** | code, data, conformance to the plan | **Opus 5.5** | catches architectural mistakes early | findings closed |
 
 **Order and parallelism**
@@ -263,7 +268,8 @@ Models: **Opus 5.5** (`claude-opus-5-5`) — architecture, complex logic, anythi
 1 → 2 → 2a ┐
 1 → 3 ─────┼→ 5 → 7 → 8 → 9 ══ v1.0 desktop ══ 10 → 11 → 12 → 13 → 14
 1 → 4 ─────┘   ├→ 5a
-               └→ 6 (rulebook, in parallel with 7–8)
+               ├→ 6 (rulebook, in parallel with 7–8)
+               └→ A (AI agent, after 8: needs revisions and undo)
 ```
 
 ---
@@ -278,6 +284,7 @@ Models: **Opus 5.5** (`claude-opus-5-5`) — architecture, complex logic, anythi
 | PDF text quality (hyphenation, line breaks) | cleanup as in `tools/mkrulebook.py`, manual page editing |
 | Russian morphology in search | Snowball stemmer at import and query time; fallback: prefix search (`word*`) |
 | Tauri mobile is younger than desktop | trial Android build already in phase 4; engine and data are shared, only the layout changes |
+| An AI agent breaks or wipes a sheet | opt-in, localhost only, token; every write is one undoable step with a revision; QuickJS sandbox without file/network access; Zod validation of the result before saving |
 | Every table has its own house rules | campaign "Table rules" + custom entities on par with book ones |
 | Install warnings without paid signing | **Windows:** SmartScreen → "More info → Run anyway". **macOS:** if the `.dmg` came from the internet/Telegram — System Settings → Privacy & Security → "Open Anyway" (or `xattr -dr com.apple.quarantine /Applications/Blades.app`); a build made on your own Mac opens directly. Instructions in the group README |
 | Different web engines: WebKit (Mac) and WebView2/Chromium (Windows) | layout checked on both; no experimental CSS; Mac first |
@@ -299,5 +306,6 @@ Models: **Opus 5.5** (`claude-opus-5-5`) — architecture, complex logic, anythi
 - Undo/redo with Immer patches: [egghead](https://egghead.io/lessons/react-use-immer-patches-to-build-redo-functionality), [Travels](https://unadlib.github.io/2025/10/05/rethinking-undo-redo-why-we-need-travels/)
 - Local-first and sync: [2026 engines overview](https://www.youngju.dev/blog/culture/2026-05-15-crdt-local-first-engines-2026-yjs-automerge-loro-replicache-liveblocks-deep-dive.en), [CRDTs for offline-first mobile](https://dev.to/software_mvp-factory/crdts-for-offline-first-mobile-sync-1mja)
 - Tauri 2 on mobile: [Tauri 2.0 RC](https://v2.tauri.app/blog/tauri-2-0-0-release-candidate/), [experience in 2026](https://blog.codercops.com/blog/tauri-2-desktop-mobile-apps-rust-web-2026)
+- MCP code mode: [Anthropic: code execution with MCP](https://www.anthropic.com/news/code-execution-with-mcp), [Cloudflare Code Mode](https://developers.cloudflare.com/agents/tools/codemode/index.md), [MCP TypeScript SDK](https://ts.sdk.modelcontextprotocol.io/server.html)
 - Installer and updates: [Updater](https://v2.tauri.app/plugin/updater/), [auto-updates on Windows](https://voidcraft-blog.pages.dev/blog/tauri-auto-updates-on-windows-a-practical-guide)
 - Translations of the game: [publisher's 2018 translation list](https://bladesinthedark.backerkit.com/hosted_preorders/project_updates?page=3), [Foundry VTT system localizations](https://foundryvtt.com/packages/blades-in-the-dark), [Roll20 sheet translations](https://github.com/Roll20/roll20-character-sheets/tree/master/Blades%20in%20the%20Dark/translations)

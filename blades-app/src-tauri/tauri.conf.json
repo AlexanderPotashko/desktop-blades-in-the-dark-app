@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Blades",
+  "version": "0.1.0",
+  "identifier": "local.blades.app",
+  "build": {
+    "beforeDevCommand": "vite",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "vite build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [{ "title": "Blades", "width": 1200, "height": 800 }],
+    "security": {
+      "csp": "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src ipc: http://ipc.localhost"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis", "dmg"],
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"]
+  }
+}
