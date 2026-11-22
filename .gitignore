@@ -8,3 +8,11 @@ rulebook.js
 private-game/
 CLAUDE.md
 AGENTS.md
+
+# Node dependencies
+node_modules/
+
+src-tauri/target/
+src-tauri/gen/
+dist/
+tools/test/node_modules/

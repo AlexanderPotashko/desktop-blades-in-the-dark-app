@@ -34,6 +34,22 @@ label{display:block;font-size:12px;color:var(--dim);margin-top:6px}
 .talent{border-top:1px solid var(--line);padding:5px 0}
 .talent p{margin:2px 0 0 22px;font-size:12px;color:var(--dim)}
 .tri{cursor:pointer;width:22px;display:inline-block;text-align:center}
+.bio3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px 12px}.bio3>div{display:grid;gap:4px}
+textarea.grow{field-sizing:content;min-height:3lh;resize:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}
+.chip{display:inline-flex;align-items:center;gap:2px;padding:2px 4px 2px 2px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03)}
+.chip.up{border-color:var(--ok)}.chip.up .tri{color:var(--ok)}.chip.down{border-color:var(--red)}.chip.down .tri{color:var(--red)}
+.chip input{width:auto;border:0;background:none;padding:0 2px}.chip button{border:0;background:none;padding:0 4px;color:var(--dim)}
+.chips select{width:auto}
+.nview{overflow:auto;border:1px solid var(--line);border-radius:4px;background:var(--bg);display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.nview>div:not(.nchip){align-self:stretch}.nview h3{margin:8px 0 2px;color:var(--acc)}.nview h4{margin:6px 0 2px}.nview hr{align-self:stretch;border:0;border-top:1px solid var(--line);margin:6px 0}
+.nview .ngap{height:6px}.nview .nli{padding-left:8px}
+.nchip{border:1px solid;border-radius:6px;padding:2px 8px;max-width:100%}
+.nmsg{border-color:var(--ok);background:rgba(111,154,90,.12)}.nmsg>b{color:var(--ok)}
+.nroll{border-color:var(--line);background:rgba(201,162,74,.06)}.nroll .dim{color:var(--dim)}
+.nroll .rc{color:var(--acc);font-weight:bold}.nroll .r6{color:var(--ok);font-weight:bold}.nroll .r4{color:#d9a441}.nroll .r1{color:var(--red)}
+.gpop{padding:10px;border:1px solid var(--acc);border-radius:8px;background:var(--panel);color:var(--ink);grid-template-columns:repeat(8,40px);gap:4px}.gpop:popover-open{display:grid}
+.gpop button{width:40px;height:40px;font-size:20px;padding:0}.gpop button.on{border-color:var(--acc);background:rgba(201,162,74,.15)}
 .harm{display:grid;grid-template-columns:22px 1fr 1fr 110px;gap:4px;align-items:center;margin:3px 0}
 .harm.l3{grid-template-columns:22px 2fr 110px}
 [hidden]{display:none!important}
@@ -42,12 +58,15 @@ label{display:block;font-size:12px;color:var(--dim);margin-top:6px}
 .inv.off{opacity:.55}.inv .on{border-color:var(--acc);color:var(--acc)}
 .inv.head{font-size:11px;color:var(--dim);margin-bottom:0}.inv.head span{text-align:center}.inv.head span:nth-child(2){text-align:left}
 .inv .take{border-color:var(--acc);color:var(--acc)}.inv .ovr{color:var(--red);border-color:var(--red)}
-.money{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}.money .row,.money .small{grid-column:1/-1}
+.money{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin-bottom:8px}.money label{display:flex;align-items:center;gap:6px;margin:0;font-size:13px;color:var(--ink)}.money input{width:80px}
+.money,#moneyBook{padding:8px 10px;border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:6px;background:rgba(201,162,74,.05)}
+.money label input{font-weight:bold;font-size:15px;color:var(--acc)}
+.calc{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;padding:3px 10px;border:1px solid var(--acc);border-radius:6px;background:rgba(201,162,74,.08)}
 dialog{background:var(--panel);color:var(--ink);border:1px solid var(--acc);border-radius:8px;width:min(640px,92vw);padding:14px}dialog::backdrop{background:rgba(0,0,0,.65)}dialog h3{margin:0 0 8px;color:var(--acc)}#noteText{min-height:320px}#propsToggle.on{border-color:var(--acc);color:var(--acc)}#propsPanel{border:1px solid var(--line);border-radius:6px;padding:10px}.note.has{color:var(--acc);border-color:var(--acc)}
-#coins{grid-template-columns:1fr}.notes{display:grid;grid-template-columns:260px 1fr;gap:14px;min-height:65vh}.notes aside{display:flex;flex-direction:column;gap:4px;border-right:1px solid var(--line);padding-right:12px}#cardList{display:grid;gap:4px}.ci{width:100%;text-align:left;display:grid;gap:2px;padding:8px 10px;background:transparent;border:1px solid transparent;border-radius:6px}.ci:hover{background:#262220}.ci.on{border-color:var(--acc);background:#262220}.ci *{pointer-events:none}.ci .cp{font-size:12px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#cardEd{display:flex;flex-direction:column;gap:8px}.ci .cpi{font-size:11px;color:var(--acc)}.ntabs,.ptool{display:flex;gap:4px;align-items:center;flex-wrap:wrap}.ntabs button.on,.ptool button.on{border-color:var(--acc);color:var(--acc)}.ptool .sep{width:1px;height:22px;background:var(--line);margin:0 4px}.ptool button{min-width:30px}.pfl{display:flex;gap:4px;flex-wrap:wrap}.pwrap{flex:1;min-height:55vh;display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--panel)}#planSvg{flex:1;min-height:55vh;display:block;touch-action:none;cursor:crosshair;outline:none;user-select:none}#planSvg.sel{cursor:grab}#planSvg.sel g[data-i]{cursor:move}#pinfo{min-height:20px;white-space:pre-wrap}#pinfo button{padding:1px 8px;margin-left:6px}.gal{display:flex;gap:8px;flex-wrap:wrap}.gal img{height:110px;max-width:220px;object-fit:cover;border:1px solid var(--line);border-radius:6px;cursor:zoom-in}#imgDlg{width:auto;max-width:94vw}#imgBig{max-width:90vw;max-height:78vh;display:block;margin:0 auto 10px}.edt{font-size:18px;font-weight:bold;padding:6px 10px}.edx{flex:1;min-height:55vh;line-height:1.55;padding:10px 12px}@media(max-width:700px){.notes{grid-template-columns:1fr}.notes aside{border-right:0;padding-right:0}.edx{min-height:40vh}}
-.ctr{border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin:10px 0;display:grid;gap:8px}.ctr .row>*{min-width:0}.ctr input,.ctr select{width:auto}.ctr [data-ctrn],.ctr select{flex:1;width:0;min-width:0}.ctr button{padding:4px 7px}.ctr .cv{min-width:44px;text-align:center;font-weight:bold}.ctr [data-ctrmax]{width:52px!important}.rest{display:flex;gap:6px;margin-bottom:10px}.rest button{flex:1;padding:4px 2px;font-size:13px}.ctr.spec{border-color:var(--acc)}.ctr .on{border-color:var(--acc);color:var(--acc)}
-.dz{position:relative}.dz .ctr{padding-left:26px}.grip{position:absolute;left:8px;top:21px;cursor:grab;color:var(--dim);user-select:none;z-index:1;font-size:16px}.grip:hover{color:var(--acc)}.dz.over .ctr{border-color:var(--ok);box-shadow:0 0 0 1px var(--ok)}.dz.dragging{opacity:.4}
-.inv.prodrow{grid-template-columns:24px 1fr 130px 56px 34px 34px 34px}.prog{display:flex;gap:4px;align-items:center}.prog input{width:56px}.inv.prodrow.done input[data-prodn]{border-color:var(--ok);color:var(--ok)}
+#coins{grid-template-columns:1fr}.notes{display:grid;grid-template-columns:260px 1fr;gap:14px;min-height:65vh}.notes aside{display:flex;flex-direction:column;gap:4px;border-right:1px solid var(--line);padding-right:12px}#cardList{display:grid;gap:4px}.ci{width:100%;text-align:left;display:grid;gap:2px;padding:8px 10px;background:transparent;border:1px solid transparent;border-radius:6px}.ci:hover{background:#262220}.ci.on{border-color:var(--acc);background:#262220}.ci *{pointer-events:none}.ci .cp{font-size:12px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#cardEd{display:flex;flex-direction:column;gap:8px}.aib{font-size:12px;color:var(--dim);align-self:center;padding:0 4px}.aib.on{color:var(--ok)}.ci .cpi{font-size:11px;color:var(--acc)}.ci.pin .ct::before{content:'📌 ';font-size:12px}button[data-cardpin]{white-space:nowrap}button[data-cardpin].on{border-color:var(--acc);color:var(--acc)}.ntabs,.ptool{display:flex;gap:4px;align-items:center;flex-wrap:wrap}.ntabs button.on,.ptool button.on{border-color:var(--acc);color:var(--acc)}.ptool .sep{width:1px;height:22px;background:var(--line);margin:0 4px}.ptool button{min-width:30px}.pfl{display:flex;gap:4px;flex-wrap:wrap}.pwrap{flex:1;min-height:55vh;display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--panel)}#planSvg{flex:1;min-height:55vh;display:block;touch-action:none;cursor:crosshair;outline:none;user-select:none}#planSvg.sel{cursor:grab}#planSvg.sel g[data-i]{cursor:move}#pinfo{min-height:20px;white-space:pre-wrap}#pinfo button{padding:1px 8px;margin-left:6px}.gal{display:flex;gap:8px;flex-wrap:wrap}.gal img{height:110px;max-width:220px;object-fit:cover;border:1px solid var(--line);border-radius:6px;cursor:zoom-in}#imgDlg{width:auto;max-width:94vw}#imgBig{max-width:90vw;max-height:78vh;display:block;margin:0 auto 10px}.edt{font-size:18px;font-weight:bold;padding:6px 10px}.edx{flex:1;min-height:55vh;line-height:1.55;padding:10px 12px}@media(max-width:700px){.notes{grid-template-columns:1fr}.notes aside{border-right:0;padding-right:0}.edx{min-height:40vh}}
+.ctr{border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin:10px 0;display:grid;gap:8px}.rest{display:flex;gap:6px;margin-bottom:10px}.rest button{flex:1;padding:4px 2px;font-size:13px}.ctr.spec{border-color:var(--acc)}.ctr{gap:6px;padding:8px 10px;grid-template-columns:minmax(0,1fr)}.chd{display:flex;align-items:center;gap:8px}.cn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cn i{color:var(--dim);font-weight:normal}.crs{font-size:12px;color:var(--dim);white-space:nowrap}.cgear{padding:2px 6px;background:none;border-color:transparent;color:var(--dim)}.cgear:hover,.cgear.on{color:var(--acc)}.cbody{display:flex;align-items:center;gap:8px}.cbody button{width:32px;height:32px;padding:0;font-size:18px}.cv{flex:1;text-align:center;font-size:22px;font-weight:bold}.cv small{font-size:14px;color:var(--dim);font-weight:normal}.cboxes{flex:1;display:flex;flex-wrap:wrap;gap:4px;justify-content:center}.cboxes .box{cursor:pointer}.cset{display:grid;grid-template-columns:1fr 1fr;gap:6px;border-top:1px dashed var(--line);padding-top:8px}.cset label{display:grid;gap:2px;font-size:12px;color:var(--dim)}.cset label:first-child{grid-column:1/-1}.cset input,.cset select{width:100%}.cdel{grid-column:1/-1;color:var(--bad,#c66)}.noload #loadSel,.noload #loadUsed,.noload #inv>.inv>:nth-child(5){display:none}.noload #inv>.inv{grid-template-columns:24px 1fr 52px 84px 34px 34px}.spec{display:flex;align-items:center;gap:8px;margin:10px 0;padding:6px 10px;border:1px solid var(--line);border-radius:6px}.spec .box{cursor:pointer;flex:none}.spec .small{margin-left:auto;text-align:right}.ctr .on{border-color:var(--acc);color:var(--acc)}
+.dz{position:relative}.dz .ctr{padding-left:26px}.grip{position:absolute;left:8px;top:10px;cursor:grab;color:var(--dim);user-select:none;z-index:1;font-size:16px}.grip:hover{color:var(--acc)}.dz.over .ctr{border-color:var(--ok);box-shadow:0 0 0 1px var(--ok)}.dz.dragging{opacity:.4}
+.inv.prodrow{grid-template-columns:24px 1fr 130px 56px 34px 34px 34px}.inv.wsrow{grid-template-columns:24px 1fr 56px 34px 34px 34px}#prod{grid-template-columns:1fr}.prog{display:flex;gap:4px;align-items:center}.prog input{width:56px}.inv.prodrow.done input[data-prodn]{border-color:var(--ok);color:var(--ok)}
 .mini{padding:0 6px;font-size:12px;margin-left:4px}
 .props{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.props label{display:grid;gap:3px;margin:0;color:var(--dim)}.props .wide{grid-column:1/-1}.props .chk{display:flex;align-items:center;gap:6px;color:var(--ink)}.props .chk input{width:auto;padding:0;margin:0}.props .row{gap:4px 14px}.props .row input:not([type=checkbox]){width:70px}.propline{margin:-2px 0 4px 30px}
 .rules{display:grid;gap:6px;margin:8px 0}.rules.off{opacity:.45}.rules .chk,#settings .chk{display:flex;gap:8px;align-items:center;color:var(--ink);margin:0}#settings .chk input{width:auto}.sub2{margin-left:28px;color:var(--dim);display:flex;gap:6px;align-items:center;flex-wrap:wrap}#settings h3{margin-top:16px}#settings section{max-width:760px}#tipsBtn.on{border-color:var(--acc);color:var(--acc)}body.tips [data-tip]{cursor:help;position:relative;text-decoration:underline dotted var(--dim);text-underline-offset:3px}body.tips [data-tip]:hover::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 4px);z-index:60;width:max-content;max-width:min(380px,80vw);background:#2a2520;color:var(--ink);border:1px solid var(--acc);border-radius:6px;padding:7px 9px;font:12px/1.45 'PT Serif',Georgia,serif;letter-spacing:0;text-transform:none;font-weight:normal;white-space:normal;text-align:left;box-shadow:0 4px 14px rgba(0,0,0,.5);pointer-events:none}body.tips .rest [data-tip]:hover::after,body.tips #ctrs [data-tip]:hover::after{left:auto;right:0}
@@ -65,8 +84,8 @@ dialog{background:var(--panel);color:var(--ink);border:1px solid var(--acc);bord
   <input data-k="name" placeholder="Имя" style="width:220px">
   <input data-k="alias" placeholder="Кличка" style="width:140px">
   <span id="dayBox" class="row" style="gap:4px" data-tip="Игровой день. «Новый день» прибавляет 1, число можно поправить.">День<input type="number" min="1" data-k="day" style="width:62px"></span>
-  <span class="tabs"><button data-tab="sheet">Бланк</button><button data-tab="gear">Снаряжение</button><button data-tab="prod">Мастерская</button><button data-tab="coins">Заметки</button><button data-tab="bio">Биография</button><button data-tab="rulebook">Рулбук</button></span>
-  <button data-tab="settings" title="Настройки">⚙</button><button id="tipsBtn" title="подсказки по правилам при наведении">?</button>
+  <span class="tabs"><button data-tab="sheet">Бланк</button><button data-tab="gear">Снаряжение</button><button data-tab="prod">Мастерская</button><button data-tab="coins">Заметки</button><button data-tab="rules">Правила</button><button data-tab="bio">Биография</button><button data-tab="rulebook">Рулбук</button></span>
+  <button data-tab="settings" title="Настройки">⚙</button><button id="tipsBtn" title="подсказки по правилам при наведении">?</button><span id="aiBadge" class="aib" hidden></span>
   <button id="export">Экспорт</button>
   <label style="margin:0"><button type="button" onclick="this.nextElementSibling.click()">Импорт</button><input type="file" id="import" accept=".json" hidden></label>
   <button onclick="print()">Печать</button>
@@ -77,7 +96,7 @@ dialog{background:var(--panel);color:var(--ink);border:1px solid var(--acc);bord
     <h2 data-tip="Кубиков = уровень навыка. Характеристика = число навыков группы с точкой; ею кидают испытания (стресс = 6 − лучший кубик).">Навыки</h2>
     <div class="small" id="skillInfo"></div>
     <div id="actions"></div>
-    <h3 data-tip="Опыт: отчаянная проверка — +1 в её характеристику. В конце встречи 1 (или 2) в любую шкалу за: особый опыт бланка, убеждения/происхождение/прошлое, проблемы из-за страсти или травм. Характеристика 6 клеток — +1 навык; таланты 8 — новый талант (стр. 61).">Опыт талантов <span id="xpTalent"></span></h3>
+    <h3 data-tip="Опыт: отчаянная проверка — +1 в её характеристику. В конце встречи 1 (или 2) в любую шкалу за: особый опыт бланка, убеждения/происхождение/прошлое, проблемы из-за страсти или травм. Характеристика 6 клеток — +1 навык; таланты 8 — новый талант (стр. 61).">Опыт талантов <span id="xpTalent" style="display:inline-flex;flex-direction:column;gap:3px;vertical-align:top"></span></h3>
   </section>
 
   <section>
@@ -93,6 +112,7 @@ dialog{background:var(--panel);color:var(--ink);border:1px solid var(--acc);bord
       <button data-rest="score" data-tip="Новое дело: выбор нагрузки, ячейки доспеха восстанавливаются (стр. 43), сброс счётчиков «дело».">Новое дело</button>
     </div>
     <div class="small" id="restMsg"></div>
+    <div id="specs"></div>
     <div id="ctrs"></div>
     <select id="addCtr" style="width:100%"></select>
   </section>
@@ -127,20 +147,24 @@ dialog{background:var(--panel);color:var(--ink);border:1px solid var(--acc);bord
     <div class="money" id="moneyCustom">
       <label><span id="lblMaj"></span><input type="number" min="0" data-k="dr"></label>
       <label><span id="lblMin"></span><input type="number" min="0" data-k="drm"></label>
-      <div class="small" id="moneyTotal"></div>
-      <div class="row"><button id="breakDr">Разменять 1</button><button id="joinDr">Собрать 1</button></div>
-      <div class="row small">Калькулятор: <input type="number" id="cDr" style="width:80px"> <span id="cLblMaj"></span> = <input type="number" id="cDrm" style="width:90px"> <span id="cLblMin"></span></div>
+      <button id="breakDr">Разменять 1</button><button id="joinDr">Собрать 1</button>
+      <span class="small" id="moneyTotal"></span>
+      <span class="calc">🧮 <input type="number" id="cDr"> <span id="cLblMaj"></span> = <input type="number" id="cDrm"> <span id="cLblMin"></span></span>
     </div>
-    <div class="row">
+    <h3 class="row" style="justify-content:space-between;margin:14px 0 8px">Предметы<span class="row" style="font-weight:normal;font-size:14px">
       <select data-k="load" id="loadSel" data-tip="Нагрузка (стр. 72): лёгкая 3 — неприметен; нормальная 5 — выглядишь готовым к неприятностям; тяжёлая 6 — движения стеснены. Предметы отмечаешь по ходу дела."><option value="3">лёгкая</option><option value="5">нормальная</option><option value="6">тяжёлая</option></select>
       <span id="loadUsed"></span>
-    </div>
-    <h3>Предметы</h3>
+    </span></h3>
     <div id="inv"></div>
     <select id="addItem" style="width:100%;margin-top:6px"></select>
   </section>
 </main>
 <main id="prod" hidden>
+  <section>
+    <h2 data-tip="Что уже есть в мастерской: станки, верстак, инструменты. Не входит в нагрузку. Свойства (✎) — качество, «даёт», недостатки — как у снаряжения. Книжная мастерская даёт +1 к качеству при изготовлении (стр. 269).">Оснащение</h2>
+    <div id="wsList"></div>
+    <select id="addWs" style="width:100%;margin-top:6px"></select>
+  </section>
   <section>
     <h2 data-tip="Изделия в работе и готовые: прогресс, количество, состав и свойства. «→» переносит изделие в снаряжение (на базу). Изготовление: действие передышки, бросок Ремесла, качество = ранг ± результат (стр. 270).">Мастерская</h2>
     <div id="prodList"></div>
@@ -159,6 +183,8 @@ dialog{background:var(--panel);color:var(--ink);border:1px solid var(--acc);bord
       <div class="sub2" id="moneyOpts">Своя валюта: крупная <input data-r="major" style="width:120px"> мелкая <input data-r="minor" style="width:130px"> курс <input type="number" min="1" data-r="rate" style="width:70px"></div>
       <label class="chk"><input type="checkbox" data-r="stress"> Стресс по книге: 9 ячеек, +1 за «Уцелевшего» (стр. 18)</label>
       <div class="sub2" id="stressOpts">Ячеек стресса <input type="number" min="1" max="20" data-r="stressN" style="width:70px"></div>
+      <div class="sub2">Опыта на новый талант <input type="number" min="1" max="40" data-r="talentXP" style="width:70px"> <span class="small">по книге 8; чужой талант ×2 — ставь 16</span></div>
+      <label class="chk"><input type="checkbox" data-r="carry"> Нагрузка по книге: лёгкая 3 / нормальная 5 / тяжёлая 6 (стр. 72). Сними — носишь сколько хочешь, нагрузка не считается</label>
       <label class="chk"><input type="checkbox" data-r="band"> Перевязь по книге: вещества из книги, пополняется в передышку (стр. 103)</label>
       <label class="chk"><input type="checkbox" data-r="presets"> Только книжные заготовки счётчиков (без своих, например доз Ядовитости)</label>
       <label class="chk"><input type="checkbox" data-r="day"> Счётчик дней и кнопка «Новый день»</label>
@@ -176,6 +202,10 @@ dialog{background:var(--panel);color:var(--ink);border:1px solid var(--acc);bord
     <div class="small">Качество вещи обычно равно рангу команды; добротная +1; при изготовлении бросок Ремесла сдвигает его: 1-3 −1, 4-5 ±0, 6 +1, 6&amp;6 +2 (стр. 32, 270).</div>
     <h3>Подсказки</h3>
     <label class="chk"><input type="checkbox" data-ui="tips"> Показывать подсказки по правилам при наведении (кнопка ? в шапке)</label>
+    <h3>ИИ-агент (MCP)</h3>
+    <label class="chk"><input type="checkbox" id="aiOn"> Разрешить ИИ-агенту (Claude и др.) читать и менять бланк через локальный MCP-сервер</label>
+    <div class="row small">порт <input type="number" id="aiPort" min="1024" max="65535" style="width:90px"> токен <input id="aiToken" placeholder="если задан в настройках сервера" style="width:220px"> <span id="aiState"></span></div>
+    <div class="small">Сервер: <code>tools/mcp/server.mjs</code> (инструкция — <code>tools/mcp/README.md</code>). Связь только внутри компьютера. Перед каждым изменением от агента бланк делает резервную копию.</div>
     <h3>Резервная копия</h3>
     <div class="row"><button id="restoreBackup">Восстановить резервную копию</button><span class="small" id="backupInfo"></span></div>
   </section>
@@ -192,25 +222,24 @@ dialog{background:var(--panel);color:var(--ink);border:1px solid var(--acc);bord
 </main>
 <main id="coins" hidden>
   <section>
-    <h2>Заметки</h2>
+    <h2 id="notesH">Заметки</h2>
     <div class="notes"><aside><button id="addCard">+ новая карточка</button><div id="cardList"></div></aside><div id="cardEd"></div></div><input type="file" id="imgFile" accept="image/*" multiple hidden>
   </section>
 </main>
 <main id="bio" hidden>
   <section>
-    <h2>Внешность</h2>
-    <textarea data-k="look" placeholder="пол, телосложение, одежда, приметы"></textarea>
-    <label>Происхождение</label>
-    <div class="row"><input data-k="heritage" data-opts="heritages" list="dl-heritages" placeholder="из книги или своё" style="width:200px"><input data-k="heritageNote" style="flex:1" placeholder="детали семьи"></div>
-    <label>Прошлое</label>
-    <div class="row"><input data-k="background" data-opts="backgrounds" list="dl-backgrounds" placeholder="из книги или своё" style="width:200px"><input data-k="backgroundNote" style="flex:1" placeholder="детали"></div>
-    <label>Страсть / благодетель</label>
-    <div class="row"><input data-k="vice" data-opts="vices" list="dl-vices" placeholder="из книги или своё" style="width:200px"><input data-k="viceNote" style="flex:1" placeholder="кто и где"></div>
-  </section>
-  <section>
-    <h2>Друзья и недруги</h2>
-    <div class="small">клик: ▲ друг · ▼ недруг</div>
-    <div id="friends"></div>
+    <h2>Биография</h2>
+    <div class="bio3">
+      <div><label>Происхождение</label><input data-k="heritage" data-opts="heritages" list="dl-heritages" placeholder="из книги или своё"><input data-k="heritageNote" placeholder="детали семьи"></div>
+      <div><label>Прошлое</label><input data-k="background" data-opts="backgrounds" list="dl-backgrounds" placeholder="из книги или своё"><input data-k="backgroundNote" placeholder="детали"></div>
+      <div><label>Страсть / благодетель</label><input data-k="vice" data-opts="vices" list="dl-vices" placeholder="из книги или своё"><input data-k="viceNote" placeholder="кто и где"></div>
+    </div>
+    <label>Внешность</label>
+    <textarea data-k="look" class="grow" placeholder="пол, телосложение, одежда, приметы"></textarea>
+    <label>Друзья и недруги <span title="клик по ▲/▼ — сменить; ✕ — убрать">ⓘ</span></label>
+    <div id="friends" class="chips"></div>
+    <label>Заметки по биографии</label>
+    <textarea data-k="bioNote" class="grow" placeholder="история, связи, где живёт, на кого работает, что скрывает"></textarea>
   </section>
 </main>
 
@@ -312,7 +341,7 @@ const bQty=id=>S.bqty[id]||1,bTake=id=>bQty(id)>1?Math.min(S.btake[id]||0,bQty(i
 // sub entries: plain string, or {n,q} once a quantity is set
 const subN=x=>typeof x==='object'&&x?x.n:(x??''),subQ=x=>typeof x==='object'&&x?x.q:'';
 // per-item notes: custom -> c.note, book -> S.itemNotes[id]
-const obj=k=>k[0]==='u'?S.custom[+k.slice(1)]:k[0]==='p'?S.prod[+k.slice(1)]:null;
+const obj=k=>k[0]==='u'?S.custom[+k.slice(1)]:k[0]==='p'?S.prod[+k.slice(1)]:k[0]==='w'?S.ws[+k.slice(1)]:null;
 const noteGet=k=>obj(k)?obj(k).note||'':S.itemNotes[k]||'';
 const noteSet=(k,v)=>{if(obj(k))obj(k).note=v;else S.itemNotes[k]=v};
 const itemName=k=>obj(k)?obj(k).n:(S.nameOv[k]??(k[0]==='s'?D.special:D.common)[+k.slice(1)][0]);
@@ -329,31 +358,38 @@ const subArr=(k,mk)=>{const c=obj(k);if(c){if(mk&&!c.sub)c.sub=[];return c.sub}i
 const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 // counters that appear automatically for a taken talent (value kept in S.tc[talent])
 const rid=()=>Math.random().toString(36).slice(2,9);
-const PRESET=t=>(TC[t]&&(TC[t].book||!R().bookPresets)?TC[t]:null)||(SPECIAL.includes(t)?{n:t+' (особая защита)',max:1,r:'downtime',h:'1 раз до передышки'}:null);
+const PRESET=t=>TC[t]&&(TC[t].book||!R().bookPresets)?TC[t]:null;
 const PRESET_T=()=>Object.values(D.talents).flatMap(o=>Object.keys(o)).filter(PRESET);
 const mkPreset=(t,v)=>{const p=PRESET(t);return{id:rid(),n:p.n,v,max:p.max,r:p.r,h:p.h||'',from:t}};
 // when a talent with a preset is taken, add its counter once (old S.tc / special-armor values migrate in)
-function presetSync(){for(const t of S.talents)if(PRESET(t)&&!S.presetDone.includes(t)){S.counters.push(mkPreset(t,SPECIAL.includes(t)?(S.armor.s?1:0):(S.tc[t]||0)));S.presetDone.push(t)}S.presetDone=S.presetDone.filter(t=>S.talents.includes(t))}
+function presetSync(){for(const t of S.talents)if(PRESET(t)&&!S.presetDone.includes(t)){S.counters.push(mkPreset(t,S.tc[t]||0));S.presetDone.push(t)}S.presetDone=S.presetDone.filter(t=>S.talents.includes(t))}
 const TC={'Ядовитость':{book:false,n:'Производство анестезии за день',max:'',r:'day',h:'1-е за день — 1 стресс, дальше по 2 (особое усилие)'},'Аналитик':{book:true,n:'Доп. деления на проекты',max:2,r:'downtime',h:'+2 деления на расследования / рецепты / схемы'},'Призрачный барьер':{book:true,n:'Барьер держится, дней',max:'',r:'none',h:'область размером с комнату, несколько дней'}};
 const SPECIAL=['Стойкость','Изворотливость','Прирождённый боец','Собранность','Комбинатор','Магическая защита','Тень'];
 const talentInfo=t=>{for(const [pb,ts] of Object.entries(D.talents)) if(t in ts) return [pb,ts[t]];return ['?','']};
-const fresh = () => ({name:'',alias:'',look:'',heritage:'',heritageNote:'',background:'',backgroundNote:'',vice:'',viceNote:'',
+const fresh = () => ({name:'',alias:'',look:'',bioNote:'',heritage:'',heritageNote:'',background:'',backgroundNote:'',vice:'',viceNote:'',
   actions:Object.fromEntries(ALL.map(a=>[a,a==='Ремесло'?2:a==='Разрушение'?1:0])),
   xp:{'Чутьё':0,'Удаль':0,'Воля':0,'Талант':0},stress:0,trauma:[],h3:'',h2a:'',h2b:'',h1a:'',h1b:'',heal:0,
-  armor:{a:0,h:0,s:0},coin:0,stash:0,talents:[],items:[],base:[],rbPage:1,rules:{mode:'book',money:true,stress:true,band:true,presets:true,day:false,rest2:false,major:'Драхмы',minor:'Драхмёныши',rate:20,stressN:9,stage:'creation',tier:0},tips:true,day:1,itemProps:{},customTalents:[],contacts:[],traumaExtra:[],armorOv:{},armorUsed:{},prod:[],cards:[],itemNotes:{},bqty:{},btake:{},loadOv:{},nameOv:{},subOv:{},open:['s3','s4'],load:'3',bandolier:['','','','','',''],custom:[],bandQ:{},counters:[],tc:{},ctrOrder:[],presetDone:[],dr:0,drm:0,friends:{},notes:''});
+  armor:{a:0,h:0,s:0},coin:0,stash:0,talents:[],items:[],base:[],ws:[],rbPage:1,rules:{mode:'book',money:true,stress:true,carry:true,band:true,presets:true,day:false,rest2:false,major:'Драхмы',minor:'Драхмёныши',rate:20,stressN:9,talentXP:8,stage:'creation',tier:0},tips:true,day:1,itemProps:{},customTalents:[],contacts:[],traumaExtra:[],armorOv:{},armorUsed:{},prod:[],cards:[],itemNotes:{},bqty:{},btake:{},loadOv:{},nameOv:{},subOv:{},open:['s3','s4'],load:'3',bandolier:['','','','','',''],custom:[],bandQ:{},counters:[],tc:{},ctrOrder:[],presetDone:[],spec:{},dr:0,drm:0,friends:{},notes:''});
 const KEY='bitd-leech';
 // saves made before «Правила» existed belong to our homebrew table -> start them in «свои правила»
 const OUR_RULES={mode:'custom',money:false,stress:true,band:false,presets:false,day:true,rest2:true,major:'Драхмы',minor:'Драхмёныши',rate:20,stressN:9,stage:'free',tier:0};
 const loadRaw=t=>{const r=JSON.parse(t||'{}');if(Object.keys(r).length&&!r.rules)r.rules={...OUR_RULES};return Object.assign(fresh(),r,{rules:{...fresh().rules,...(r.rules||{})}})};
 let S; try{S=loadRaw(localStorage.getItem(KEY))}catch{S=fresh()}
 // effective rules: «по книге» forces every official mechanic on
-const R=()=>{const r=S.rules,b=r.mode==='book';return{book:b,bookMoney:b||r.money,bookStress:b||r.stress,bookBand:b||r.band,bookPresets:b||r.presets,showDay:!b&&r.day,rest2:!b&&r.rest2,stage:r.stage,tier:+r.tier||0}};
+const R=()=>{const r=S.rules,b=r.mode==='book';return{book:b,bookMoney:b||r.money,bookStress:b||r.stress,bookCarry:b||r.carry,bookBand:b||r.band,bookPresets:b||r.presets,showDay:!b&&r.day,rest2:!b&&r.rest2,stage:r.stage,tier:+r.tier||0}};
 S.items=S.items.filter(x=>x!=='s4'); // ponytail: 'Вторая перевязь' hidden (not in RU rulebook), kept in D.special so item ids don't shift
 // one-time migration: blowgun split into трубка + дротики + шприцы (load 0 each, as in the book)
 if(!S.mig1){S.mig1=1;delete S.loadOv?.s2;delete S.subOv?.s2;if(S.items.includes('s2'))S.items.push('s8','s9')}
 if(!S.cards.length&&S.notes){S.cards=[{t:'Заметки',x:S.notes}];S.notes=''}
-{const k=S.counters.findIndex(c=>c.n==='Производство анестезии за день');if(k>=0){S.tc['Ядовитость']=S.counters[k].v;S.counters.splice(k,1)}}
+for(const c of S.cards)if(c.plan&&!c.plan.floors.some(f=>f.s.length))delete c.plan;   // plans opened but never drawn
+{const k=S.counters.findIndex(c=>c.n==='Производство анестезии за день'&&!c.from);if(k>=0){S.tc['Ядовитость']=S.counters[k].v;S.counters.splice(k,1)}}
 S.counters.forEach(c=>{if(!c.id)c.id=rid()});
+// repair: the migration above used to delete the Ядовитость preset on every load
+if(!S.mig2){S.mig2=1;S.presetDone=S.presetDone.filter(t=>S.counters.some(c=>c.from===t))}
+let ctrEdit=null;
+// special armor moved from counters to checkboxes
+S.counters=S.counters.filter(c=>{if(!SPECIAL.includes(c.from))return true;S.spec[c.from]=!!c.v;return false});
+if(S.armor?.s){for(const t of S.talents)if(SPECIAL.includes(t)&&!(t in S.spec))S.spec[t]=true;S.armor.s=0}
 presetSync();
 const backup=()=>{try{localStorage.setItem(KEY+'-backup',JSON.stringify({at:new Date().toLocaleString('ru'),data:S}))}catch{}};
 let saveWarn=0;const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch{if(Date.now()-saveWarn>60000){saveWarn=Date.now();alert('Не удалось сохранить: в памяти браузера кончилось место (обычно из-за картинок). Удали лишние картинки или сделай Экспорт, иначе последние изменения пропадут после закрытия.')}}};
@@ -379,7 +415,8 @@ function render(){
       act.append(r);
     }
   }
-  fill($('#xpTalent'),boxes(8,S.xp['Талант'],'',v=>{S.xp['Талант']=v;upd()}));
+  {const n=R().book?8:Math.max(1,+S.rules.talentXP||8),bx=boxes(n,S.xp['Талант'],'',v=>{S.xp['Талант']=v;upd()}),rows=[];   // rows of 8
+    for(let i=0;i<n;i+=8){const r=document.createElement('span');r.append(...bx.slice(i,i+8));rows.push(r)}fill($('#xpTalent'),rows)}
   // stress/trauma
   const maxS=R().bookStress?(S.talents.includes('Уцелевший')?10:9):Math.max(1,+S.rules.stressN||9);
   fill($('#stress'),boxes(maxS,S.stress,'red',v=>{S.stress=v;upd()}));
@@ -407,20 +444,29 @@ function render(){
   const totalM=(+S.dr||0)*rt+(+S.drm||0);$('#moneyTotal').textContent=`Всего: ${totalM} ${mn} = ${(totalM/rt).toFixed(2).replace(/\.?0+$/,'')} ${mj}`;
   fill($('#coin'),boxes(4,S.coin,'',v=>{S.coin=v;upd()}));fill($('#stash'),boxes(40,S.stash,'',v=>{S.stash=v;upd()}));
   $('#stashInfo').textContent=`Уровень жизни ${Math.floor(S.stash/10)} · на покое: ${S.stash<=10?'нищий':S.stash<=20?'бедняк':S.stash<40?'середнячок':'богач'}`;
-  const sel=Math.min(S.cardSel||0,Math.max(0,S.cards.length-1)),first=x=>(x||'').split('\n').find(l=>l.trim())||'';
-  $('#cardList').innerHTML=S.cards.map((c,i)=>`<button class="ci${i===sel?' on':''}" data-cardsel="${i}"><b class="ct">${esc(c.t)||'без названия'}</b>${c.plan||c.imgs?.length?`<span class="cpi">${c.plan?'▭ план':''}${c.plan&&c.imgs?.length?' · ':''}${c.imgs?.length?'🖼 '+c.imgs.length:''}</span>`:''}<span class="cp">${esc(first(c.x))||'пусто'}</span></button>`).join('');
-  const cc=S.cards[sel],pm=S.cardMode==='plan',memB=(localStorage.getItem(KEY)||'').length,mem=memB<1048576?Math.ceil(memB/1024)+' КБ':(memB/1048576).toFixed(1)+' МБ';
-  $('#cardEd').innerHTML=S.cards.length?`<div class="row" style="flex-wrap:nowrap"><input class="edt" data-cardt="${sel}" value="${esc(cc.t)}" placeholder="Заголовок"><button data-carddel="${sel}">Удалить</button></div>`+
-    `<div class="ntabs"><button data-cardmode="text" class="${pm?'':'on'}">Текст</button><button data-cardmode="plan" class="${pm?'on':''}">План</button><span style="flex:1"></span><span class="small" title="сколько занимает бланк в памяти браузера (предел около 5 МБ)">${mem}</span><button data-imgadd title="добавить картинку: выбрать файл, Ctrl+V из буфера или перетащить сюда">🖼 Картинка</button></div>`+
-    (pm?planHTML():`<textarea class="edx" data-cardx="${sel}" placeholder="Текст заметки. Для плана: этажи [ Первый этаж ], комнаты [[ Кабинет ]] — каждый на своей строке">${esc(cc.x)}</textarea>`+
-      (cc.imgs?.length?`<div class="gal">${cc.imgs.map((src,i)=>`<img src="${src}" data-imgview="${i}" title="открыть">`).join('')}</div>`:'')):'<div class="small" style="margin:auto">Заметок пока нет. Нажми «+ новая карточка».</div>';
-  if(S.cards.length&&pm)planMount();
+  const sel=curIdx(),first=x=>(x||'').split('\n').find(l=>l.trim())||'',rk=kindR();
+  $('#notesH').textContent=rk?'Правила':'Заметки';$('#addCard').textContent=rk?'+ новое правило':'+ новая карточка';
+  const hasPlan=c=>c.plan?.floors.some(f=>f.s.length);
+  $('#cardList').innerHTML=visIdx().map(i=>[S.cards[i],i]).map(([c,i])=>`<button class="ci${i===sel?' on':''}${c.pin?' pin':''}" data-cardsel="${i}"><b class="ct">${esc(c.t)||'без названия'}</b>${hasPlan(c)||c.imgs?.length?`<span class="cpi">${hasPlan(c)?'▭ план':''}${hasPlan(c)&&c.imgs?.length?' · ':''}${c.imgs?.length?'🖼 '+c.imgs.length:''}</span>`:''}<span class="cp">${esc(first(c.x))||'пусто'}</span></button>`).join('');
+  const cc=S.cards[sel],pm=S.cardMode==='plan'&&!!cc?.plan,nv=S.noteView!==false&&!!(cc?.x||'').trim(),memB=(localStorage.getItem(KEY)||'').length,mem=memB<1048576?Math.ceil(memB/1024)+' КБ':(memB/1048576).toFixed(1)+' МБ';
+  $('#cardEd').innerHTML=cc?`<div class="row" style="flex-wrap:nowrap"><input class="edt" data-cardt="${sel}" value="${esc(cc.t)}" placeholder="Заголовок"><button data-cardpin="${sel}" class="${cc.pin?'on':''}" title="${cc.pin?'открепить':'закрепить вверху списка'}">📌 ${cc.pin?'Закреплено':'Закрепить'}</button><button data-carddel="${sel}">Удалить</button></div>`+
+    `<div class="ntabs"><button data-cardmode="text" class="${pm?'':'on'}">Текст</button><button data-cardmode="plan" class="${pm?'on':''}" title="${cc?.plan?'':'нарисовать план к этой заметке'}">${cc?.plan?'План':'+ План'}</button><span style="flex:1"></span>${pm||!(cc?.x||'').trim()?'':`<button data-noteview title="${nv?'править исходный текст':'показать оформленным: чат, броски, заголовки'}">${nv?'✎ Править':'👁 Вид'}</button>`}${pm||nv?'':'<button data-rollfmt title="броски из чата («rolling 5d6 ( 2 + 4 + 3 ) = 9», даже разбитые по строкам) — в одну строку с результатом. Ctrl+Z — вернуть">🎲 Броски</button>'}<span class="small" title="сколько занимает бланк в памяти браузера (предел около 5 МБ)">${mem}</span><button data-imgadd title="добавить картинку: выбрать файл, Ctrl+V из буфера или перетащить сюда">🖼 Картинка</button></div>`+
+    (pm?planHTML():(nv?`<div class="edx nview" title="двойной щелчок — править">${noteHTML(cc.x)}</div>`:`<textarea class="edx" data-cardx="${sel}" placeholder="Текст заметки. Для плана: этажи [ Первый этаж ], комнаты [[ Кабинет ]] — каждый на своей строке">${esc(cc.x)}</textarea>`)+
+      (cc.imgs?.length?`<div class="gal">${cc.imgs.map((src,i)=>`<img src="${src}" data-imgview="${i}" title="открыть">`).join('')}</div>`:'')):`<div class="small" style="margin:auto">${rk?'Правил пока нет. Нажми «+ новое правило».':'Заметок пока нет. Нажми «+ новая карточка».'}</div>`;
+  if(cc&&pm)planMount();
   const RN={day:'день',downtime:'передышка',score:'дело',none:'вручную'};
-  const ents=S.counters.map((c,i)=>['c:'+c.id,`<div class="ctr"><div class="row" style="flex-wrap:nowrap"><input data-ctrn="${i}" value="${esc(c.n)}" placeholder="название"><button data-ctrdel="${i}" title="удалить">✕</button></div>`
-    +`<div class="row" style="flex-wrap:nowrap"><button data-ctrm="${i}">−</button><span class="cell cv">${c.v}${c.max!==''?' / '+c.max:''}</span><button data-ctrp="${i}">+</button>`
-    +`<input type="number" min="0" data-ctrmax="${i}" value="${c.max}" placeholder="∞" title="максимум (пусто — без предела)" style="width:64px">`
-    +`<select data-ctrr="${i}" title="когда сбрасывать">${Object.entries(RN).map(([k,v])=>`<option value="${k}"${c.r===k?' selected':''}>↺ ${v}</option>`).join('')}</select></div>`
-    +`</div>`]);
+  const ents=S.counters.map((c,i)=>{const boxes=c.max!==''&&+c.max>0&&+c.max<=12,ed=ctrEdit===c.id;
+    return ['c:'+c.id,`<div class="ctr${ed?' ed':''}"><div class="chd"><b class="cn" title="${esc(c.n)}">${esc(c.n)||'<i>без названия</i>'}</b><span class="crs" title="когда сбрасывается">↺ ${RN[c.r]}</span><button class="cgear${ed?' on':''}" data-ctred="${c.id}" title="настроить">⚙</button></div>`
+    +(c.h?`<div class="small">${esc(c.h)}</div>`:'')
+    +`<div class="cbody"><button data-ctrm="${i}" title="−1">−</button>`
+    +(boxes?`<span class="cboxes">${Array.from({length:+c.max},(_,j)=>`<span class="box${j<c.v?' on':''}" data-ctrb="${i}|${j}"></span>`).join('')}</span>`:`<span class="cv">${c.v}${c.max!==''?`<small> / ${c.max}</small>`:''}</span>`)
+    +`<button data-ctrp="${i}" title="+1">+</button></div>`
+    +(ed?`<div class="cset"><label>Название <input data-ctrn="${i}" value="${esc(c.n)}" placeholder="название"></label>`
+      +`<label>Максимум <input type="number" min="0" data-ctrmax="${i}" value="${c.max}" placeholder="∞" title="пусто — без предела; до 12 — показывается ячейками"></label>`
+      +`<label>Сброс <select data-ctrr="${i}">${Object.entries(RN).map(([k,v])=>`<option value="${k}"${c.r===k?' selected':''}>${v}</option>`).join('')}</select></label>`
+      +`<button data-ctrdel="${i}" class="cdel">Удалить</button></div>`:'')
+    +`</div>`]});
+  $('#specs').innerHTML=S.talents.filter(t=>SPECIAL.includes(t)).map(t=>`<div class="spec" title="${esc(talentInfo(t)[1])}"><span class="box${S.spec[t]?' on':''}" data-spec="${esc(t)}"></span><b>${esc(t)}</b><span class="small">особая защита · до передышки</span></div>`).join('');
   $('#addCtr').innerHTML='<option value="">+ счётчик…</option><option value="blank">пустой</option>'+PRESET_T().map(t=>`<option value="p:${t}">по таланту: ${t}</option>`).join('');
   const ord=S.ctrOrder.filter(k=>ents.some(e=>e[0]===k));ents.forEach(e=>{if(!ord.includes(e[0]))ord.push(e[0])});
   $('#ctrs').innerHTML=ord.map(k=>`<div class="dz" data-ckey="${k}"><span class="grip" draggable="true" data-grip="${k}" title="перетащить">⠿</span>${ents.find(e=>e[0]===k)[1]}</div>`).join('')||'<div class="small">Счётчиков нет</div>';
@@ -430,7 +476,7 @@ function render(){
   document.querySelectorAll('#settings [data-ui="tips"]').forEach(el=>el.checked=!!S.tips);
   $('#customRules').classList.toggle('off',rr.book);$('#customRules').querySelectorAll('input').forEach(el=>el.disabled=rr.book);
   $('#moneyOpts').hidden=rr.bookMoney;$('#stressOpts').hidden=rr.bookStress;
-  $('#modeInfo').textContent=rr.book?'Всё строго по рулбуку: монеты и заначка, 9 ячеек стресса, перевязь по книге, только книжные заготовки.':'Свои правила: ниже включай или отключай официальные механики.';
+  $('#modeInfo').textContent=rr.book?'Всё строго по рулбуку: монеты и заначка, 9 ячеек стресса, нагрузка 3/5/6, перевязь по книге, только книжные заготовки.':'Свои правила: ниже включай или отключай официальные механики.';
   {let b=null;try{b=JSON.parse(localStorage.getItem(KEY+'-backup')||'null')}catch{}$('#backupInfo').textContent=b?'копия от '+b.at:'копии пока нет'}
   $('#dayBox').hidden=!rr.showDay;$('[data-rest="day"]').hidden=!rr.showDay;
   {const pts=ALL.reduce((a,x)=>a+S.actions[x],0),cap={creation:2,play:3,mastery:4}[rr.stage],over=cap&&ALL.filter(x=>S.actions[x]>cap);
@@ -439,6 +485,7 @@ function render(){
   $('#tipsBtn').classList.toggle('on',!!S.tips);
   document.body.classList.toggle('tips',!!S.tips);
   const lim=S.talents.includes('Мул')?{3:5,5:7,6:8}[S.load]:+S.load;
+  document.body.classList.toggle('noload',!rr.bookCarry);
   $('#loadUsed').innerHTML=`занято <b class="${used>lim?'warn':''}">${used}</b> / ${lim}`;
   const tg=(key,at)=>`<button data-base="${key}" class="${at?'':'on'}" title="переключить">${at?'на базе':'с собой'}</button>`;
   const isOpen=k=>obj(k)?!!obj(k).open:S.open.includes(k);
@@ -470,12 +517,27 @@ function render(){
       +propLine(k)+(c.open?`<div class="sub">${sub(k)}</div>`:'')}).join('')||'<div class="small" style="margin:6px 0">Пока ничего не производишь</div>';
   $('#addProd').innerHTML='<option value="">+ добавить изделие…</option><option value="new">✎ новое изделие</option>'
     +(S.custom.length?`<optgroup label="перенести из снаряжения">${S.custom.map((c,i)=>`<option value="u${i}">${esc(c.n||'без названия')}</option>`).join('')}</optgroup>`:'');
+  // workshop equipment: book items keep their own id as key, own items are 'w'+i (same shape as S.custom)
+  const wsKey=(c,i)=>c.book||'w'+i;
+  $('#wsList').innerHTML=(S.ws.length?'<div class="inv wsrow head"><span></span><span>оснащение</span><span>шт.</span><span></span><span></span><span></span></div>':'')
+    +S.ws.map((c,i)=>{const k=wsKey(c,i),has=hasSub(k),bn=c.book?(c.book[0]==='s'?D.special:D.common)[+c.book.slice(1)][0]:'';
+      return `<div class="inv wsrow${has?' grp':''}">${fold(k,has)}`
+      +(c.book?`<input data-bookn="${k}" value="${esc(S.nameOv[k]??bn)}" placeholder="${esc(bn)}" title="по книге: ${esc(bn)}"><input type="number" min="1" max="99" data-bq="${k}" value="${bQty(k)}" title="сколько">`
+        :`<input data-wsn="${i}" value="${esc(c.n)}" placeholder="что есть в мастерской"><input type="number" min="1" max="99" data-wsq="${i}" value="${c.qty||1}" title="сколько">`)
+      +`${noteBtn(k)}<button data-wsmv="${i}" title="перенести в снаряжение (на базу)">→</button><button data-wsdel="${i}" title="убрать">✕</button></div>`
+      +propLine(k)+(isOpen(k)?`<div class="sub">${sub(k)}</div>`:'')}).join('')||'<div class="small" style="margin:6px 0">Пока ничего: добавь верстак, станок, инструменты…</div>';
+  $('#addWs').innerHTML='<option value="">+ добавить оснащение…</option><option value="new">✎ новое оснащение</option>'
+    +((S.items.length||S.custom.length)?`<optgroup label="перенести из снаряжения">${S.items.filter(id=>id!=='s3'&&id!=='s4').map(id=>`<option value="${id}">${esc(itemName(id))}</option>`).join('')}${S.custom.map((c,i)=>`<option value="u${i}">${esc(c.n||'без названия')}</option>`).join('')}</optgroup>`:'');
   $('#inv').insertAdjacentHTML('beforeend',`<datalist id="subsList">${(R().bookBand?Object.keys(D.subs).filter(k=>/^книга/.test(D.subs[k])):[...new Set(S.custom.map(c=>c.n.trim()).filter(Boolean))]).map(o=>`<option value="${esc(o)}">`).join('')}</datalist>`);
   const opt=(list,pre)=>list.map((it,i)=>[pre+i,it]).filter(([id])=>!S.items.includes(id)&&id!=='s4').map(([id,[n,l]])=>`<option value="${id}">${n} [${l}]</option>`).join('');
   $('#addItem').innerHTML=`<option value="">+ добавить предмет…</option><option value="custom">✎ свой предмет</option><optgroup label="Особые (умелец)">${opt(D.special,'s')}</optgroup><optgroup label="Обычные">${opt(D.common,'c')}</optgroup>`;
   // friends
   const tri=v=>({up:'▲',down:'▼'})[v]||'·';
-  $('#friends').innerHTML=D.friends.map(f=>`<div><span class="tri" data-friend="${f}">${tri(S.friends[f])}</span>${f}</div>`).join('')+S.contacts.map((c,i)=>`<div class="row" style="flex-wrap:nowrap;margin:2px 0"><span class="tri" data-cfr="${i}">${tri(c.rel)}</span><input data-cfn="${i}" value="${esc(c.n)}" placeholder="имя, кто такой"><button data-cfdel="${i}" title="убрать">✕</button></div>`).join('')+'<button id="addContact" class="subadd" style="margin-top:6px">+ свой контакт</button>';
+  // only active contacts are shown; neutral book contacts wait in the "+ контакт" list
+  const idle=D.friends.filter(f=>!S.friends[f]);
+  $('#friends').innerHTML=D.friends.filter(f=>S.friends[f]).map(f=>`<span class="chip ${S.friends[f]}"><span class="tri" data-friend="${f}">${tri(S.friends[f])}</span>${f}<button data-fhide="${f}" title="убрать">✕</button></span>`).join('')
+    +S.contacts.map((c,i)=>`<span class="chip ${c.rel||''}"><span class="tri" data-cfr="${i}">${tri(c.rel)}</span><input data-cfn="${i}" value="${esc(c.n)}" size="${Math.max(12,c.n.length)}" placeholder="имя, кто такой"><button data-cfdel="${i}" title="убрать">✕</button></span>`).join('')
+    +`<select id="addFriend"><option value="">+ контакт…</option>${idle.length?`<optgroup label="из книги">${idle.map(f=>`<option>${f}</option>`).join('')}</optgroup>`:''}<option value="new">✎ свой контакт</option></select>`;
   // coin/stash
 }
 function upd(){save();render()}
@@ -491,6 +553,7 @@ document.addEventListener('click',e=>{
   const t=e.target, d=t.dataset;
   if(d.a){const v=+d.v;S.actions[d.a]=S.actions[d.a]===v?v-1:v;upd()}
   else if(d.heal){S.heal=S.heal===+d.heal?+d.heal-1:+d.heal;upd()}
+  else if(d.spec){S.spec[d.spec]=!S.spec[d.spec];upd()}
   else if(d.armu){const [k,j]=d.armu.split('|'),u=S.armorUsed[k]||0;S.armorUsed[k]=+j<u?+j:+j+1;upd()}
   else if(d.tab) showTab(d.tab);
   else if(d.cusdel){S.custom.splice(+d.cusdel,1);upd()}
@@ -498,27 +561,30 @@ document.addEventListener('click',e=>{
   else if(d.subadd){subArr(d.subadd,true).push('');upd()}
   else if(d.subdel){const [k,j]=d.subdel.split('|');subArr(k,true).splice(+j,1);upd()}
   else if(d.note) openNote(d.note);
+  else if(d.ctred){ctrEdit=ctrEdit===d.ctred?null:d.ctred;render()}
+  else if(d.ctrb){const [i,j]=d.ctrb.split('|').map(Number),c=S.counters[i];c.v=j<c.v?j:j+1;upd()}
   else if(d.ctrp){const c=S.counters[+d.ctrp];if(c.max===''||c.v<+c.max)c.v++;upd()}
   else if(d.ctrm){const c=S.counters[+d.ctrm];if(c.v>0)c.v--;upd()}
   else if(d.ctrdel){const c=S.counters[+d.ctrdel];if(confirm(`Удалить счётчик «${c.n||'без названия'}»?`)){S.counters.splice(+d.ctrdel,1);upd()}}
   else if(d.rest) rest(d.rest);
   else if(d.rest2){if(d.rest2==='heal'){S.heal=Math.min(4,(+S.heal||0)+1);S.stress=Math.max(0,S.stress-1)}else S.stress=Math.max(0,S.stress-2);upd();$('#restMsg').textContent=d.rest2==='heal'?'Передышка: +1 к лечению, −1 стресс':'Передышка: −2 стресса'}
   else if(d.carddel){const c=S.cards[+d.carddel];if(!(c.t||c.x)||confirm(`Удалить карточку «${c.t||'без названия'}»?`)){S.cards.splice(+d.carddel,1);S.cardSel=Math.max(0,+d.carddel-1);upd()}}
-  else if(t.id==='addCard'){S.cards.push({t:'',x:''});S.cardSel=S.cards.length-1;upd();document.querySelector('.edt').focus()}
+  else if(t.id==='addCard'){S.cards.push(kindR()?{t:'',x:'',rule:true}:{t:'',x:''});S.cardMode='text';S.cardSel=S.cards.length-1;upd();document.querySelector('.edt').focus()}
   else if(d.cardsel){S.cardSel=+d.cardsel;upd()}
+  else if(d.cardpin){const c=S.cards[+d.cardpin];if(c.pin)delete c.pin;else c.pin=true;upd()}
   else if(d.prodmv){const c=S.prod.splice(+d.prodmv,1)[0];S.custom.push({n:c.n,l:c.l??1,qty:Math.max(1,c.q??1),take:0,base:true,sub:c.sub,note:c.note,open:c.open});upd()}
   else if(d.proddel){const c=S.prod[+d.proddel];if(confirm(`Удалить «${c.n||'без названия'}»?`)){S.prod.splice(+d.proddel,1);upd()}}
   else if(d.use){const pr=P(d.use);if(+pr.left>0){pr.left=+pr.left-1;upd()}}
   else if(d.unitem){S.items=S.items.filter(x=>x!==d.unitem);S.base=S.base.filter(x=>x!==d.unitem);upd()}
   else if(d.base){const b=d.base;if(b[0]==='u'){const c=S.custom[+b.slice(1)];c.base=!c.base}else S.base=S.base.includes(b)?S.base.filter(x=>x!==b):[...S.base,b];upd()}
   else if(d.ctdel){const c=S.customTalents[+d.ctdel];if(!(c.n||c.x)||confirm(`Убрать талант «${c.n||'без названия'}»?`)){S.customTalents.splice(+d.ctdel,1);upd()}}
-  else if(d.cfr){const c=S.contacts[+d.cfr];c.rel=c.rel==='up'?'down':c.rel==='down'?'':'up';upd()}
+  else if(d.cfr){const c=S.contacts[+d.cfr];c.rel=c.rel==='up'?'down':'up';upd()}
   else if(d.cfdel){S.contacts.splice(+d.cfdel,1);upd()}
-  else if(t.id==='addContact'){S.contacts.push({id:rid(),n:'',rel:''});upd();document.querySelector(`[data-cfn="${S.contacts.length-1}"]`).focus()}
   else if(t.id==='addTrauma'){const n=(prompt('Название своей травмы')||'').trim();if(n&&!D.traumas.includes(n)&&!S.traumaExtra.includes(n)){S.traumaExtra.push(n);upd()}}
   else if(d.untrauma){e.preventDefault();S.traumaExtra=S.traumaExtra.filter(x=>x!==d.untrauma);S.trauma=S.trauma.filter(x=>x!==d.untrauma);upd()}
   else if(d.untalent){S.talents=S.talents.filter(t=>t!==d.untalent);upd()}
-  else if(d.friend){const c=S.friends[d.friend];S.friends[d.friend]=c==='up'?'down':c==='down'?'':'up';upd()}
+  else if(d.friend){S.friends[d.friend]=S.friends[d.friend]==='up'?'down':'up';upd()}
+  else if(d.fhide){S.friends[d.fhide]='';upd()}
 });
 document.addEventListener('change',e=>{
   const d=e.target.dataset, tog=(arr,v)=>arr.includes(v)?arr.filter(x=>x!==v):[...arr,v];
@@ -528,7 +594,8 @@ document.addEventListener('change',e=>{
   if(d.ctn){S.customTalents[+d.ctn].n=e.target.value;upd()}
   if(d.ctx){S.customTalents[+d.ctx].x=e.target.value;upd()}
   if(d.cfn){S.contacts[+d.cfn].n=e.target.value;upd()}
-  if(e.target.id==='addCtr'&&e.target.value){const v=e.target.value;if(v==='blank')S.counters.push({id:rid(),n:'',v:0,max:'',r:'day'});else S.counters.push(mkPreset(v.slice(2),0));upd();document.querySelector(`[data-ctrn="${S.counters.length-1}"]`).focus()}
+  if(e.target.id==='addFriend'&&e.target.value){const v=e.target.value;if(v==='new'){S.contacts.push({id:rid(),n:'',rel:'up'});upd();document.querySelector(`[data-cfn="${S.contacts.length-1}"]`).focus()}else{S.friends[v]='up';upd()}}
+  if(e.target.id==='addCtr'&&e.target.value){const v=e.target.value;if(v==='blank')S.counters.push({id:rid(),n:'',v:0,max:'',r:'day'});else S.counters.push(mkPreset(v.slice(2),0));ctrEdit=S.counters.at(-1).id;upd();document.querySelector(`[data-ctrn="${S.counters.length-1}"]`).focus()}
   if(e.target.id==='addItem'&&e.target.value){const v=e.target.value;if(v==='custom')S.custom.push({n:'',l:1});else S.items=[...S.items,v];upd()}
   if(d.ctrn){S.counters[+d.ctrn].n=e.target.value;upd()}
   if(d.ctrmax){const c=S.counters[+d.ctrmax];c.max=e.target.value===''?'':Math.max(0,+e.target.value);if(c.max!==''&&c.v>c.max)c.v=c.max;upd()}
@@ -576,6 +643,7 @@ document.addEventListener('input',e=>{const d=e.target.dataset;const li=k=>docum
 // rests: day < downtime (also special armor) ; score resets armor boxes (load is chosen anew)
 function rest(kind){const kinds={day:['day'],downtime:['day','downtime'],score:['score']}[kind];if(kind==='day')S.day=(+S.day||0)+1;
   const done=S.counters.filter(c=>kinds.includes(c.r)&&c.v).map(c=>c.n||'без названия');S.counters.forEach(c=>{if(kinds.includes(c.r))c.v=0});
+  if(kind==='downtime'){const u=Object.keys(S.spec).filter(k=>S.spec[k]);if(u.length){done.push(...u.map(k=>k+' (особая защита)'));S.spec={}}}
   if(kind==='score'&&Object.values(S.armorUsed).some(Boolean)){S.armorUsed={};done.push('доспех')}
   upd();$('#restMsg').textContent=done.length?'Сброшено: '+done.join(', '):'Сбрасывать нечего';
   if(kind==='downtime'&&R().rest2)$('#restMsg').insertAdjacentHTML('beforeend','<div class="row" style="margin-top:6px" id="rest2"><span>Передышка:</span><button data-rest2="heal">+1 лечение, −1 стресс</button><button data-rest2="stress">−2 стресса</button></div>')}
@@ -621,16 +689,24 @@ $('#rbprev').onclick=()=>rbShow((+S.rbPage||1)-1);$('#rbnext').onclick=()=>rbSho
 $('#rbpage').onchange=e=>rbShow(e.target.value);
 rbSide();rbShow(S.rbPage??1);
 function planHTML(){const p=planOf(curCard());
-  const tools=[['sel','↖','выбор: двигать, растягивать, двойной щелчок — переименовать'],['room','▭','комната: тяни прямоугольник'],['wall','━','стена (Shift — ровно)'],['door','┅','дверь / проход (Shift — ровно)'],['pen','✎','карандаш'],['text','T','подпись'],['mark',PL.glyph,'метка']];
+  const tools=[['sel','↖','выбор: двигать, растягивать, двойной щелчок — переименовать'],['room','▭','комната: тяни прямоугольник'],['wall','━','стена (Shift — ровно)'],['door','┅','дверь / проход (Shift — ровно)'],['win','═','окно (Shift — ровно)'],['pen','✎','карандаш'],['text','T','подпись'],['mark',PL.glyph,'метка']];
   return `<div class="ptool"><span class="pfl">${p.floors.map((f,i)=>`<button class="${i===p.f?'on':''}" data-pfloor="${i}" title="двойной щелчок — переименовать или удалить">${esc(f.n)}</button>`).join('')}<button data-pfadd title="добавить этаж">+</button></span><i class="sep"></i>`+
     tools.map(([k,ic,tip])=>`<button class="${PL.tool===k?'on':''}" data-ptool="${k}" title="${tip}">${esc(ic)}</button>`).join('')+
-    `<select data-pglyph title="значок метки">${['✕','!','?','●','★','☠','⚑'].map(g=>`<option${g===PL.glyph?' selected':''}>${g}</option>`).join('')}</select><i class="sep"></i>`+
+    `<button popovertarget="gpop" title="выбрать значок метки">${esc(PL.glyph)} ▾</button><div id="gpop" popover class="gpop">${GLYPHS.map(([g,n])=>`<button data-pglyphpick="${g}" title="${n}" class="${g===PL.glyph?'on':''}">${g}</button>`).join('')}</div><i class="sep"></i>`+
     `<button data-pundo title="отменить (Ctrl+Z)">⟲</button><button data-pdel title="удалить выделенное (Delete)">🗑</button><button data-pzoom="1.25" title="приблизить">+</button><button data-pzoom="0.8" title="отдалить">−</button><button data-pfit title="показать всё">⤢</button><i class="sep"></i>`+
-    `<button data-pfromtext title="создать этажи и комнаты из заголовков текста: [ Этаж ] и [[ Комната ]]">из текста</button><button data-ppng title="сохранить этаж картинкой PNG">PNG</button></div>`+
+    `<button data-pfromtext title="создать этажи и комнаты из заголовков текста: [ Этаж ] и [[ Комната ]]">из текста</button><button data-ppng title="сохранить этаж картинкой PNG">PNG</button><button data-pkill title="удалить план этой заметки целиком">✕ план</button></div>`+
     `<div class="pwrap"><svg id="planSvg" tabindex="0"></svg></div><div id="pinfo" class="small"></div>`}
 // notes: floor-plan editor (SVG shapes per card and floor) + images (paste / upload / drop)
+const GLYPHS=[['✕','ловушка / опасность'],['!','внимание'],['?','неизвестно'],['●','точка'],['★','важное'],['☠','смерть'],['⚑','вход / цель'],
+  ['⚠','угроза'],['💀','труп'],['👤','человек'],['🛡','охрана'],['⚔','бой'],['🏹','стрелок'],['👁','наблюдение'],['🔔','сигнализация'],['👻','призрак'],
+  ['🚪','дверь'],['🔒','заперто'],['🔑','ключ'],['🗝','тайник'],['🪜','лестница'],['⬆','наверх'],['⬇','вниз'],['🕳','люк / дыра'],['🪟','окно'],
+  ['🔥','огонь'],['💧','вода'],['🕯','свет'],['⛓','цепи / пленник'],['🩸','кровь'],['💊','лекарства'],['⚗','алхимия'],['🔧','инструменты'],
+  ['💰','деньги'],['📦','груз'],['📜','документы'],['🛏','спальное место'],['🪑','мебель'],['✚','лечение']];
 const PL={tool:'sel',glyph:'✕',sel:null,undo:[],drag:null,ck:null},GRID=20,snap=(v,g=GRID)=>Math.round(v/g)*g;
-const curIdx=()=>Math.min(S.cardSel||0,Math.max(0,S.cards.length-1)),curCard=()=>S.cards[curIdx()];
+// notes and rules share S.cards; rules carry rule:true. Order: pinned on top, newest first (array order = creation order)
+const kindR=()=>S.cardKind==='rules';
+const visIdx=()=>S.cards.map((c,i)=>i).filter(i=>!!S.cards[i].rule===kindR()).sort((a,b)=>(!!S.cards[b].pin-!!S.cards[a].pin)||b-a);
+const curIdx=()=>{const v=visIdx();return v.includes(S.cardSel)?S.cardSel:v[0]},curCard=()=>S.cards[curIdx()];
 const planOf=c=>c.plan??={f:0,floors:[{n:'1 этаж',s:[]}],v:{x:40,y:40,z:1}};
 const floorOf=p=>p.floors[Math.min(p.f,p.floors.length-1)];
 function pal(){const cs=getComputedStyle(document.documentElement),g=n=>cs.getPropertyValue(n).trim()||'#888';
@@ -649,7 +725,17 @@ function shSvg(s,i,P,on,z){const F=`font-family="${esc(P.font)}"`;let h='';
   else if(s.k==='r')h=`<rect x="${s.x}" y="${s.y}" width="${s.w}" height="${s.h}" fill="${P.acc}" fill-opacity=".08" stroke="${P.ink}" stroke-width="2"/>`+
     (s.t?`<text x="${s.x+s.w/2}" y="${s.y+s.h/2}" text-anchor="middle" dominant-baseline="middle" fill="${P.ink}" font-size="14" ${F}>${esc(s.t)}</text>`:'');
   else if(s.k==='l'){const a=`x1="${s.x1}" y1="${s.y1}" x2="${s.x2}" y2="${s.y2}"`;
-    h=`<line ${a} stroke="transparent" stroke-width="14"/><line ${a} stroke="${s.d?P.acc:P.ink}" stroke-width="${s.d?3:5}" stroke-linecap="round"${s.d?' stroke-dasharray="7 6"':''}/>`}
+    if(!s.d)h=`<line ${a} stroke="transparent" stroke-width="14"/><line ${a} stroke="${P.ink}" stroke-width="5" stroke-linecap="round"/>`;
+    else if(s.d===2){// window: framed box in the wall with an accent "glass" line
+      const L=Math.hypot(s.x2-s.x1,s.y2-s.y1)||1,nx=-(s.y2-s.y1)/L*6,ny=(s.x2-s.x1)/L*6,
+        pts=[[s.x1+nx,s.y1+ny],[s.x2+nx,s.y2+ny],[s.x2-nx,s.y2-ny],[s.x1-nx,s.y1-ny]].map(q=>q.join(',')).join(' ');
+      h=`<line ${a} stroke="transparent" stroke-width="16"/><polygon points="${pts}" fill="${P.bg}" stroke="${P.ink}" stroke-width="2.5"/>`+
+        `<line ${a} stroke="${P.acc}" stroke-width="3"/>`}
+    else{// door: gap in the wall + leaf hinged at (x1,y1) + swing arc; drawing direction picks the swing side
+      const L=Math.hypot(s.x2-s.x1,s.y2-s.y1)||1,ex=s.x1-(s.y2-s.y1),ey=s.y1+(s.x2-s.x1);
+      h=`<line ${a} stroke="transparent" stroke-width="14"/><line ${a} stroke="${P.bg}" stroke-width="8"/>`+
+        `<line x1="${s.x1}" y1="${s.y1}" x2="${ex}" y2="${ey}" stroke="${P.ink}" stroke-width="3" stroke-linecap="round"/>`+
+        `<path d="M${s.x2} ${s.y2}A${L} ${L} 0 0 1 ${ex} ${ey}" fill="none" stroke="${P.acc}" stroke-width="1.5" stroke-dasharray="4 4"/>`}}
   else if(s.k==='p'){const pts=s.pts.map(q=>q.join(',')).join(' ');
     h=`<polyline points="${pts}" fill="none" stroke="transparent" stroke-width="12"/><polyline points="${pts}" fill="none" stroke="${P.red}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`}
   else if(s.k==='t')h=`<text x="${s.x}" y="${s.y}" fill="${P.ink}" font-size="15" ${F}>${esc(s.t)}</text>`;
@@ -659,16 +745,18 @@ function shSvg(s,i,P,on,z){const F=`font-family="${esc(P.font)}"`;let h='';
     if(s.k==='r'||s.k==='i')h+=`<rect data-h="${i}" x="${s.x+s.w-6/z}" y="${s.y+s.h-6/z}" width="${12/z}" height="${12/z}" fill="${P.acc}" style="cursor:nwse-resize"/>`}
   return `<g data-i="${i}">${h}</g>`}
 const gridDef=P=>`<defs><pattern id="pg" width="${GRID}" height="${GRID}" patternUnits="userSpaceOnUse"><path d="M${GRID} 0H0V${GRID}" fill="none" stroke="${P.line}" stroke-width=".7"/></pattern></defs>`;
-function planDraw(){const svg=$('#planSvg'),c=curCard();if(!svg||!c)return;const p=planOf(c),v=p.v,P=pal();
+function planDraw(info){const svg=$('#planSvg'),c=curCard();if(!svg||!c)return;const p=planOf(c),v=p.v,P=pal();
   svg.classList.toggle('sel',PL.tool==='sel');
   svg.innerHTML=gridDef(P)+`<g transform="translate(${v.x} ${v.y}) scale(${v.z})"><rect x="-5000" y="-5000" width="10000" height="10000" fill="url(#pg)"/>`+
-    floorOf(p).s.map((s,i)=>shSvg(s,i,P,i===PL.sel,v.z)).join('')+'</g>';planInfo()}
+    floorOf(p).s.map((s,i)=>shSvg(s,i,P,i===PL.sel,v.z)).join('')+'</g>';if(info!==false)planInfo()}
 // text under a "[[ Room ]]" heading, up to the next [ … ] / [[ … ]] heading
 function roomText(c,name){const L=(c.x||'').split('\n'),h=new RegExp('^\\s*\\[\\[\\s*'+name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*\\]\\]\\s*$','i'),i=L.findIndex(l=>h.test(l));
   if(i<0)return null;const out=[];for(const l of L.slice(i+1)){if(/^\s*\[.*\]\s*$/.test(l))break;out.push(l)}return out.join('\n').trim()}
 function planInfo(){const el=$('#pinfo'),c=curCard();if(!el||!c)return;const s=PL.sel!=null&&floorOf(planOf(c)).s[PL.sel];
-  if(s&&s.k==='r'&&s.t){const t=roomText(c,s.t);el.innerHTML=`<b>${esc(s.t)}</b>${t==null?' · в тексте нет заголовка [[ '+esc(s.t)+' ]]':t?': '+esc(t):' · описания пока нет'} <button data-pgotext="${esc(s.t)}">в тексте →</button>`;return}
-  el.textContent='Тяни пустое место — двигать план · колесо — масштаб · двойной щелчок — переименовать · Delete — удалить · Ctrl+Z — отменить · Ctrl+V — вставить картинку'}
+  if(s&&['r','t','m'].includes(s.k)){const t=s.k==='r'&&s.t?roomText(c,s.t):undefined;
+    el.innerHTML=`<label>${s.k==='r'?'Название':'Подпись'} <input data-plabel value="${esc(s.t||'')}" placeholder="${s.k==='m'?'например: люк, ловушка':'текст'}" style="width:260px"></label>`+
+      (s.k==='r'&&s.t?` ${t==null?'· в тексте нет заголовка [[ '+esc(s.t)+' ]]':t?'· '+esc(t):'· описания пока нет'} <button data-pgotext="${esc(s.t)}">в тексте →</button>`:'');return}
+  el.textContent='Правая кнопка или тяни пустое место — двигать план · колесо — масштаб · двойной щелчок по комнате, метке или надписи — переименовать · Delete — удалить · Ctrl+Z — отменить · Ctrl+V — вставить картинку'}
 function planPush(){const p=planOf(curCard());PL.undo.push(JSON.stringify(p.floors));if(PL.undo.length>60)PL.undo.shift()}
 function planUndo(){const p=planOf(curCard()),u=PL.undo.pop();if(!u)return;p.floors=JSON.parse(u);p.f=Math.min(p.f,p.floors.length-1);PL.sel=null;upd()}
 function planDel(){const f=floorOf(planOf(curCard()));if(PL.sel==null||!f.s[PL.sel])return;planPush();f.s.splice(PL.sel,1);PL.sel=null;save();planDraw()}
@@ -695,14 +783,15 @@ function planPng(){const c=curCard(),p=planOf(c),f=floorOf(p),P=pal();if(!f.s.le
   im.onerror=()=>alert('Не удалось сохранить картинку');im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}
 function planMount(){const svg=$('#planSvg'),ci=curIdx();if(!svg)return;if(PL.ck!==ci){PL.ck=ci;PL.sel=null;PL.undo=[]}planDraw();
   const W=e=>{const r=svg.getBoundingClientRect(),v=planOf(curCard()).v;return[(e.clientX-r.left-v.x)/v.z,(e.clientY-r.top-v.y)/v.z]};
-  svg.onpointerdown=e=>{if(e.button>0)return;svg.focus();const f=floorOf(planOf(curCard())),[x,y]=W(e),hd=e.target.closest('[data-h]'),g=e.target.closest('[data-i]');
+  svg.oncontextmenu=e=>e.preventDefault();
+  svg.onpointerdown=e=>{if(e.button>0){if(e.button>2)return;const v=planOf(curCard()).v;PL.drag={k:'pan',cx:e.clientX,cy:e.clientY,vx:v.x,vy:v.y};try{svg.setPointerCapture(e.pointerId)}catch{}return}svg.focus();const f=floorOf(planOf(curCard())),[x,y]=W(e),hd=e.target.closest('[data-h]'),g=e.target.closest('[data-i]');
     const t=PL.tool==='sel'||(e.target.closest('[data-h]')&&PL.tool!=='pen')?'sel':PL.tool;
     if(t==='sel'){if(hd){planPush();const i=+hd.dataset.h;PL.drag={k:'size',i,o:{...f.s[i]}}}
-      else if(g){PL.sel=+g.dataset.i;planPush();PL.drag={k:'move',i:PL.sel,x,y,o:JSON.parse(JSON.stringify(f.s[PL.sel]))}}
+      else if(g){const i=+g.dataset.i,now=Date.now();if(PL.last&&PL.last.i===i&&now-PL.last.t<450){PL.last=null;planLabel(i);return}PL.last={i,t:now};PL.lbl=false;PL.sel=i;planPush();PL.drag={k:'move',i:PL.sel,x,y,o:JSON.parse(JSON.stringify(f.s[PL.sel]))}}
       else{PL.sel=null;const v=planOf(curCard()).v;PL.drag={k:'pan',cx:e.clientX,cy:e.clientY,vx:v.x,vy:v.y}}}
     else if(t==='text'||t==='mark'){const txt=t==='text'?prompt('Подпись:'):'';if(t==='text'&&!txt)return;planPush();
       f.s.push(t==='text'?{k:'t',x:snap(x,5),y:snap(y,5),t:txt}:{k:'m',x:snap(x,5),y:snap(y,5),g:PL.glyph,t:''});PL.sel=f.s.length-1;save();planDraw();return}
-    else{planPush();const s=t==='room'?{k:'r',x:snap(x),y:snap(y),w:0,h:0,t:''}:t==='pen'?{k:'p',pts:[[Math.round(x),Math.round(y)]]}:{k:'l',d:t==='door'?1:0,x1:snap(x),y1:snap(y),x2:snap(x),y2:snap(y)};
+    else{planPush();const s=t==='room'?{k:'r',x:snap(x),y:snap(y),w:0,h:0,t:''}:t==='pen'?{k:'p',pts:[[Math.round(x),Math.round(y)]]}:{k:'l',d:t==='door'?1:t==='win'?2:0,x1:snap(x),y1:snap(y),x2:snap(x),y2:snap(y)};
       f.s.push(s);PL.drag={k:'new',s,x0:snap(x),y0:snap(y)}}
     try{svg.setPointerCapture(e.pointerId)}catch{}planDraw()};
   svg.onpointermove=e=>{const d=PL.drag;if(!d)return;const p=planOf(curCard()),f=floorOf(p),[x,y]=W(e);
@@ -719,9 +808,13 @@ function planMount(){const svg=$('#planSvg'),ci=curIdx();if(!svg)return;if(PL.ck
     else if((d.k==='move'||d.k==='size')&&JSON.stringify(f.s[d.i])===JSON.stringify(d.o))PL.undo.pop();
     save();planDraw()};
   svg.onwheel=e=>{e.preventDefault();const r=svg.getBoundingClientRect();planZoom(e.deltaY<0?1.12:1/1.12,e.clientX-r.left,e.clientY-r.top)};
-  svg.ondblclick=e=>{const g=e.target.closest('[data-i]');if(!g)return;const f=floorOf(planOf(curCard())),s=f.s[+g.dataset.i];
-    if(!['r','t','m'].includes(s.k))return;const t=prompt(s.k==='m'?'Подпись к метке:':'Название:',s.t||'');if(t==null)return;
-    planPush();if(s.k==='t'&&!t.trim())f.s.splice(+g.dataset.i,1);else s.t=t.trim();PL.sel=null;save();planDraw()}}
+}
+// double click is detected in pointerdown: the SVG is redrawn on every press, so the browser's own dblclick loses its target
+function planLabel(i){const f=floorOf(planOf(curCard())),s=f.s[i];if(!s||!['r','t','m'].includes(s.k))return;
+  const t=prompt(s.k==='m'?'Подпись к метке:':'Название:',s.t||'');if(t==null)return;
+  planPush();if(s.k==='t'&&!t.trim()){f.s.splice(i,1);PL.sel=null}else{s.t=t.trim();PL.sel=i}save();planDraw()}
+document.addEventListener('input',e=>{if(e.target.dataset.plabel==null)return;const s=floorOf(planOf(curCard())).s[PL.sel];if(!s)return;
+  if(!PL.lbl){planPush();PL.lbl=true}s.t=e.target.value;save();planDraw(false)});
 document.addEventListener('keydown',e=>{if($('#coins').hidden||S.cardMode!=='plan'||!$('#planSvg'))return;const a=document.activeElement;if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))return;
   if((e.ctrlKey||e.metaKey)&&e.code==='KeyZ'){e.preventDefault();planUndo()}else if(e.key==='Delete'||e.key==='Backspace'){if(PL.sel!=null){e.preventDefault();planDel()}}
   else if(e.key==='Escape'){PL.sel=null;PL.tool='sel';render()}});
@@ -733,15 +826,19 @@ function imgShrink(file,max=1600){return new Promise((res,rej)=>{const u=URL.cre
   im.onerror=()=>{URL.revokeObjectURL(u);rej()};im.src=u})}
 async function addImages(files){const c=curCard();if(!c)return;let n=0;
   for(const file of files){if(!/^image\//.test(file.type))continue;let r;try{r=await imgShrink(file)}catch{alert('Не удалось прочитать картинку');continue}
-    if(S.cardMode==='plan'){const p=planOf(c),f=floorOf(p),svg=$('#planSvg'),Wd=svg?.clientWidth||800,Hd=svg?.clientHeight||500,v=p.v;
+    if(S.cardMode==='plan'&&c.plan){const p=planOf(c),f=floorOf(p),svg=$('#planSvg'),Wd=svg?.clientWidth||800,Hd=svg?.clientHeight||500,v=p.v;
       const k=Math.min(1,Wd*.6/v.z/r.w,Hd*.6/v.z/r.h),w=Math.round(r.w*k),h=Math.round(r.h*k);planPush();
       f.s.unshift({k:'i',x:Math.round((Wd/2-v.x)/v.z-w/2),y:Math.round((Hd/2-v.y)/v.z-h/2),w,h,src:r.src});PL.sel=0;PL.tool='sel'}
     else(c.imgs??=[]).push(r.src);n++}
   if(n)upd()}
 let imgIdx=null;
 document.addEventListener('click',e=>{const t=e.target.closest('button,img,select');if(!t)return;const d=t.dataset;
-  if(d.cardmode){S.cardMode=d.cardmode;PL.sel=null;upd()}
+  if(d.cardmode){S.cardMode=d.cardmode;if(d.cardmode==='plan')planOf(curCard());PL.sel=null;upd()}
+  else if(d.pkill!=null){const c=curCard();if(c.plan?.floors.some(f=>f.s.length)&&!confirm('Удалить план этой заметки целиком, со всеми этажами?'))return;delete c.plan;S.cardMode='text';PL.sel=null;upd()}
+  else if(d.pglyphpick){PL.glyph=d.pglyphpick;PL.tool='mark';render()}
   else if(d.imgadd!=null)$('#imgFile').click();
+  else if(d.rollfmt!=null)rollFmtNote();
+  else if(d.noteview!=null){S.noteView=S.noteView===false;upd();if(S.noteView===false)$('.edx')?.focus()}
   else if(d.imgview!=null){imgIdx=+d.imgview;$('#imgBig').src=curCard().imgs[imgIdx];const g=$('#imgDlg');g.showModal?g.showModal():g.setAttribute('open','')}
   else if(d.ptool){PL.tool=d.ptool;if(d.ptool!=='sel')PL.sel=null;render()}
   else if(d.pfloor!=null&&e.detail<2){const p=planOf(curCard());if(p.f!==+d.pfloor){p.f=+d.pfloor;PL.sel=null;PL.undo=[];upd()}}
@@ -750,25 +847,82 @@ document.addEventListener('click',e=>{const t=e.target.closest('button,img,selec
   else if(d.pfromtext!=null)planFromText();else if(d.ppng!=null)planPng();
   else if(d.pgotext){const c=curCard(),L=(c.x||'').split('\n'),i=L.findIndex(l=>new RegExp('^\\s*\\[\\[\\s*'+d.pgotext.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*\\]\\]','i').test(l));
     S.cardMode='text';upd();const ta=$('.edx');if(ta&&i>=0){const at=L.slice(0,i).join('\n').length+(i?1:0);ta.focus();ta.setSelectionRange(at,at+L[i].length);ta.scrollTop=Math.max(0,i*parseFloat(getComputedStyle(ta).lineHeight||'22')-40)}}});
+document.addEventListener('dblclick',e=>{if(e.target.closest('.nview')){S.noteView=false;upd();$('.edx')?.focus()}});
 document.addEventListener('dblclick',e=>{const b=e.target.closest('[data-pfloor]');if(!b)return;const p=planOf(curCard()),i=+b.dataset.pfloor,f=p.floors[i];
   const n=prompt('Название этажа (пусто — удалить этаж):',f.n);if(n==null)return;
   if(n.trim())f.n=n.trim();else if(p.floors.length>1&&(!f.s.length||confirm(`Удалить этаж «${f.n}» со всем, что на нём нарисовано?`))){p.floors.splice(i,1);p.f=Math.max(0,Math.min(p.f,p.floors.length-1));PL.undo=[]}
   PL.sel=null;upd()});
-document.addEventListener('change',e=>{if(e.target.dataset.pglyph!=null){PL.glyph=e.target.value;PL.tool='mark';render()}});
 $('#imgFile').onchange=e=>{addImages([...e.target.files]);e.target.value=''};
-document.addEventListener('paste',e=>{if($('#coins').hidden||!S.cards.length)return;
+document.addEventListener('paste',e=>{if($('#coins').hidden||!curCard())return;
   const fs=[...(e.clipboardData?.items||[])].filter(i=>i.kind==='file'&&/^image\//.test(i.type)).map(i=>i.getAsFile()).filter(Boolean);if(!fs.length)return;e.preventDefault();addImages(fs)});
 document.addEventListener('dragover',e=>{if(e.target.closest&&e.target.closest('#cardEd')&&[...(e.dataTransfer?.types||[])].includes('Files'))e.preventDefault()});
 document.addEventListener('drop',e=>{if(!(e.target.closest&&e.target.closest('#cardEd'))||!e.dataTransfer?.files?.length)return;e.preventDefault();addImages([...e.dataTransfer.files])});
+// dice from chat pasted into a note: "rolling 5d6 ( 2 + 4 + 3 + 1 + 2 ) =12", often split over many lines -> one line, read the Blades way.
+// Only the roll is rewritten; "Name:" before it and the rest of the chat stay. Idempotent (output has no "rolling").
+const rollsInText=x=>x.replace(/rolling\s+(\d*)d(\d+)\s*\(([\d\s+]+)\)\s*=\s*(\d+)/gi,(_,n,f,ds,sum)=>{
+  const d=ds.trim().split(/\s*\+\s*/).map(Number),best=Math.max(...d),sixes=d.filter(v=>v===6).length;
+  return `🎲 ${n||1}d${f} → ${d.join(' ')} · `+(+f!==6?`сумма ${sum}`:`лучший ${best} → `+(sixes>1?'6&6: критический успех':best===6?'6: успех':best>=4?'4–5: успех с последствиями':'1–3: неудача'))});
+// note view: the note stays plain text (easy to edit, export, read by the agent); this only renders it.
+// Understands: [ Этаж ] / # heading, [[ Комната ]] / ## subheading, - or • bullets, **bold**, --- / === rules,
+// chat lines "Name:text" (colon glued to text; next lines without a speaker continue the message) and rolls (raw "rolling …" too).
+function noteHTML(x){const B=[];let who='',msg=null,chat=false;   // chat: inside a chat log, so loose lines belong to the last speaker
+  const inl=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+  const roll=(name,body)=>{const m=/^🎲\s*(\S+)\s*→\s*([\d ]+?)\s*·\s*(.*)$/.exec(body);if(!m)return null;
+    const c=/6&6/.test(m[3])?'rc':/^лучший 6/.test(m[3])?'r6':/4–5/.test(m[3])?'r4':/1–3/.test(m[3])?'r1':'';
+    return `<div class="nchip nroll">🎲 <b>${esc(name)}</b> <span class="dim">· ${esc(m[1])}</span> ${esc(m[2])} <span class="${c}">${esc(m[3].replace(/^лучший \d → /,''))}</span></div>`};
+  for(const l of rollsInText(x||'').split('\n')){let m;
+    if(!l.trim()){msg=null;chat=false;B.push('<div class="ngap"></div>');continue}
+    if((m=/^\s*\[\[\s*(.+?)\s*\]\]\s*$/.exec(l))||(m=/^\s*##+\s+(.+)$/.exec(l))){msg=null;chat=false;B.push(`<h4>${inl(m[1])}</h4>`)}
+    else if((m=/^\s*\[\s*(.+?)\s*\]\s*$/.exec(l))||(m=/^\s*#\s+(.+)$/.exec(l))){msg=null;chat=false;B.push(`<h3>${inl(m[1])}</h3>`)}
+    else if(/^\s*[-=]{3,}\s*$/.test(l)){msg=null;B.push('<hr>')}
+    else if((m=/^\s*([^:\d+()=\s\[][^:]{0,39}?)\s?:(?=\S)(.*)$/.exec(l))){who=m[1].trim();chat=true;const r=roll(who,m[2].trim());
+      if(r){msg=null;B.push(r)}else{msg={who,lines:[m[2]]};B.push(msg)}}
+    else if(/^\s*🎲/.test(l)&&roll(who,l.trim())){msg=null;B.push(roll(who,l.trim()))}
+    else if(msg)msg.lines.push(l);
+    else if(chat){msg={who,lines:[l]};B.push(msg)}
+    else if((m=/^\s*[-•]\s+(.*)$/.exec(l)))B.push(`<div class="nli">• ${inl(m[1])}</div>`);
+    else B.push(`<div>${inl(l)}</div>`)}
+  return B.map(b=>typeof b==='string'?b:`<div class="nchip nmsg">💬 <b>${esc(b.who)}:</b> ${b.lines.map(inl).join('<br>')}</div>`).join('')}
+function rollFmtNote(){const ta=$('.edx');if(!ta)return;const nt=rollsInText(ta.value);
+  if(nt===ta.value){alert('В тексте нет бросков вида «rolling 5d6 ( 2 + 4 + 3 ) = 9».');return}
+  ta.focus();ta.select();if(!document.execCommand('insertText',false,nt)){ta.value=nt;ta.dispatchEvent(new Event('input',{bubbles:true}))}}   // execCommand keeps Ctrl+Z
 $('#imgClose').onclick=()=>{const g=$('#imgDlg');g.close?g.close():g.removeAttribute('open')};
 $('#imgDel').onclick=()=>{const c=curCard();if(imgIdx==null||!confirm('Удалить картинку?'))return;c.imgs.splice(imgIdx,1);if(!c.imgs.length)delete c.imgs;imgIdx=null;$('#imgClose').click();upd()};
+// AI agent bridge: the page connects to the local MCP server (tools/mcp/server.mjs) over WebSocket; opt-in in ⚙
+let aiWs=null,aiTimer=null,aiImgs=[];
+const aiPack=()=>{aiImgs=[];return JSON.parse(JSON.stringify(S,(k,v)=>typeof v==='string'&&v.startsWith('data:image/')?'img#'+(aiImgs.push(v)-1):v))};
+const aiUnpack=st=>JSON.parse(JSON.stringify(st),(k,v)=>typeof v==='string'&&/^img#\d+$/.test(v)&&aiImgs[+v.slice(4)]?aiImgs[+v.slice(4)]:v);
+function aiStatus(text,on){const b=$('#aiBadge');b.hidden=!S.ai;b.textContent=on?'ИИ ●':'ИИ ○';b.classList.toggle('on',!!on);b.title=text;$('#aiState').textContent=S.ai?text:''}
+function aiConnect(){clearTimeout(aiTimer);if(!S.ai){if(aiWs){const w=aiWs;aiWs=null;w.close()}aiStatus('',0);return}if(aiWs)return;
+  let ws;try{ws=new WebSocket('ws://127.0.0.1:'+(+S.aiPort||8765))}catch{aiTimer=setTimeout(aiConnect,5000);return}aiWs=ws;aiStatus('подключаюсь…',0);
+  ws.onopen=()=>{ws.send(JSON.stringify({op:'hello',token:S.aiToken||''}));aiStatus('агент подключён: может читать и менять бланк',1)};
+  ws.onclose=()=>{if(aiWs===ws)aiWs=null;if(S.ai){aiStatus('MCP-сервер не запущен. Он стартует сам, когда открыт ИИ-клиент (Claude Code / Claude Desktop) с подключённым сервером blades-sheet. Жду…',0);aiTimer=setTimeout(aiConnect,4000)}};
+  ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}const reply=o=>ws.send(JSON.stringify({id:m.id,...o}));
+    if(m.op==='get')reply({state:aiPack()});
+    else if(m.op==='set'){try{const st=aiUnpack(m.state);if(!st||typeof st!=='object'||Array.isArray(st))throw Error('state must be an object');
+        const n=loadRaw(JSON.stringify(st));n.ai=S.ai;n.aiPort=S.aiPort;n.aiToken=S.aiToken;backup();S=n;save();render();document.querySelectorAll('[data-k]').forEach(el=>el.value=S[el.dataset.k]??'');aiStatus('агент изменил бланк в '+new Date().toLocaleTimeString('ru')+' (прошлое состояние — в резервной копии)',1);reply({ok:true})}
+      catch(err){reply({error:String(err.message||err)})}}
+    else if(m.op==='error')aiStatus('MCP-сервер: '+m.message,0)}}
+document.addEventListener('change',e=>{const el=e.target;if(el.id==='aiOn'){S.ai=el.checked;save();aiConnect()}
+  else if(el.id==='aiPort'||el.id==='aiToken'){S[el.id]=el.id==='aiPort'?(+el.value||8765):el.value;save();if(aiWs){const w=aiWs;aiWs=null;w.close()}aiConnect()}});
+$('#aiOn').checked=!!S.ai;$('#aiPort').value=S.aiPort||8765;$('#aiToken').value=S.aiToken||'';aiConnect();
+// workshop equipment edits
+document.addEventListener('change',e=>{const el=e.target,d=el.dataset;
+  if(el.id==='addWs'&&el.value){const v=el.value;if(v==='new')S.ws.push({n:'',l:0,qty:1});else if(v[0]==='u')S.ws.push(S.custom.splice(+v.slice(1),1)[0]);else{S.items=S.items.filter(x=>x!==v);S.ws.push({book:v})}upd()}
+  else if(d.wsn!=null){S.ws[+d.wsn].n=el.value;upd()}
+  else if(d.wsq!=null){S.ws[+d.wsq].qty=Math.max(1,+el.value||1);upd()}});
+document.addEventListener('click',e=>{const d=e.target.dataset||{};
+  if(d.wsmv!=null){const c=S.ws.splice(+d.wsmv,1)[0];if(c.book){if(!S.items.includes(c.book))S.items.push(c.book)}else{c.base=true;c.take=0;S.custom.push(c)}upd()}
+  else if(d.wsdel!=null){const c=S.ws[+d.wsdel];if(confirm(`Убрать «${c.book?itemName(c.book):c.n||'без названия'}» из оснащения?`)){S.ws.splice(+d.wsdel,1);upd()}}});
 // file io
 $('#export').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download=(S.name||'умелец')+'.json';a.click()};
 $('#import').onchange=e=>{const f=e.target.files[0];if(!f)return;if(!confirm('Заменить текущего персонажа данными из файла? Текущий сохранится в резервную копию (⚙ → Восстановить).')){e.target.value='';return}f.text().then(t=>{try{const n=loadRaw(t);backup();S=n;save();location.reload()}catch{alert('Не удалось прочитать файл')}})};
 $('#reset').onclick=()=>{if(confirm('Очистить бланк? Текущий персонаж сохранится в резервную копию (⚙ → Восстановить).')){backup();S=fresh();save();location.reload()}};
 $('#restoreBackup').onclick=()=>{let b;try{b=JSON.parse(localStorage.getItem(KEY+'-backup')||'null')}catch{}if(!b){alert('Резервной копии нет');return}if(confirm(`Восстановить копию от ${b.at}? Текущий персонаж станет новой резервной копией.`)){const cur=S;S=loadRaw(JSON.stringify(b.data));localStorage.setItem(KEY+'-backup',JSON.stringify({at:new Date().toLocaleString('ru'),data:cur}));save();location.reload()}};
 $('#tipsBtn').onclick=()=>{S.tips=!S.tips;upd()};
-function showTab(t){if(t==='rulebook'&&typeof rbShow==='function')setTimeout(()=>rbShow(S.rbPage??1));for(const id of ['sheet','gear','prod','coins','bio','settings','rulebook']) document.getElementById(id).hidden=id!==t;
+function showTab(t){if(t==='rulebook'&&typeof rbShow==='function')setTimeout(()=>rbShow(S.rbPage??1));
+  if(t==='coins'||t==='rules'){const k=t==='rules'?'rules':'';if(S.cardKind!==k){S.cardKind=k;PL.sel=null;render()}}   // rules = the notes view filtered to rule cards
+  const m=t==='rules'?'coins':t;for(const id of ['sheet','gear','prod','coins','bio','settings','rulebook']) document.getElementById(id).hidden=id!==m;
   document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));try{localStorage.setItem(KEY+'-tab',t)}catch{}}
 let tab0='sheet';try{tab0=localStorage.getItem(KEY+'-tab')||'sheet'}catch{}
 render();showTab(tab0);
