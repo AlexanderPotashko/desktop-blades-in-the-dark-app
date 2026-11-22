@@ -70,7 +70,7 @@
     "page": 99,
     "text": "Lighter than standard (ordinary gear has load 2)."
   },
-  "silence-potion": {
+  "lurk-silence-potion": {
     "name": "Silence Potion",
     "page": 99,
     "text": "Muffles sounds within 10 paces of the drinker for a few moments."
@@ -110,22 +110,22 @@
     "text": "Perhaps a good source of information.",
     "page": 97
   },
-  "build.acrobat": {
+  "lurk-acrobat": {
     "name": "Acrobat",
     "text": "Sway +1, Consort +2, Finesse +1",
     "page": 97
   },
-  "build.assassin": {
+  "lurk-assassin": {
     "name": "Assassin",
     "text": "Skirmish +2, Hunt +2",
     "page": 97
   },
-  "build.burglar": {
+  "lurk-burglar": {
     "name": "Burglar",
     "text": "Survey +2, Tinker +1, Finesse +1",
     "page": 97
   },
-  "build.rogue": {
+  "lurk-rogue": {
     "name": "Rogue",
     "text": "Skirmish +2, Consort +2",
     "page": 97

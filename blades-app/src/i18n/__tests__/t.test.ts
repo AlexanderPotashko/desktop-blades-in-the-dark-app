@@ -28,7 +28,7 @@ describe('i18n', () => {
   });
   it('contentText: per language, fallback to ru, unknown id', () => {
     expect(contentText('en', 'tinker')?.name).toBe('Tinker');
-    expect(contentText('en', 'tinker', 'leech')?.name).toBe('Artificer');
+    expect(contentText('en', 'artificer')?.name).toBe('Artificer');
     expect(contentText('ru', 'leech')?.name).toBe('Умелец');
     expect(contentText('de', 'leech')?.name).toBe('Умелец');
     expect(contentText('en', 'nope')).toBeUndefined();

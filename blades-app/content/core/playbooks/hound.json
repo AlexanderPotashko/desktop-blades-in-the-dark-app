@@ -83,7 +83,7 @@
   ],
   "builds": [
     {
-      "id": "build.bounty-hunter",
+      "id": "hound-bounty-hunter",
       "actions": {
         "skirmish": 2,
         "consort": 1,
@@ -92,7 +92,7 @@
       "talent": "scout"
     },
     {
-      "id": "build.deadlands-scout",
+      "id": "hound-deadlands-scout",
       "actions": {
         "prowl": 1,
         "survey": 1,
@@ -101,7 +101,7 @@
       "talent": "survivor"
     },
     {
-      "id": "build.sniper",
+      "id": "hound-sniper",
       "actions": {
         "study": 1,
         "prowl": 2,
@@ -110,7 +110,7 @@
       "talent": "sharpshooter"
     },
     {
-      "id": "build.veteran",
+      "id": "hound-veteran",
       "actions": {
         "skirmish": 2,
         "command": 1,

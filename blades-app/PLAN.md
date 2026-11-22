@@ -170,12 +170,12 @@ edit in UI → Immer produceWithPatches → (patch onto the undo stack) → new 
 
 ```sql
 campaigns  (id TEXT PK, name, rules JSON, updated_at)
-characters (id TEXT PK, campaign_id → campaigns, doc JSON, schema_version INT, archived INT, updated_at,
+characters (id TEXT PK CHECK (id = doc->>'$.id'), campaign_id → campaigns, doc JSON, schema_version INT, archived INT, updated_at,
             name     TEXT GENERATED ALWAYS AS (doc->>'$.name'),
             playbook TEXT GENERATED ALWAYS AS (doc->>'$.playbookId'))   -- indexes on name, playbook, campaign_id
 revisions  (id INTEGER PK, character_id → characters, created_at, reason, doc JSON)  -- "as it was yesterday"; keep the last 50 + one per day
 rulings    (id TEXT PK, campaign_id, date, author, quote, topic)                     -- GM rulings log, verbatim
-rulebooks  (id TEXT PK, title, imported_at, page_offset INT)                         -- offset: PDF page − book page (5 in the Russian edition)
+rulebooks  (id TEXT PK, title, imported_at)                                          -- PDF ↔ book page mapping is per page in rb_pages
 rb_pages   (rulebook_id, pdf INT, book INT, text, PRIMARY KEY(rulebook_id, pdf))
 rb_toc     (rulebook_id, ord INT, title, page INT, level INT)
 rb_fts     USING fts5(stemmed, content='', ...)   -- word stems of a page; rowid ↔ rb_pages
@@ -194,26 +194,31 @@ TableRules{ mode:'book'|'custom',
             skillStage:'creation'|'play'|'mastery'|'free', crewTier:0..6,
             foreignTalentCost:1|2 }
 
-Character { id, schemaVersion, campaignId?, playbookId, name, alias, look, day,
-            heritage, background, vice, friends:{npcId:'up'|'down'}, contacts: Contact[],
+Character { id, schemaVersion, playbookId, name, alias, look, day,        // campaign link: characters.campaign_id only
+            heritage, background, vice, contacts: {id, bookId?, name?, rel:'up'|'down', note}[],  // playbook friends + custom
             actions: Record<actionId,0..4>, xp:{insight,prowess,resolve,playbook},
             talents: talentId[], customTalents: {id,name,text}[],
-            stress, trauma: string[], customTraumas: string[],
+            stress, trauma: string[], customTraumas: {id,name,text}[],
             harm:{l3,l2:[,],l1:[,]}, healing:0..4, armorUsed: Record<itemId,n>,
             specialArmorUsed: Record<talentId,boolean>,       // checkboxes above counters, from any playbook's (or custom) special-armor talents; cleared by downtime
             money:{coins,stash}|{major,minor}, load:'light'|'normal'|'heavy',
             items: Item[], workshop: WorkItem[], counters: Counter[], cards: Card[],
             rulesOverride?: Partial<TableRules> }             // a sheet without a campaign keeps its own rules
 
-Item      { id, source:'book'|'custom', bookId?, name, load, qty, carried, open,
-            note, props: ItemProps, sub: SubItem[], slots?: Slot[] }   // slots = bandolier
+Item      { id, bookId?, name, load, qty, carried, open,                 // book item iff bookId
+            note, props: ItemProps, sub?: SubItem[], slots?: Slot[] }  // sub absent = book contents; slots = bandolier
 ItemProps { type?:'standard'|'alchemical'|'arcane'|'spark-craft', quality?:'tier'|0..6, fine?:boolean,
             uses?:number, usesLeft?:number, armor?:number, gives?:string, flaws:string[] }
+            // TODO: item counter (e.g. "Spirit Wardens attention" 4 boxes on potions / electroplasmic ammo, p. 87, 272), healing segments a creation adds (potion of vitality +4, p. 273)
 SubItem   { id, name, qty? }
 WorkItem  { id, name, done?, total?, qty, load, note, props: ItemProps, sub: SubItem[] }
 Counter   { id, name, value, max?, reset:'day'|'downtime'|'score'|'manual', fromTalent? }
 Card      { id, title, text }
 ```
+
+**All document objects are strict:** an unknown key fails validation (the prototype importer routes unknown fields to the «Импорт: не перенесено» card first).
+
+**Deleting a campaign** never falls back to book rules: before the row goes, the app copies the campaign's `rules` into `rulesOverride` of each of its sheets (in the same transaction), then `campaign_id` becomes NULL.
 
 **Migrations:** the first document migration is **import of the prototype format** with all its fields and flags (`mig1`, `OUR_RULES`, index ids `u0`/`p1` → UUID, `itemProps`, `subOv`, `bandQ`…).
 

@@ -105,22 +105,22 @@
     "text": "Perhaps she taught you to shoot and hunt.",
     "page": 85
   },
-  "build.bounty-hunter": {
+  "hound-bounty-hunter": {
     "name": "Bounty Hunter",
     "text": "Skirmish +2, Consort +1, Prowl +1",
     "page": 85
   },
-  "build.deadlands-scout": {
+  "hound-deadlands-scout": {
     "name": "Deadlands Scout",
     "text": "Prowl +1, Survey +1, Attune +2",
     "page": 85
   },
-  "build.sniper": {
+  "hound-sniper": {
     "name": "Sniper",
     "text": "Study +1, Prowl +2, Survey +1",
     "page": 85
   },
-  "build.veteran": {
+  "hound-veteran": {
     "name": "Veteran",
     "text": "Skirmish +2, Command +1, Wreck +1",
     "page": 85

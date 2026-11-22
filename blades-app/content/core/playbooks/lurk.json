@@ -69,7 +69,7 @@
       "load": 1
     },
     {
-      "id": "silence-potion",
+      "id": "lurk-silence-potion",
       "load": 0
     },
     {
@@ -86,7 +86,7 @@
   ],
   "builds": [
     {
-      "id": "build.acrobat",
+      "id": "lurk-acrobat",
       "actions": {
         "sway": 1,
         "consort": 2,
@@ -95,7 +95,7 @@
       "talent": "devils-footsteps"
     },
     {
-      "id": "build.assassin",
+      "id": "lurk-assassin",
       "actions": {
         "skirmish": 2,
         "hunt": 2
@@ -103,7 +103,7 @@
       "talent": "ambush"
     },
     {
-      "id": "build.burglar",
+      "id": "lurk-burglar",
       "actions": {
         "survey": 2,
         "tinker": 1,
@@ -112,7 +112,7 @@
       "talent": "infiltrator"
     },
     {
-      "id": "build.rogue",
+      "id": "lurk-rogue",
       "actions": {
         "skirmish": 2,
         "consort": 2

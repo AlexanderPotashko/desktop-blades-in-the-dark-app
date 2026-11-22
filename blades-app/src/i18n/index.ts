@@ -34,20 +34,12 @@ export function t(key: Key, vars: Record<string, string | number> = {}, l: Lang 
   return (e ?? key).replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m));
 }
 
-// content/<lang>/{common,playbooks/*}.json, kept per file: some ids repeat across files
-// (e.g. action "tinker" vs Leech talent "tinker"), so lookup takes an optional scope.
+// content/<lang>/{common,playbooks/*}.json merged per language: ids are unique across content files (tested).
 const files = import.meta.glob<LocaleTexts>('../../content/*/{common,playbooks/*}.json', { eager: true, import: 'default' });
-const texts: Record<string, Record<string, LocaleTexts>> = {};
-for (const [path, data] of Object.entries(files)) {
-  const [code, file] = path.split('/content/')[1].replace(/\.json$/, '').split(/\/(.+)/);
-  (texts[code] ??= {})[file.replace('playbooks/', '')] = data;
-}
+const texts: Record<string, LocaleTexts> = {};
+for (const [path, data] of Object.entries(files)) Object.assign((texts[path.split('/content/')[1].split('/')[0]] ??= {}), data);
 
-/** Book entity text by id. `scope` is 'common' or a playbook id; without it common is searched first. Falls back to ru. */
-export function contentText(l: Lang | string, id: string, scope?: string) {
-  for (const code of [l, FALLBACK]) {
-    const byFile = texts[code] ?? {};
-    const hit = scope ? byFile[scope]?.[id] : (byFile.common?.[id] ?? Object.values(byFile).find((f) => id in f)?.[id]);
-    if (hit) return hit;
-  }
+/** Book entity text by id. Falls back to ru. */
+export function contentText(l: Lang | string, id: string) {
+  return texts[l]?.[id] ?? texts[FALLBACK]?.[id];
 }

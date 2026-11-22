@@ -110,22 +110,22 @@
     "text": "Perhaps an acquaintance from the war years, or the butcher who ruined your health.",
     "page": 81
   },
-  "build.commander": {
+  "cutter-commander": {
     "name": "Commander",
     "text": "Study +1, Command +1, Survey +2",
     "page": 81
   },
-  "build.extortionist": {
+  "cutter-extortionist": {
     "name": "Extortionist",
     "text": "Sway +1, Consort +2, Command +1",
     "page": 81
   },
-  "build.destroyer": {
+  "cutter-destroyer": {
     "name": "Destroyer",
     "text": "Prowl +2, Wreck +2",
     "page": 81
   },
-  "build.ghost-hunter": {
+  "cutter-ghost-hunter": {
     "name": "Ghost Hunter",
     "text": "Study +1, Hunt +1, Attune +2",
     "page": 81

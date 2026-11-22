@@ -15,7 +15,7 @@ export const XP: Record<string, 'insight' | 'prowess' | 'resolve' | 'playbook'> 
 
 export const TALENTS: Record<string, string> = {
   // Leech
-  'Алхимик': 'alchemist', 'Аналитик': 'analyst', 'Врач': 'physicker', 'Инженер': 'tinker',
+  'Алхимик': 'alchemist', 'Аналитик': 'analyst', 'Врач': 'physicker', 'Инженер': 'artificer',
   'Призрачный барьер': 'ghost-ward', 'Саботажник': 'saboteur', 'Стойкость': 'fortitude', 'Ядовитость': 'venomous',
   // Slide
   'Рокировка': 'rooks-gambit', 'Гипнотизёр': 'mesmerism', 'Доверься мне': 'trust-in-me', 'Изворотливость': 'subterfuge',

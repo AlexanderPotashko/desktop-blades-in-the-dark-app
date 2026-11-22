@@ -12,7 +12,8 @@ CREATE TABLE campaigns (
 ) STRICT;
 
 CREATE TABLE characters (
-  id             TEXT PRIMARY KEY,                               -- UUID, equals doc.id
+  id             TEXT PRIMARY KEY CHECK (id = doc ->> '$.id'),   -- UUID, equals doc.id
+  -- the campaign link lives only here; before deleting a campaign the app copies its rules into each doc's rulesOverride
   campaign_id    TEXT REFERENCES campaigns(id) ON DELETE SET NULL,
   doc            TEXT NOT NULL CHECK (json_valid(doc)),          -- Character document
   archived       INTEGER NOT NULL DEFAULT 0 CHECK (archived IN (0, 1)),
@@ -51,9 +52,8 @@ CREATE INDEX rulings_campaign ON rulings(campaign_id, date);
 CREATE TABLE rulebooks (
   id          TEXT PRIMARY KEY,
   title       TEXT NOT NULL,
-  imported_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
-  page_offset INTEGER NOT NULL DEFAULT 0                         -- PDF page − book page (5 in the Russian edition)
-) STRICT;
+  imported_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+) STRICT;                                                        -- PDF ↔ book page mapping: rb_pages.pdf/book
 
 -- Explicit INTEGER PRIMARY KEY: it is the rb_fts rowid, and implicit rowids may change on VACUUM.
 CREATE TABLE rb_pages (

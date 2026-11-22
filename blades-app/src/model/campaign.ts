@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { Uuid } from './common';
 import { TableRules } from './rules';
 
-/** campaigns row: `rules` column holds TableRules; characters point here via campaignId. */
+/** campaigns row: `rules` column holds TableRules; characters point here via the `characters.campaign_id` column. */
 export const Campaign = z.object({
   id: Uuid,
   name: z.string().min(1),

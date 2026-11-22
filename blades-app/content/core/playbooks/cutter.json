@@ -93,7 +93,7 @@
   ],
   "builds": [
     {
-      "id": "build.commander",
+      "id": "cutter-commander",
       "actions": {
         "study": 1,
         "command": 1,
@@ -102,7 +102,7 @@
       "talent": "leader"
     },
     {
-      "id": "build.extortionist",
+      "id": "cutter-extortionist",
       "actions": {
         "sway": 1,
         "consort": 2,
@@ -111,7 +111,7 @@
       "talent": "not-to-be-trifled-with"
     },
     {
-      "id": "build.destroyer",
+      "id": "cutter-destroyer",
       "actions": {
         "prowl": 2,
         "wreck": 2
@@ -119,7 +119,7 @@
       "talent": "savage"
     },
     {
-      "id": "build.ghost-hunter",
+      "id": "cutter-ghost-hunter",
       "actions": {
         "study": 1,
         "hunt": 1,

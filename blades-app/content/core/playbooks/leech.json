@@ -29,7 +29,7 @@
       "specialArmor": false
     },
     {
-      "id": "tinker",
+      "id": "artificer",
       "owner": "leech",
       "group": "ability",
       "specialArmor": false
@@ -38,7 +38,10 @@
       "id": "ghost-ward",
       "owner": "leech",
       "group": "ability",
-      "specialArmor": false
+      "specialArmor": false,
+      "counter": {
+        "reset": "manual"
+      }
     },
     {
       "id": "saboteur",
@@ -91,7 +94,7 @@
   ],
   "builds": [
     {
-      "id": "build.physician",
+      "id": "leech-physician",
       "actions": {
         "study": 2,
         "consort": 1,
@@ -100,7 +103,7 @@
       "talent": "physicker"
     },
     {
-      "id": "build.sapper",
+      "id": "leech-sapper",
       "actions": {
         "study": 1,
         "survey": 2,
@@ -109,7 +112,7 @@
       "talent": "saboteur"
     },
     {
-      "id": "build.viper",
+      "id": "leech-viper",
       "actions": {
         "sway": 2,
         "prowl": 2
@@ -117,7 +120,7 @@
       "talent": "venomous"
     },
     {
-      "id": "build.herbalist",
+      "id": "leech-herbalist",
       "actions": {
         "study": 2,
         "attune": 2

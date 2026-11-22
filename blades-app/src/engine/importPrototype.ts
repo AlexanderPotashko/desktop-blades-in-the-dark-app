@@ -76,7 +76,7 @@ export function prototypeLoad(input: unknown): Raw {
   return S;
 }
 
-export function importPrototype(input: unknown, opts: { campaignId?: string; playbookId?: string } = {}): PrototypeImport {
+export function importPrototype(input: unknown, opts: { playbookId?: string } = {}): PrototypeImport {
   const S = prototypeLoad(input);
   const warnings: string[] = [];
   const leftovers: Raw = {};
@@ -117,19 +117,20 @@ export function importPrototype(input: unknown, opts: { campaignId?: string; pla
     return {
       type, quality: optInt(p.q, `${path}.q`, 0, 6), fine: !!p.good,
       uses: optInt(p.uses, `${path}.uses`), usesLeft: optInt(p.left, `${path}.left`),
-      armor: optInt(armor, `${path}.armor`, 0, 5), gives: str(p.gives),
+      armor: optInt(armor, `${path}.armor`), gives: str(p.gives),
       flaws: arr(p.flaws).map(f => P.FLAWS[f] ?? str(f)).filter(Boolean),
     };
   };
-  const subs = (a: unknown) => arr(a).map(x => (x && typeof x === 'object'
+  // absent = book contents (prototype: subOv[k] || D.contents[k]); an empty array means the user emptied it
+  const subs = (a: unknown) => (!Array.isArray(a) ? undefined : a.map(x => (x && typeof x === 'object'
     ? { id: uuid(), name: str(x.n), qty: optInt(x.q, 'sub.q') }
-    : { id: uuid(), name: str(x) }));
+    : { id: uuid(), name: str(x) })));
   const customItem = (c: Raw, path: string, place: 'gear' | 'workshop') => {
     extra(c, CUSTOM_ITEM_KEYS, path);
     const qty = int(c.qty ?? 1, `${path}.qty`, 1, 1);
     const carried = place === 'workshop' ? 0 : qty > 1 ? Math.min(int(c.take, `${path}.take`, 0), qty) : c.base ? 0 : 1;
     return {
-      id: uuid(), source: 'custom' as const, name: str(c.n), place, load: int(c.l, `${path}.l`, 0), qty, carried,
+      id: uuid(), name: str(c.n), place, load: int(c.l, `${path}.l`, 0), qty, carried,
       open: !!c.open, note: str(c.note), props: props(c, c.armor, path), sub: subs(c.sub),
     };
   };
@@ -150,7 +151,7 @@ export function importPrototype(input: unknown, opts: { campaignId?: string; pla
     const carried = place === 'workshop' ? 0 : qty > 1 ? Math.min(int(S.btake[k], `btake.${k}`, 0), qty) : S.base.includes(k) ? 0 : 1;
     const name: string | undefined = S.nameOv[k] ?? (def?.rename || !def?.id ? def?.name ?? k : undefined);
     return {
-      id: uuid(), source: def?.id ? 'book' as const : 'custom' as const, bookId: def?.id ?? undefined, name, place,
+      id: uuid(), bookId: def?.id ?? undefined, name, place,
       load: empty(S.loadOv[k]) ? def?.load ?? 0 : int(S.loadOv[k], `loadOv.${k}`, 0), qty, carried,
       open: S.open.includes(k), note: str(S.itemNotes[k]),
       props: props(obj(S.itemProps[k]), S.armorOv[k], `itemProps.${k}`), sub: subs(S.subOv[k]),
@@ -169,7 +170,7 @@ export function importPrototype(input: unknown, opts: { campaignId?: string; pla
     return {
       id: uuid(), name: str(c?.n), done: optInt(c?.v, `${path}.v`), total: optInt(c?.m, `${path}.m`),
       qty: int(c?.q ?? 1, `${path}.q`, 1), load: int(c?.l ?? 1, `${path}.l`, 1), open: !!c?.open, note: str(c?.note),
-      props: props(obj(c), c?.armor, path), sub: subs(c?.sub),
+      props: props(obj(c), c?.armor, path), sub: subs(c?.sub) ?? [],
     };
   });
   const extraItems: (ReturnType<typeof customItem> & { slots: ReturnType<typeof slots> })[] = [];
@@ -203,8 +204,7 @@ export function importPrototype(input: unknown, opts: { campaignId?: string; pla
   const counters: Counter[] = [...S.counters].sort((a, b) => pos(a) - pos(b)).map((c: Raw, i) => {
     const path = `counters.${i}`;
     extra(c, ['id', 'n', 'v', 'max', 'r', 'h', 'from'], path);
-    let max = optInt(c.max, `${path}.max`, 0);
-    if (max === 0) { left(`${path}.max`, 0, 'max 0 stored as no limit'); max = undefined; }
+    const max = optInt(c.max, `${path}.max`, 0);
     let value = int(c.v, `${path}.v`, 0);
     if (max !== undefined && value > max) { left(`${path}.v`, value, `stored as ${max} (over max)`); value = max; }
     const reset = c.r === 'none' ? 'manual' : ['day', 'downtime', 'score'].includes(c.r) ? c.r : 'manual';
@@ -220,25 +220,26 @@ export function importPrototype(input: unknown, opts: { campaignId?: string; pla
     if (ref) specialArmorUsed[ref] = !!v; else left(`spec.${t}`, v, 'unknown talent');
   }
 
-  const customTraumas = [...new Set(arr(S.traumaExtra).map(str).filter(Boolean))].map(name => ({ id: uuid(), name }));
+  const customTraumas = [...new Set(arr(S.traumaExtra).map(str).filter(Boolean))].map(name => ({ id: uuid(), name, text: '' }));
   const trauma: string[] = [];
   for (const t of arr(S.trauma).map(str).filter(Boolean)) {
     let id = P.TRAUMAS[t] ?? customTraumas.find(x => x.name === t)?.id;
-    if (!id) { const ct = { id: uuid(), name: t }; customTraumas.push(ct); id = ct.id; }
+    if (!id) { const ct = { id: uuid(), name: t, text: '' }; customTraumas.push(ct); id = ct.id; }
     if (!trauma.includes(id)) trauma.push(id);
   }
 
-  const friends: Record<string, 'up' | 'down'> = {};
-  const contacts: Contact[] = arr(S.contacts).map((c, i) => {
-    extra(obj(c), ['id', 'n', 'rel'], `contacts.${i}`);
-    return { id: uuid(), name: str(c?.n), rel: c?.rel === 'down' ? 'down' : 'up', note: '' };
-  });
+  // playbook friends first (as the prototype shows them), then own contacts
+  const contacts: Contact[] = [];
   for (const [name, rel] of Object.entries(obj(S.friends))) {
     if (rel !== 'up' && rel !== 'down') continue; // '' = hidden
-    const id = P.FRIENDS[name];
-    if (id) friends[id] = rel;
+    const bookId = P.FRIENDS[name];
+    if (bookId) contacts.push({ id: uuid(), bookId, rel, note: '' });
     else { contacts.push({ id: uuid(), name, rel, note: '' }); warnings.push(`friends: "${name}" is not a book friend, imported as a contact`); }
   }
+  arr(S.contacts).forEach((c, i) => {
+    extra(obj(c), ['id', 'n', 'rel'], `contacts.${i}`);
+    contacts.push({ id: uuid(), name: str(c?.n), rel: c?.rel === 'down' ? 'down' : 'up', note: '' });
+  });
 
   const plan = (p: Raw, path: string) => {
     const shape = (s: Raw) => {
@@ -337,12 +338,12 @@ export function importPrototype(input: unknown, opts: { campaignId?: string; pla
   extra(obj(S.armor), ['a', 'h', 's'], 'armor');
 
   const doc = {
-    id: uuid(), schemaVersion: 1, campaignId: opts.campaignId, playbookId: opts.playbookId ?? P.PLAYBOOK,
+    id: uuid(), schemaVersion: 1, playbookId: opts.playbookId ?? P.PLAYBOOK,
     name: str(S.name), alias: str(S.alias), look: str(S.look), notes: str(S.bioNote), day: int(S.day, 'day', 1, 1),
     heritage: origin(S.heritage, S.heritageNote, P.HERITAGES),
     background: origin(S.background, S.backgroundNote, P.BACKGROUNDS),
     vice: origin(S.vice, S.viceNote, P.VICES),
-    friends, contacts, actions, xp, talents, customTalents,
+    contacts, actions, xp, talents, customTalents,
     stress: int(S.stress, 'stress', 0), trauma, customTraumas,
     harm: { l3: str(S.h3), l2: [str(S.h2a), str(S.h2b)], l1: [str(S.h1a), str(S.h1b)] },
     healing: int(S.heal, 'heal', 0, 0, 4), armorUsed, specialArmorUsed,

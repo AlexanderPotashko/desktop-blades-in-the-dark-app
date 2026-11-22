@@ -48,18 +48,18 @@ function sandr(): CharacterInput {
     money: { coins: 0, stash: 0, major: 30, minor: 0 },
     load: 'normal',
     items: [
-      { id: tinkerTools, source: 'book', bookId: 'fine-tinkering-tools', load: 1 },
+      { id: tinkerTools, bookId: 'fine-tinkering-tools', load: 1 },
       {
-        id: id(), source: 'book', bookId: 'fine-demolition-tools', load: 2, open: true,
+        id: id(), bookId: 'fine-demolition-tools', load: 2, open: true,
         sub: ['сверло', 'молоток и клинья', 'фомка', 'зажимы', 'проволока'].map(name => ({ id: id(), name })),
       },
-      { id: id(), source: 'book', bookId: 'blowgun', load: 0 },
-      { id: bandolier, source: 'book', bookId: 'alchemists-bandolier', load: 1, slots: [{ name: '' }, { name: '' }, { name: '' }] },
-      { id: id(), source: 'book', bookId: 'darts', load: 0 },
-      { id: id(), source: 'book', bookId: 'syringes', load: 0 },
-      { id: rifle, source: 'custom', name: 'Ружьё', load: 1, sub: [{ id: id(), name: 'Заряды', qty: 10 }] },
-      { id: id(), source: 'custom', name: 'Памятка хранителя севера', load: 0 },
-      { id: id(), source: 'custom', name: 'Штырь для гончарного круга', load: 0, qty: 5, carried: 5 },
+      { id: id(), bookId: 'blowgun', load: 0 },
+      { id: bandolier, bookId: 'alchemists-bandolier', load: 1, slots: [{ name: '' }, { name: '' }, { name: '' }] },
+      { id: id(), bookId: 'darts', load: 0 },
+      { id: id(), bookId: 'syringes', load: 0 },
+      { id: rifle, name: 'Ружьё', load: 1, sub: [{ id: id(), name: 'Заряды', qty: 10 }] },
+      { id: id(), name: 'Памятка хранителя севера', load: 0 },
+      { id: id(), name: 'Штырь для гончарного круга', load: 0, qty: 5, carried: 5 },
     ],
     counters: [{ id: id(), name: venomousPreset.name, value: 0, reset: 'day', fromTalent: 'venomous', hint: venomousPreset.hint }],
     presetsApplied: ['venomous'],
@@ -73,9 +73,8 @@ function full(): CharacterInput {
   const armor = id(), ctId = id(), trId = id();
   return {
     ...base,
-    campaignId: id(),
     look: 'худой, в кожаном фартуке', notes: 'история',
-    friends: { stazia: 'up', eckerd: 'down' },
+    contacts: [...base.contacts!, { id: id(), bookId: 'stazia', rel: 'up' }, { id: id(), bookId: 'eckerd', name: 'Экерд-младший', rel: 'down', note: 'сын' }],
     customTalents: [{ id: ctId, name: 'Свой талант', text: 'как договорились', specialArmor: true, counter: { name: 'Заряды', max: 3, reset: 'score' }, mods: { stressBoxes: 1, load: { light: 4, normal: 6, heavy: 7 } } }],
     stress: 4,
     trauma: ['paranoid', trId],
@@ -87,10 +86,10 @@ function full(): CharacterInput {
     items: [
       ...base.items!,
       {
-        id: armor, source: 'book', bookId: 'armor', name: 'Кожаная куртка', load: 2, qty: 2, carried: 1, place: 'gear',
+        id: armor, bookId: 'armor', name: 'Кожаная куртка', load: 2, qty: 2, carried: 1, place: 'gear',
         note: 'с рынка', props: { type: 'standard', quality: 2, fine: true, uses: 3, usesLeft: 1, armor: 1, gives: '+d6', flaws: ['rare', 'скрипит'] },
       },
-      { id: id(), source: 'custom', name: 'Верстак', load: 0, place: 'workshop', carried: 0 },
+      { id: id(), name: 'Верстак', load: 0, place: 'workshop', carried: 0 },
     ],
     workshop: [{ id: id(), name: 'Фонарь духов', done: 3, total: 8, qty: 1, load: 1, open: true, note: 'схема', props: { type: 'arcane', flaws: [] }, sub: [{ id: id(), name: 'линза' }] }],
     counters: [...base.counters!, { id: id(), name: 'Барьер, дней', value: 2, max: 5, reset: 'manual', fromTalent: ctId }],
@@ -125,7 +124,7 @@ describe('Character', () => {
     expect(c.actions.tinker).toBe(4);
     expect(c.talents).toEqual(['physicker', 'venomous', 'fortitude']);
     expect(c.rulesOverride?.money).toEqual({ book: false, major: 'Драхмы', minor: 'Драхмёныши', rate: 20 });
-    expect(c.items.find(i => i.name === 'Ружьё')?.sub[0]).toMatchObject({ name: 'Заряды', qty: 10 });
+    expect(c.items.find(i => i.name === 'Ружьё')?.sub?.[0]).toMatchObject({ name: 'Заряды', qty: 10 });
     expect(c.harm).toEqual({ l3: '', l2: ['', ''], l1: ['', ''] }); // defaults filled
   });
 
@@ -133,6 +132,19 @@ describe('Character', () => {
     const c = Character.parse(full());
     expect(Character.parse(JSON.parse(JSON.stringify(c)))).toEqual(c);
     expect(c.cards[1].plan?.floors[0].shapes).toHaveLength(8);
+  });
+
+  it('item contents: absent = book contents, [] = emptied by the user', () => {
+    const [a, b] = Character.parse({ ...sandr(), items: [{ id: id(), bookId: 'armor', load: 2 }, { id: id(), bookId: 'armor', load: 2, sub: [] }] }).items;
+    expect(a.sub).toBeUndefined();
+    expect(b.sub).toEqual([]);
+  });
+
+  it('defaults are fresh per parse, never shared', () => {
+    const min = { id: id(), schemaVersion: 1, playbookId: 'leech', actions: {} };
+    const a = Character.parse(min), b = Character.parse(min);
+    a.harm.l2[0] = 'x'; a.money.coins = 3; a.items.push({} as never);
+    expect([b.harm.l2[0], b.money.coins, b.items]).toEqual(['', 0, []]);
   });
 
   it('keeps a partial rules override partial (no defaults leak in)', () => {
@@ -148,8 +160,12 @@ describe('Character', () => {
     ['fractional stress', c => { c.stress = 1.5; }],
     ['attribute xp over 6', c => { c.xp.insight = 7; }],
     ['carried more than owned', c => { c.items[0].carried = 2; }],
-    ['custom item with bookId', c => { c.items[6].bookId = 'pistol'; }],
-    ['book item without bookId', c => { delete c.items[0].bookId; }],
+    ['unknown top-level key', c => { c.futureField = 1; }],
+    ['campaignId in the document', c => { c.campaignId = id(); }],
+    ['unknown nested key', c => { c.items[0].source = 'book'; }],
+    ['unknown key in rules override', c => { c.rulesOverride.carry = true; }],
+    ['custom talent UUID in talents', c => { c.talents.push(id()); }],
+    ['UUID as a book id', c => { c.items[0].bookId = id(); }],
     ['counter over max', c => { c.counters[0].max = 2; c.counters[0].value = 3; }],
     ['unknown counter reset', c => { c.counters[0].reset = 'none'; }],
     ['remote image', c => { c.cards[1].images[0].src = 'https://example.com/x.png'; }],

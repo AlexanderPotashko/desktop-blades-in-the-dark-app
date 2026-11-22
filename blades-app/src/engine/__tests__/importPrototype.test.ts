@@ -163,9 +163,9 @@ describe('importPrototype: reference character', () => {
 
   it('book items: ids, renames, overrides, quantities', () => {
     const tools = item['Инструменты механика (отцовские)'];
-    expect(tools).toMatchObject({ source: 'book', bookId: 'fine-tinkering-tools', load: 1, carried: 1, open: true, note: 'достались от отца' });
+    expect(tools).toMatchObject({ bookId: 'fine-tinkering-tools', load: 1, carried: 1, open: true, note: 'достались от отца' });
     expect(tools.props).toMatchObject({ quality: 2, fine: true });
-    expect(item['fine-wrecking-tools'].sub.map(s => s.name)).toEqual(save.subOv.s1);
+    expect(item['fine-wrecking-tools'].sub!.map(s => s.name)).toEqual(save.subOv.s1);
     expect(item['Духовая трубка']).toMatchObject({ bookId: 'blowgun-and-darts', load: 0 });
     expect(item['Пустые шприцы']).toMatchObject({ bookId: 'blowgun-and-darts', qty: 3, carried: 2 });
     expect(item.armor).toMatchObject({ note: 'кожанка с нашитыми пластинами', props: expect.objectContaining({ armor: 2 }) });
@@ -184,7 +184,8 @@ describe('importPrototype: reference character', () => {
   });
 
   it('own items: rifle with 10 charges, props, quantities', () => {
-    expect(item['Ружьё']).toMatchObject({ source: 'custom', load: 1, qty: 1, carried: 1, open: true });
+    expect(item['Ружьё']).toMatchObject({ load: 1, qty: 1, carried: 1, open: true });
+    expect(item['Ружьё'].bookId).toBeUndefined();
     expect(item['Ружьё'].sub).toEqual([{ id: expect.any(String), name: 'Заряд к ружью', qty: 10 }]);
     expect(item['Шприц с анестезией']).toMatchObject({ qty: 3, carried: 2, note: 'хранится ~сутки' });
     expect(item['Шприц с анестезией'].props).toEqual({ type: 'alchemical', quality: undefined, fine: false, uses: 1, usesLeft: 1, armor: undefined, gives: 'беспамятство', flaws: ['unreliable', 'dangerous'] });
@@ -200,7 +201,7 @@ describe('importPrototype: reference character', () => {
 
   it('workshop: equipment as workshop items, projects with progress', () => {
     const ws = c.items.filter(i => i.place === 'workshop');
-    expect(ws.map(i => [i.source, i.name ?? i.bookId, i.carried])).toEqual([['custom', 'отличный ручной гончарный круг', 0], ['book', 'tinkering-tools', 0]]);
+    expect(ws.map(i => [i.bookId, i.name, i.carried])).toEqual([[undefined, 'отличный ручной гончарный круг', 0], ['tinkering-tools', undefined, 0]]);
     expect(ws[0].props).toMatchObject({ quality: 3, fine: true });
     expect(c.workshop.map(w => [w.name, w.done, w.total, w.qty, w.load])).toEqual([
       ['Кираса для Ру (лист железа 7мм)', 6, 25, 1, 1],
@@ -210,8 +211,10 @@ describe('importPrototype: reference character', () => {
   });
 
   it('contacts and friends', () => {
-    expect(c.friends).toEqual({ stazia: 'up', jul: 'down' });
-    expect(c.contacts.map(x => [x.name, x.rel])).toEqual([['Резо, колдун с севера', 'up'], ['Ру, старший сотрудник', 'down']]);
+    expect(c.contacts.map(x => [x.bookId, x.name, x.rel])).toEqual([
+      ['stazia', undefined, 'up'], ['jul', undefined, 'down'], // hidden Экерд ('') is not a contact
+      [undefined, 'Резо, колдун с севера', 'up'], [undefined, 'Ру, старший сотрудник', 'down'],
+    ]);
   });
 
   it('cards: rule/pinned/images, plan with every shape kind', () => {
@@ -314,7 +317,7 @@ describe('importPrototype: prototype load quirks', () => {
     expect(c.customTraumas.map(t => t.name)).toEqual(['Странная травма']);
     expect(c.trauma).toEqual([c.customTraumas[0].id]);
     expect(c.contacts).toMatchObject([{ name: 'Незнакомец', rel: 'down' }]);
-    expect(c.items).toMatchObject([{ source: 'custom', name: 's99' }]);
+    expect(c.items.map(i => [i.bookId, i.name])).toEqual([[undefined, 's99']]);
     expect(warnings.length).toBe(3); // talent, friend, item; an unknown trauma is just a custom trauma
   });
 
@@ -332,11 +335,12 @@ describe('importPrototype: prototype load quirks', () => {
       cards: [{ t: 'p', x: '', imgs: ['http://x/y.png'], plan: { f: 9, floors: [{ n: 'F', s: [{ k: 't', x: 1, y: 1, t: '' }, { k: 'r', x: 0, y: 0, w: 1, h: 1, t: '' }] }], v: { x: 0, y: 0, z: 0 } } }],
     });
     expect([c.money.coins, c.healing, c.actions.tinker]).toEqual([4, 3, 4]);
-    expect(c.counters.map(x => [x.value, x.max, x.reset])).toEqual([[3, 3, 'day'], [0, undefined, 'manual']]);
+    expect(c.counters.map(x => [x.value, x.max, x.reset])).toEqual([[3, 3, 'day'], [0, 0, 'manual']]); // max 0 is kept: the prototype caps the counter at 0
     expect(c.cards[0].images).toEqual([]);
     expect(c.cards[0].plan).toMatchObject({ current: 0, view: { zoom: 1 } });
-    expect(c.cards[0].plan!.floors[0].shapes.map(s => s.kind)).toEqual(['room']);
+    expect(c.cards[0].plan!.floors[0].shapes.map(s => s.kind)).toEqual(['text', 'room']); // empty text label is valid
     const left = JSON.parse(c.cards.at(-1)!.text);
-    expect(left).toMatchObject({ coin: 7, 'actions.Ремесло': 5, 'counters.0.v': 9, 'counters.1.max': 0, 'counters.1.r': 'weird', 'cards.0.imgs.0': 'http://x/y.png', 'cards.0.plan.floors.0.s.0': { k: 't', x: 1, y: 1, t: '' } });
+    expect(left).toMatchObject({ coin: 7, 'actions.Ремесло': 5, 'counters.0.v': 9, 'counters.1.r': 'weird', 'cards.0.imgs.0': 'http://x/y.png' });
+    expect(left).not.toHaveProperty(['counters.1.max']);
   });
 });

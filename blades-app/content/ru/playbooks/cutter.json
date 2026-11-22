@@ -110,22 +110,22 @@
     "text": "Возможно, знакомый с военных времён или мясник, испортивший тебе здоровье.",
     "page": 81
   },
-  "build.commander": {
+  "cutter-commander": {
     "name": "Командир",
     "text": "Изучение +1, приказ +1, разведка +2",
     "page": 81
   },
-  "build.extortionist": {
+  "cutter-extortionist": {
     "name": "Вымогатель",
     "text": "Манипулирование +1, общение +2, приказ +1",
     "page": 81
   },
-  "build.destroyer": {
+  "cutter-destroyer": {
     "name": "Разрушитель",
     "text": "Проникновение +2, разрушение +2",
     "page": 81
   },
-  "build.ghost-hunter": {
+  "cutter-ghost-hunter": {
     "name": "Охотник на дьявольщину",
     "text": "Изучение +1, охота +1, резонанс +2",
     "page": 81

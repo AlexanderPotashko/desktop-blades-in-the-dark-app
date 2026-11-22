@@ -85,10 +85,10 @@ describe('stage limits', () => {
 
 describe('load', () => {
   const items = Character.shape.items.parse([
-    { id: id(), source: 'custom', name: 'Ружьё', load: 1 },
-    { id: id(), source: 'custom', name: 'Шприц', load: 1, qty: 5, carried: 2 },
-    { id: id(), source: 'custom', name: 'Метла', load: 1, carried: 0 },
-    { id: id(), source: 'custom', name: 'Верстак', load: 3, place: 'workshop', carried: 1 },
+    { id: id(), name: 'Ружьё', load: 1 },
+    { id: id(), name: 'Шприц', load: 1, qty: 5, carried: 2 },
+    { id: id(), name: 'Метла', load: 1, carried: 0 },
+    { id: id(), name: 'Верстак', load: 3, place: 'workshop', carried: 1 },
   ]);
   it('counts carried pieces of gear only', () => expect(loadUsed(items)).toBe(3));
   it('book limits 3/5/6', () => {
@@ -108,11 +108,11 @@ describe('armor', () => {
     const armor = id(), vest = id(), stored = id(), ws = id(), plain = id();
     const d = doc({
       items: [
-        { id: armor, source: 'book', bookId: 'armor', load: 2 },
-        { id: vest, source: 'custom', name: 'Железный жилет', load: 2, props: { armor: 2 } },
-        { id: stored, source: 'custom', name: 'Кольчуга', load: 2, carried: 0, props: { armor: 1 } },
-        { id: ws, source: 'custom', name: 'Щит', load: 2, place: 'workshop', props: { armor: 1 } },
-        { id: plain, source: 'book', bookId: 'lantern', load: 1 },
+        { id: armor, bookId: 'armor', load: 2 },
+        { id: vest, name: 'Железный жилет', load: 2, props: { armor: 2 } },
+        { id: stored, name: 'Кольчуга', load: 2, carried: 0, props: { armor: 1 } },
+        { id: ws, name: 'Щит', load: 2, place: 'workshop', props: { armor: 1 } },
+        { id: plain, bookId: 'lantern', load: 1 },
       ],
       armorUsed: { [vest]: 5 },
     });
@@ -122,7 +122,7 @@ describe('armor', () => {
     ]);
   });
   it('book armor overridden to 0 gives none', () => {
-    const d = doc({ items: [{ id: id(), source: 'book', bookId: 'armor', load: 2, props: { armor: 0 } }] });
+    const d = doc({ items: [{ id: id(), bookId: 'armor', load: 2, props: { armor: 0 } }] });
     expect(armorAvailable(d, { armor: 1 })).toEqual([]);
   });
   it('special armor per talent, book and custom', () => {

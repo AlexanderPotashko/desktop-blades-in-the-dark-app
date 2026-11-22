@@ -34,7 +34,7 @@
     "page": 102,
     "text": "Tinker to treat wounds and work with the body; the whole crew gets +1d to healing rolls; first aid."
   },
-  "tinker": {
+  "artificer": {
     "name": "Artificer",
     "page": 102,
     "text": "+1 effect for spark-craft creations; start with one free plan."
@@ -42,7 +42,11 @@
   "ghost-ward": {
     "name": "Ghost Ward",
     "page": 102,
-    "text": "Make an area anathema or enticing to ghosts for several days."
+    "text": "Make an area anathema or enticing to ghosts for several days.",
+    "counter": {
+      "name": "Ward holds, days",
+      "hint": "a room-sized area, for several days"
+    }
   },
   "saboteur": {
     "name": "Saboteur",
@@ -129,22 +133,22 @@
     "text": "Which forgotten god does she serve?",
     "page": 101
   },
-  "build.physician": {
+  "leech-physician": {
     "name": "Physicker",
     "text": "Study +2, Consort +1, Finesse +1",
     "page": 101
   },
-  "build.sapper": {
+  "leech-sapper": {
     "name": "Sapper",
     "text": "Study +1, Survey +2, Wreck +1",
     "page": 101
   },
-  "build.viper": {
+  "leech-viper": {
     "name": "Viper",
     "text": "Sway +2, Prowl +2",
     "page": 101
   },
-  "build.herbalist": {
+  "leech-herbalist": {
     "name": "Herbalist",
     "text": "Study +2, Attune +2",
     "page": 101
