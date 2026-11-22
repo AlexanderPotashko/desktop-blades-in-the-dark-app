@@ -5,5 +5,5 @@ export default defineConfig({
   plugins: [react()],
   clearScreen: false,
   server: { port: 1420, strictPort: true },
-  test: { include: ["src/**/*.test.ts", "content/**/*.test.ts"] },
+  test: { include: ["src/**/*.test.{ts,tsx}", "content/**/*.test.ts"] },
 });

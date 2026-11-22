@@ -1,0 +1,15 @@
+.rb { display: flex; gap: 1rem; align-items: flex-start; }
+.rb-side { flex: 0 0 18rem; max-height: calc(100vh - 6rem); overflow: auto; }
+.rb-side ul { list-style: none; margin: 0 0 1rem; padding: 0; }
+.rb-side .lvl2 { padding-left: 1rem; }
+.rb-main { flex: 1; min-width: 0; }
+.rb-search { width: 100%; box-sizing: border-box; padding: 0.4rem; }
+.rb-row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.rb-import { display: grid; gap: 0.6rem; max-width: 32rem; }
+.rb-link { background: none; border: 0; color: var(--accent); cursor: pointer; padding: 0; text-align: left; font: inherit; }
+.rb-muted { color: var(--muted); }
+.rb-error { color: #e5736b; }
+.rb-hit { padding: 0.4rem 0; border-bottom: 1px solid var(--panel); }
+.rb-hit mark { background: var(--accent); color: #fff; border-radius: 2px; }
+.rb-text { white-space: pre-wrap; line-height: 1.5; margin-top: 0.8rem; }
+@media (max-width: 700px) { .rb { flex-direction: column; } .rb-side { flex-basis: auto; max-height: none; } }

@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-rb-pick-source"
+description = "Enables the rb_pick_source command without any pre-configured scope."
+commands.allow = ["rb_pick_source"]
+
+[[permission]]
+identifier = "deny-rb-pick-source"
+description = "Denies the rb_pick_source command without any pre-configured scope."
+commands.deny = ["rb_pick_source"]

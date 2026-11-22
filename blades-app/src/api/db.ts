@@ -1,6 +1,7 @@
 // The only place that calls `invoke`. Thin typed wrappers over the Rust commands in src-tauri/src/db/commands.rs.
 // Errors from Rust arrive as `{ kind, message }`; every call here rejects with a DbError.
 import { invoke as tauriInvoke } from '@tauri-apps/api/core';
+import { devInvoke } from './devDb';
 import { Campaign as CampaignSchema, Character, Ruling as RulingSchema } from '../model';
 import type { Campaign, Ruling, TableRules } from '../model';
 
@@ -22,8 +23,11 @@ function toDbError(e: unknown): DbError {
   }
   return new DbError('Unknown', e instanceof Error ? e.message : String(e));
 }
+/** Plain browser / jsdom: no Tauri runtime, use the localStorage emulation (dev and tests only). */
+const inTauri = () => typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 async function invoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
   try {
+    if (!inTauri()) return await devInvoke<T>(cmd, args);
     return await tauriInvoke<T>(cmd, args);
   } catch (e) {
     throw toDbError(e);

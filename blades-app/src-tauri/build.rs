@@ -20,6 +20,17 @@ const COMMANDS: &[&str] = &[
     "backup_now",
     "list_backups",
     "restore_backup",
+    "rb_pick_source",
+    "rb_import_pages",
+    "rb_search",
+    "rb_page",
+    "rb_page_by_book",
+    "rb_toc",
+    "rb_list",
+    "rb_delete",
+    "rb_add_bookmark",
+    "rb_list_bookmarks",
+    "rb_delete_bookmark",
 ];
 
 fn main() {

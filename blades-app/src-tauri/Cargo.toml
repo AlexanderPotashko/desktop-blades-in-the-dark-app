@@ -18,6 +18,7 @@ serde = { version = "1", features = ["derive"] }  # command payloads/results
 serde_json = "1"  # opaque documents, $.id check, rules merge
 thiserror = "2"  # one error type with messages
 chrono = { version = "0.4", default-features = false, features = ["clock"] }  # local time for backup file names
+rust-stemmers = "1.2.0"
 
 [dev-dependencies]
 tempfile = "3"  # temp-dir databases in tests

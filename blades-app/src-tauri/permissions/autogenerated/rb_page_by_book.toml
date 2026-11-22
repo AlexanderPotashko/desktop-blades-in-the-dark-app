@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-rb-page-by-book"
+description = "Enables the rb_page_by_book command without any pre-configured scope."
+commands.allow = ["rb_page_by_book"]
+
+[[permission]]
+identifier = "deny-rb-page-by-book"
+description = "Denies the rb_page_by_book command without any pre-configured scope."
+commands.deny = ["rb_page_by_book"]

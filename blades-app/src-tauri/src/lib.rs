@@ -1,4 +1,5 @@
 mod db;
+mod rulebook;
 
 use db::{commands, Db};
 use tauri::Manager;
@@ -53,6 +54,17 @@ pub fn run() {
             commands::backup_now,
             commands::list_backups,
             commands::restore_backup,
+            rulebook::commands::rb_pick_source,
+            rulebook::commands::rb_import_pages,
+            rulebook::commands::rb_search,
+            rulebook::commands::rb_page,
+            rulebook::commands::rb_page_by_book,
+            rulebook::commands::rb_toc,
+            rulebook::commands::rb_list,
+            rulebook::commands::rb_delete,
+            rulebook::commands::rb_add_bookmark,
+            rulebook::commands::rb_list_bookmarks,
+            rulebook::commands::rb_delete_bookmark,
         ])
         .run(tauri::generate_context!())
         .expect("error while running Blades");

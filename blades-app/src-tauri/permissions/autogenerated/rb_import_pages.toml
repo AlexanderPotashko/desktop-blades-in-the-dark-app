@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-rb-import-pages"
+description = "Enables the rb_import_pages command without any pre-configured scope."
+commands.allow = ["rb_import_pages"]
+
+[[permission]]
+identifier = "deny-rb-import-pages"
+description = "Denies the rb_import_pages command without any pre-configured scope."
+commands.deny = ["rb_import_pages"]

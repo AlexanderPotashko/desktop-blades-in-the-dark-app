@@ -1,25 +1,65 @@
-:root {
-  color-scheme: dark;
-  --bg: #121214;
-  --panel: #1b1b1f;
-  --text: #e6e6e8;
-  --muted: #8d8d96;
-  --accent: #c8553d;
-}
-
-html,
-body,
-#root {
-  height: 100%;
-  margin: 0;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: system-ui, sans-serif;
-}
-
-main {
-  padding: 1rem 1.5rem;
-}
+/* Look of the prototype (charsheet.html), same tokens. */
+:root{color-scheme:dark;--bg:#141210;--panel:#1d1a17;--line:#3a332c;--ink:#e8dfd0;--dim:#9a8f80;--acc:#c9a24a;--red:#b8483a;--ok:#6f9a5a}
+*{box-sizing:border-box}
+html,body,#root{min-height:100%;margin:0}
+input[type=checkbox],input[type=radio]{accent-color:var(--acc)}
+body{background:var(--bg);color:var(--ink);font:15px/1.4 "PT Serif",Georgia,serif}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5}
+header h1{margin:0 8px 0 0;font-size:20px;letter-spacing:.15em;text-transform:uppercase;color:var(--acc)}
+button,select,input,textarea{font:inherit;color:var(--ink);background:#262220;border:1px solid var(--line);border-radius:4px;padding:4px 8px}
+button{cursor:pointer}button:hover:not(:disabled){border-color:var(--acc)}button:disabled{opacity:.4;cursor:default}
+input,textarea{width:100%}input[type=checkbox],input[type=radio]{width:auto;padding:0;margin:0}textarea{min-height:70px;resize:vertical}
+main{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;padding:12px 16px;max-width:1400px;margin:0 auto;align-items:start}
+section{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+h2{margin:0 0 8px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);border-bottom:1px solid var(--line);padding-bottom:4px}
+h3{margin:8px 0 4px;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+label{display:block;font-size:12px;color:var(--dim);margin-top:6px}
+.row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.box{width:20px;height:20px;border:1px solid var(--dim);display:inline-block;cursor:pointer;border-radius:2px;vertical-align:middle}
+.box.on{background:var(--acc);border-color:var(--acc)}
+.box.red.on{background:var(--red);border-color:var(--red)}
+.dot{width:14px;height:14px;border:1px solid var(--dim);border-radius:50%;display:inline-block;cursor:pointer}
+.dot.on{background:var(--ink)}
+.dot.first{box-shadow:0 0 0 2px var(--line)}
+.box:focus-visible,.dot:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.act{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:6px;padding:2px 0}
+.attr{font-size:16px;color:var(--acc)}
+.small{font-size:12px;color:var(--dim)}
+.warn{color:var(--red)}.good{color:var(--ok)}
+.talent{border-top:1px solid var(--line);padding:5px 0}
+.talent p{margin:2px 0 0;font-size:12px;color:var(--dim)}
+.harm{display:grid;grid-template-columns:22px 1fr 1fr 110px;gap:4px;align-items:center;margin:3px 0}
+.harm.l3{grid-template-columns:22px 2fr 110px}
+[hidden]{display:none!important}
+.tabs button{padding:4px 6px}
+.tabs{margin-right:auto;display:flex;gap:4px;flex-wrap:wrap}.tabs .on,header>button.on{border-color:var(--acc);color:var(--acc)}
+.save{font-size:12px;color:var(--dim)}.save.error{color:var(--red)}.save.dirty,.save.saving{color:var(--acc)}
+.clock{width:56px;height:56px;flex:none}.clock .seg{fill:#262220;stroke:var(--dim);stroke-width:.04;cursor:pointer}.clock .seg.on{fill:var(--ok)}
+.mini{padding:0 6px;font-size:12px;margin-left:4px}
+.rest{display:flex;gap:6px;margin-bottom:10px}.rest button{flex:1;padding:4px 2px;font-size:13px}
+.ctr{border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin:10px 0;display:grid;gap:6px;grid-template-columns:minmax(0,1fr)}
+.chd{display:flex;align-items:center;gap:8px}.cn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cn i{color:var(--dim);font-weight:normal}
+.crs{font-size:12px;color:var(--dim);white-space:nowrap}
+.cgear{padding:2px 6px;background:none;border-color:transparent;color:var(--dim)}.cgear:hover,.cgear.on{color:var(--acc)}
+.cbody{display:flex;align-items:center;gap:8px}.cbody button{width:32px;height:32px;padding:0;font-size:18px}
+.cv{flex:1;text-align:center;font-size:22px;font-weight:bold}.cv small{font-size:14px;color:var(--dim);font-weight:normal}
+.cboxes{flex:1;display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.cset{display:grid;grid-template-columns:1fr 1fr;gap:6px;border-top:1px dashed var(--line);padding-top:8px}
+.cset label{display:grid;gap:2px;font-size:12px;color:var(--dim);margin:0}.cset label:first-child{grid-column:1/-1}.cset input,.cset select{width:100%}
+.cdel{grid-column:1/-1;color:#c66}
+.spec{display:flex;align-items:center;gap:8px;margin:10px 0;padding:6px 10px;border:1px solid var(--line);border-radius:6px;flex-wrap:wrap}
+.spec .box{flex:none}.spec b{white-space:nowrap}.spec .small{margin-left:auto;text-align:right}
+.dz{position:relative}.dz .ctr{padding-left:26px}
+.grip{position:absolute;left:8px;top:10px;cursor:grab;color:var(--dim);user-select:none;touch-action:none;z-index:1;font-size:16px}.grip:hover{color:var(--acc)}
+.dz.dragging{opacity:.5;z-index:2}
+.chk,.rules .chk{display:flex;gap:8px;align-items:center;color:var(--ink);margin:0}
+.chk input{width:auto}
+fieldset.rules{border:0;padding:0;margin:8px 0;display:grid;gap:6px;min-width:0}fieldset.rules.off{opacity:.45}
+.sub2{margin-left:28px;color:var(--dim);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+main#settings{grid-template-columns:1fr}main#settings section{max-width:760px}main#settings h3{margin-top:16px;justify-content:flex-start}
+/* hover tips: [data-tip] is set always, shown only while the ? button is on */
+body.tips [data-tip]{cursor:help;position:relative;text-decoration:underline dotted var(--dim);text-underline-offset:3px}
+body.tips [data-tip]:hover::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 4px);z-index:60;width:max-content;max-width:min(380px,80vw);background:#2a2520;color:var(--ink);border:1px solid var(--acc);border-radius:6px;padding:7px 9px;font:12px/1.45 "PT Serif",Georgia,serif;letter-spacing:0;text-transform:none;font-weight:normal;white-space:normal;text-align:left;box-shadow:0 4px 14px rgba(0,0,0,.5);pointer-events:none}
+body.tips .rest [data-tip]:hover::after{left:auto;right:0}
+*{scrollbar-color:#3a332c transparent;scrollbar-width:thin}
+@media print{header button{display:none}body{background:#fff;color:#000}section{border-color:#999}}

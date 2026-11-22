@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-rb-delete-bookmark"
+description = "Enables the rb_delete_bookmark command without any pre-configured scope."
+commands.allow = ["rb_delete_bookmark"]
+
+[[permission]]
+identifier = "deny-rb-delete-bookmark"
+description = "Denies the rb_delete_bookmark command without any pre-configured scope."
+commands.deny = ["rb_delete_bookmark"]

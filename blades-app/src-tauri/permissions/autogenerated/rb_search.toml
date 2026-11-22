@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-rb-search"
+description = "Enables the rb_search command without any pre-configured scope."
+commands.allow = ["rb_search"]
+
+[[permission]]
+identifier = "deny-rb-search"
+description = "Denies the rb_search command without any pre-configured scope."
+commands.deny = ["rb_search"]

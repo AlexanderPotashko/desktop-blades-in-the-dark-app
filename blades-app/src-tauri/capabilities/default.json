@@ -25,6 +25,17 @@
     "allow-set-setting",
     "allow-backup-now",
     "allow-list-backups",
-    "allow-restore-backup"
+    "allow-restore-backup",
+    "allow-rb-pick-source",
+    "allow-rb-import-pages",
+    "allow-rb-search",
+    "allow-rb-page",
+    "allow-rb-page-by-book",
+    "allow-rb-toc",
+    "allow-rb-list",
+    "allow-rb-delete",
+    "allow-rb-add-bookmark",
+    "allow-rb-list-bookmarks",
+    "allow-rb-delete-bookmark"
   ]
 }
