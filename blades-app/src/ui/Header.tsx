@@ -3,6 +3,7 @@ import { bookName } from '../store/content';
 import { setDay, setField } from '../store/actions';
 import { useRules, useStore } from '../store/store';
 import { TABS, useUi, type Tab } from '../store/ui';
+import { openWizard } from '../wizard/state';
 
 export function Header() {
   const doc = useStore((s) => s.doc)!;
@@ -25,6 +26,7 @@ export function Header() {
           <button key={x} className={tab === x ? 'on' : ''} onClick={() => go(x)}>{t(`tab.${x}`)}</button>
         ))}
       </nav>
+      <button onClick={openWizard} data-testid="new-character">{t('wiz.new')}</button>
       <button onClick={() => useStore.getState().undo()} disabled={!past.length} title={t('undo')} aria-label={t('undo')}>↶</button>
       <button onClick={() => useStore.getState().redo()} disabled={!future.length} title={t('redo')} aria-label={t('redo')}>↷</button>
       <span className={`save ${saveState}`} data-testid="save-state" title={saveError}>{t(`save.${saveState}`)}{saveError ? `: ${saveError.slice(0, 80)}` : ''}</span>

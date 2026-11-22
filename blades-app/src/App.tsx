@@ -12,6 +12,7 @@ import { Workshop } from './ui/workshop/Workshop';
 import { Notes } from './ui/notes/Notes';
 import { Background } from './ui/background/Background';
 import { RulebookView, subscribeOpenBookPage } from './rulebook/RulebookView';
+import { Wizard } from './wizard/Wizard';
 
 export default function App() {
   const doc = useStore((s) => s.doc);
@@ -59,6 +60,7 @@ export default function App() {
   return (
     <>
       <Header />
+      <Wizard />
       {tab === 'sheet' ? <Sheet /> : tab === 'gear' ? <Gear /> : tab === 'workshop' ? <Workshop /> : tab === 'settings' ? <Settings /> : tab === 'rulebook' ? <main><RulebookView /></main>
         : tab === 'notes' ? <Notes kind="note" /> : tab === 'rules' ? <Notes kind="rule" /> : tab === 'background' ? <Background /> : (
         <main><section><h2>{t(`tab.${tab}`)}</h2><p className="small">{t('tab.soon')}</p></section></main>

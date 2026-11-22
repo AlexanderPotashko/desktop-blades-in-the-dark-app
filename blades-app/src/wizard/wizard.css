@@ -1,0 +1,24 @@
+.wiz{position:fixed;inset:0;z-index:50;background:var(--bg);overflow:auto}
+.wizbody{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px;padding:12px 16px;max-width:1400px;margin:0 auto;align-items:start}
+.wizstep{display:flex;flex-direction:column;gap:8px;min-width:0}
+.wizstep h2{margin:0}.wizstep h3{margin:10px 0 2px;justify-content:flex-start}
+.wiz .tip{margin:0;padding:6px 10px;border-left:3px solid var(--acc);color:var(--dim);font-size:13px}
+.wiz .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.wiz .card{display:flex;flex-direction:column;gap:3px;text-align:left;align-items:flex-start;padding:8px 10px;height:auto}
+.wiz .card.on{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
+.wiz .card .small{white-space:normal}
+.wiz .modes{gap:16px}.wiz .chk.on{color:var(--acc)}
+.wiz .limits{gap:12px}.wiz .lim{display:grid;gap:2px;font-size:12px;color:var(--dim);margin:0}.wiz .lim input{width:90px}
+.wiz .attrs3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.wiz header h1{font-size:15px;white-space:nowrap}.wiz .tabs button{white-space:nowrap}
+.wiz .act{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:4px 0}.wiz .act .dots{flex:none}
+.wiz .attrs3 h3 b{margin-left:8px;color:var(--acc)}
+.wiz .talent{align-items:flex-start;padding:6px 8px;border:1px solid var(--line);border-radius:6px;margin:2px 0}
+.wiz .talent.on{border-color:var(--acc)}
+.wiz .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.wiz .contactpick{display:grid;gap:6px;align-content:start}
+.wiz .wiznav{justify-content:space-between;margin-top:12px}
+.wiz .primary{border-color:var(--acc);color:var(--acc)}
+.wizsum{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 12px;position:sticky;top:64px}
+.wizsum h3{margin:0 0 6px}.wizsum .srow{display:grid;gap:0;margin:6px 0}.wizsum b{font-weight:600;overflow-wrap:anywhere}
+@media (max-width:800px){.wizbody{grid-template-columns:1fr}.wiz .grid2{grid-template-columns:1fr}.wizsum{position:static}}

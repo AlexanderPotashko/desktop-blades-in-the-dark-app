@@ -42,3 +42,6 @@ export async function importFromPrototype(text: string): Promise<string[]> {
   await open(doc);
   return r.warnings;
 }
+
+/** Opens a ready sheet (the creation wizard result) and makes it the current one. */
+export const openCharacter = (doc: Character) => open(doc);
