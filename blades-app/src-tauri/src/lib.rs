@@ -1,4 +1,5 @@
 mod db;
+mod exchange;
 mod rulebook;
 
 use db::{commands, Db};
@@ -54,6 +55,8 @@ pub fn run() {
             commands::backup_now,
             commands::list_backups,
             commands::restore_backup,
+            exchange::export_save,
+            exchange::import_open,
             rulebook::commands::rb_pick_source,
             rulebook::commands::rb_import_pages,
             rulebook::commands::rb_search,

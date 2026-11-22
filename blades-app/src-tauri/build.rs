@@ -20,6 +20,8 @@ const COMMANDS: &[&str] = &[
     "backup_now",
     "list_backups",
     "restore_backup",
+    "export_save",
+    "import_open",
     "rb_pick_source",
     "rb_import_pages",
     "rb_search",

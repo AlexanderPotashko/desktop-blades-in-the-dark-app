@@ -6,6 +6,7 @@ import { installShortcuts, useStore } from './store/store';
 import { useUi } from './store/ui';
 import { Header } from './ui/Header';
 import { Settings } from './ui/Settings';
+import { Library } from './ui/library/Library';
 import { Gear } from './ui/gear/Gear';
 import { Sheet } from './ui/sheet/Sheet';
 import { Workshop } from './ui/workshop/Workshop';
@@ -61,7 +62,7 @@ export default function App() {
     <>
       <Header />
       <Wizard />
-      {tab === 'sheet' ? <Sheet /> : tab === 'gear' ? <Gear /> : tab === 'workshop' ? <Workshop /> : tab === 'settings' ? <Settings /> : tab === 'rulebook' ? <main><RulebookView /></main>
+      {tab === 'library' ? <Library /> : tab === 'sheet' ? <Sheet /> : tab === 'gear' ? <Gear /> : tab === 'workshop' ? <Workshop /> : tab === 'settings' ? <Settings /> : tab === 'rulebook' ? <main><RulebookView /></main>
         : tab === 'notes' ? <Notes kind="note" /> : tab === 'rules' ? <Notes kind="rule" /> : tab === 'background' ? <Background /> : (
         <main><section><h2>{t(`tab.${tab}`)}</h2><p className="small">{t('tab.soon')}</p></section></main>
       )}

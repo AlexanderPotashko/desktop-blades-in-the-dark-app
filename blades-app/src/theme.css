@@ -62,4 +62,16 @@ body.tips [data-tip]{cursor:help;position:relative;text-decoration:underline dot
 body.tips [data-tip]:hover::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 4px);z-index:60;width:max-content;max-width:min(380px,80vw);background:#2a2520;color:var(--ink);border:1px solid var(--acc);border-radius:6px;padding:7px 9px;font:12px/1.45 "PT Serif",Georgia,serif;letter-spacing:0;text-transform:none;font-weight:normal;white-space:normal;text-align:left;box-shadow:0 4px 14px rgba(0,0,0,.5);pointer-events:none}
 body.tips .rest [data-tip]:hover::after{left:auto;right:0}
 *{scrollbar-color:#3a332c transparent;scrollbar-width:thin}
-@media print{header button{display:none}body{background:#fff;color:#000}section{border-color:#999}}
+@page{margin:12mm}
+@media print{
+  :root{color-scheme:light;--bg:#fff;--panel:#fff;--line:#999;--ink:#000;--dim:#444;--acc:#000;--red:#900;--ok:#060}
+  html,body{background:#fff;color:#000}
+  header .tabs,header select,header button,header .save,.mini,.grip,.cgear,.rest,.confirm,.acts{display:none!important}
+  header{position:static;border-bottom:1px solid #999;padding:0 0 6px}
+  header input{border:0;background:none;font-weight:bold;width:auto!important}
+  main{display:block;max-width:none;padding:6px 0;columns:2;column-gap:12px}
+  section{break-inside:avoid;margin-bottom:8px;background:#fff;border-color:#999}
+  button,select,input,textarea{background:#fff!important;color:#000!important;border-color:#999!important}
+  .box.on{background:#000;border-color:#000}.dot.on{background:#000}
+  #library{columns:1}
+}

@@ -130,11 +130,17 @@ fn save_get_roundtrip_and_upsert() {
         assert_eq!(l[0].name.as_deref(), Some("Sandr 2"));
         assert_eq!(l[0].playbook.as_deref(), Some("leech"));
         assert!(!l[0].archived);
+        assert_eq!(l[0].alias, None);
+        let aliased = json!({"id": "b", "name": "B", "alias": "Sandr", "playbookId": "leech", "schemaVersion": 1});
+        store::save_character(c, &aliased.to_string(), None)?;
+        let b = store::list_characters(c, false)?.into_iter().find(|r| r.id == "b").unwrap();
+        assert_eq!(b.alias.as_deref(), Some("Sandr"));
         assert!(matches!(store::get_character(c, "zzz"), Err(DbError::NotFound(_))));
         // archive hides from the default list
         store::archive_character(c, "a", true)?;
+        store::archive_character(c, "b", true)?;
         assert!(store::list_characters(c, false)?.is_empty());
-        assert_eq!(store::list_characters(c, true)?.len(), 1);
+        assert_eq!(store::list_characters(c, true)?.len(), 2);
         Ok(())
     })
     .unwrap();
@@ -247,6 +253,32 @@ fn delete_character_backs_up_and_cascades_revisions() {
     assert!(list[0].name.contains("pre-delete"));
     let b = Connection::open(db.backup_dir().join(&list[0].name)).unwrap();
     assert_eq!(count(&b, "characters"), 1); // the backup still has the sheet
+}
+
+#[test]
+fn leaving_a_campaign_copies_its_rules_into_the_sheet() {
+    let dir = TempDir::new().unwrap();
+    let db = open(&dir);
+    db.with(|c| {
+        store::save_campaign(c, r#"{"id":"k","name":"Iruvia","rules":{"mode":"custom","dayCounter":true}}"#)?;
+        store::save_campaign(c, r#"{"id":"k2","name":"Other","rules":{"mode":"book"}}"#)?;
+        let a = json!({"id":"a","name":"A","rulesOverride":{"dayCounter":false}}).to_string();
+        store::save_character(c, &a, Some("k"))?;
+        store::set_character_campaign(c, "a", Some("k"))?; // same campaign: nothing copied
+        let d: Value = serde_json::from_str(&store::get_character(c, "a")?)?;
+        assert!(d["rulesOverride"].get("mode").is_none());
+        store::set_character_campaign(c, "a", None)?;
+        let d: Value = serde_json::from_str(&store::get_character(c, "a")?)?;
+        assert_eq!(d["rulesOverride"]["mode"], "custom");
+        assert_eq!(d["rulesOverride"]["dayCounter"], false); // the sheet's own group wins
+        assert!(store::list_characters(c, true)?[0].campaign_id.is_none());
+        store::set_character_campaign(c, "a", Some("k2"))?; // joining: override kept as is
+        let d: Value = serde_json::from_str(&store::get_character(c, "a")?)?;
+        assert_eq!(d["rulesOverride"]["mode"], "custom");
+        assert!(matches!(store::set_character_campaign(c, "zzz", None), Err(DbError::NotFound(_))));
+        Ok(())
+    })
+    .unwrap();
 }
 
 #[test]

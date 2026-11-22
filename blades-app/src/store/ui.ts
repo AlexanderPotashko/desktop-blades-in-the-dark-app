@@ -4,7 +4,7 @@ import * as db from '../api/db';
 import { detectLang, setLang, type Lang } from '../i18n';
 
 export const TABS = ['sheet', 'gear', 'workshop', 'notes', 'rules', 'background', 'rulebook'] as const;
-export type Tab = (typeof TABS)[number] | 'settings';
+export type Tab = (typeof TABS)[number] | 'settings' | 'library';
 
 interface Ui { lang: Lang; tips: boolean; tab: Tab; lastCharacter?: string }
 interface UiStore extends Ui {

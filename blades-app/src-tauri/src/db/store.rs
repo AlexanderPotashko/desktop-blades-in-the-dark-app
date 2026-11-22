@@ -18,6 +18,7 @@ pub struct CharacterRow {
     pub campaign_id: Option<String>,
     pub archived: bool,
     pub updated_at: String,
+    pub alias: Option<String>,
 }
 
 #[derive(Debug, Serialize)]
@@ -70,7 +71,7 @@ fn non_empty_str(v: &Value, key: &str, what: &str) -> Result<String> {
 
 pub fn list_characters(conn: &Connection, include_archived: bool) -> Result<Vec<CharacterRow>> {
     let mut st = conn.prepare(
-        "SELECT id, name, playbook, campaign_id, archived, updated_at FROM characters
+        "SELECT id, name, playbook, campaign_id, archived, updated_at, json_extract(doc, '$.alias') FROM characters
          WHERE ?1 OR archived = 0 ORDER BY name COLLATE NOCASE, id",
     )?;
     let rows = st.query_map([include_archived], |r| {
@@ -81,6 +82,7 @@ pub fn list_characters(conn: &Connection, include_archived: bool) -> Result<Vec<
             campaign_id: r.get(3)?,
             archived: r.get::<_, i64>(4)? != 0,
             updated_at: r.get(5)?,
+            alias: r.get(6)?,
         })
     })?;
     Ok(rows.collect::<std::result::Result<_, _>>()?)
@@ -110,12 +112,30 @@ pub fn save_character(conn: &Connection, doc_json: &str, campaign_id: Option<&st
     Ok(id)
 }
 
+/// Leaving a campaign copies its rules into the sheet's `rulesOverride` (own groups win), like deleting it,
+/// so house rules never silently fall back to the book.
 pub fn set_character_campaign(conn: &Connection, id: &str, campaign_id: Option<&str>) -> Result<()> {
     let tx = conn.unchecked_transaction()?;
-    let n = tx.execute("UPDATE characters SET campaign_id = ?2 WHERE id = ?1", params![id, campaign_id])?;
-    if n == 0 {
-        return Err(DbError::NotFound(format!("character {id}")));
+    let (old, doc): (Option<String>, String) = tx
+        .query_row("SELECT campaign_id, doc FROM characters WHERE id = ?1", [id], |r| Ok((r.get(0)?, r.get(1)?)))
+        .optional()?
+        .ok_or_else(|| DbError::NotFound(format!("character {id}")))?;
+    if let Some(old) = old.filter(|o| Some(o.as_str()) != campaign_id) {
+        let rules: Option<String> =
+            tx.query_row("SELECT rules FROM campaigns WHERE id = ?1", [&old], |r| r.get(0)).optional()?;
+        if let Some(rules) = rules {
+            let mut merged: Map<String, Value> = serde_json::from_str(&rules)?;
+            let doc: Value = serde_json::from_str(&doc)?;
+            if let Some(Value::Object(own)) = doc.get("rulesOverride") {
+                merged.extend(own.clone());
+            }
+            tx.execute(
+                "UPDATE characters SET doc = json_set(doc, '$.rulesOverride', json(?2)) WHERE id = ?1",
+                params![id, serde_json::to_string(&merged)?],
+            )?;
+        }
     }
+    tx.execute("UPDATE characters SET campaign_id = ?2 WHERE id = ?1", params![id, campaign_id])?;
     tx.commit()?;
     Ok(())
 }
