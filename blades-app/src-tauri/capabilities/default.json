@@ -25,6 +25,8 @@
     "allow-backup-now",
     "allow-list-backups",
     "allow-restore-backup",
+    "allow-export-save",
+    "allow-import-open",
     "allow-rb-pick-source",
     "allow-rb-import-pages",
     "allow-rb-search",

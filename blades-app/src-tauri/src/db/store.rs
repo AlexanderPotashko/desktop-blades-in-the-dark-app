@@ -18,6 +18,7 @@ pub struct CharacterRow {
     pub campaign_id: Option<String>,
     pub archived: bool,
     pub updated_at: String,
+    pub alias: Option<String>,
 }
 
 #[derive(Debug, Serialize)]
@@ -70,7 +71,7 @@ fn non_empty_str(v: &Value, key: &str, what: &str) -> Result<String> {
 
 pub fn list_characters(conn: &Connection, include_archived: bool) -> Result<Vec<CharacterRow>> {
     let mut st = conn.prepare(
-        "SELECT id, name, playbook, campaign_id, archived, updated_at FROM characters
+        "SELECT id, name, playbook, campaign_id, archived, updated_at, json_extract(doc, '$.alias') FROM characters
          WHERE ?1 OR archived = 0 ORDER BY name COLLATE NOCASE, id",
     )?;
     let rows = st.query_map([include_archived], |r| {
@@ -81,6 +82,7 @@ pub fn list_characters(conn: &Connection, include_archived: bool) -> Result<Vec<
             campaign_id: r.get(3)?,
             archived: r.get::<_, i64>(4)? != 0,
             updated_at: r.get(5)?,
+            alias: r.get(6)?,
         })
     })?;
     Ok(rows.collect::<std::result::Result<_, _>>()?)

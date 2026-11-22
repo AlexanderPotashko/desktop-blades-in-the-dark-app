@@ -49,7 +49,7 @@ export async function devInvoke<T>(cmd: string, a: Json = {}): Promise<T> {
           .filter(([, c]) => a.includeArchived || !c.archived)
           .map(([id, c]) => {
             const d = JSON.parse(c.doc);
-            return { id, name: d.name ?? null, playbook: d.playbookId ?? null, campaignId: c.campaignId, archived: c.archived, updatedAt: c.updatedAt };
+            return { id, name: d.name ?? null, alias: d.alias ?? null, playbook: d.playbookId ?? null, campaignId: c.campaignId, archived: c.archived, updatedAt: c.updatedAt };
           })
           .sort((x, y) => y.updatedAt.localeCompare(x.updatedAt)),
       );
@@ -94,9 +94,21 @@ export async function devInvoke<T>(cmd: string, a: Json = {}): Promise<T> {
       db.campaigns[c.id] = { ...c, updatedAt: now() };
       return out(c.id, true);
     }
-    case 'delete_campaign':
+    case 'delete_campaign': {
+      const camp = db.campaigns[a.id];
+      if (!camp) return fail('NotFound', `campaign ${a.id}`);
+      // like Rust: the campaign's rules go into each member's rulesOverride (the sheet's own keys win), link cleared
+      for (const c of Object.values(db.characters).filter((x) => x.campaignId === a.id)) {
+        const d = JSON.parse(c.doc);
+        d.rulesOverride = { ...(camp.rules as object), ...d.rulesOverride };
+        c.doc = JSON.stringify(d);
+        c.campaignId = null;
+        c.updatedAt = now();
+      }
+      db.rulings = db.rulings.filter((r) => r.campaignId !== a.id);
       delete db.campaigns[a.id];
       return out(undefined, true);
+    }
     case 'add_ruling': {
       const r = JSON.parse(a.json);
       db.rulings.push(r);

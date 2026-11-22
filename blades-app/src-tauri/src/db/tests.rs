@@ -130,11 +130,17 @@ fn save_get_roundtrip_and_upsert() {
         assert_eq!(l[0].name.as_deref(), Some("Sandr 2"));
         assert_eq!(l[0].playbook.as_deref(), Some("leech"));
         assert!(!l[0].archived);
+        assert_eq!(l[0].alias, None);
+        let aliased = json!({"id": "b", "name": "B", "alias": "Sandr", "playbookId": "leech", "schemaVersion": 1});
+        store::save_character(c, &aliased.to_string(), None)?;
+        let b = store::list_characters(c, false)?.into_iter().find(|r| r.id == "b").unwrap();
+        assert_eq!(b.alias.as_deref(), Some("Sandr"));
         assert!(matches!(store::get_character(c, "zzz"), Err(DbError::NotFound(_))));
         // archive hides from the default list
         store::archive_character(c, "a", true)?;
+        store::archive_character(c, "b", true)?;
         assert!(store::list_characters(c, false)?.is_empty());
-        assert_eq!(store::list_characters(c, true)?.len(), 1);
+        assert_eq!(store::list_characters(c, true)?.len(), 2);
         Ok(())
     })
     .unwrap();

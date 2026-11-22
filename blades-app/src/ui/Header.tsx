@@ -3,6 +3,7 @@ import { bookName } from '../store/content';
 import { setDay, setField } from '../store/actions';
 import { useRules, useStore } from '../store/store';
 import { TABS, useUi, type Tab } from '../store/ui';
+import { QuickSwitch } from './library/QuickSwitch';
 
 export function Header() {
   const doc = useStore((s) => s.doc)!;
@@ -20,6 +21,7 @@ export function Header() {
           {t('day')}<input type="number" min={1} value={doc.day} style={{ width: 62 }} onChange={(e) => setDay(+e.target.value)} />
         </span>
       )}
+      <QuickSwitch />
       <nav className="tabs">
         {TABS.map((x) => (
           <button key={x} className={tab === x ? 'on' : ''} onClick={() => go(x)}>{t(`tab.${x}`)}</button>
@@ -27,6 +29,8 @@ export function Header() {
       </nav>
       <button onClick={() => useStore.getState().undo()} disabled={!past.length} title={t('undo')} aria-label={t('undo')}>↶</button>
       <button onClick={() => useStore.getState().redo()} disabled={!future.length} title={t('redo')} aria-label={t('redo')}>↷</button>
+      <button className={tab === 'library' ? 'on' : ''} onClick={() => go(tab === 'library' ? 'sheet' : 'library')} data-testid="library-btn">{t('library')}</button>
+      <button onClick={() => window.print()} title={t('print')} aria-label={t('print')}>{t('print')}</button>
       <span className={`save ${saveState}`} data-testid="save-state" title={saveError}>{t(`save.${saveState}`)}{saveError ? `: ${saveError.slice(0, 80)}` : ''}</span>
       <button className={tab === 'settings' ? 'on' : ''} onClick={() => go(tab === 'settings' ? 'sheet' : 'settings')} title={t('settings')} aria-label={t('settings')}>⚙</button>
       <button className={tips ? 'on' : ''} onClick={() => set({ tips: !tips })} title={t('tips.toggle')} aria-label={t('tips.toggle')} aria-pressed={tips}>?</button>

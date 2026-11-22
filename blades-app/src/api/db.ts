@@ -24,7 +24,7 @@ function toDbError(e: unknown): DbError {
   return new DbError('Unknown', e instanceof Error ? e.message : String(e));
 }
 /** Plain browser / jsdom: no Tauri runtime, use the localStorage emulation (dev and tests only). */
-const inTauri = () => typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
+export const inTauri = () => typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 export async function invoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
   try {
     if (!inTauri()) return await devInvoke<T>(cmd, args);
@@ -37,6 +37,7 @@ export async function invoke<T>(cmd: string, args?: Record<string, unknown>): Pr
 export interface CharacterRow {
   id: string;
   name: string | null;
+  alias: string | null;
   playbook: string | null;
   campaignId: string | null;
   archived: boolean;
