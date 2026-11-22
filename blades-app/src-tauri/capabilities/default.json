@@ -1,7 +1,30 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Least privilege: core window + file dialogs only (no fs plugin).",
+  "description": "Least privilege: core window + file dialogs + the app's own DB commands (no fs plugin).",
   "windows": ["main"],
-  "permissions": ["core:window:default", "dialog:allow-open", "dialog:allow-save"]
+  "permissions": [
+    "core:window:default",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "allow-list-characters",
+    "allow-get-character",
+    "allow-save-character",
+    "allow-set-character-campaign",
+    "allow-archive-character",
+    "allow-delete-character",
+    "allow-save-revision",
+    "allow-list-revisions",
+    "allow-get-revision",
+    "allow-list-campaigns",
+    "allow-save-campaign",
+    "allow-delete-campaign",
+    "allow-add-ruling",
+    "allow-list-rulings",
+    "allow-get-setting",
+    "allow-set-setting",
+    "allow-backup-now",
+    "allow-list-backups",
+    "allow-restore-backup"
+  ]
 }

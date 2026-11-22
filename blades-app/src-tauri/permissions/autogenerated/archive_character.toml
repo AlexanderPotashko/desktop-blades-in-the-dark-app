@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-archive-character"
+description = "Enables the archive_character command without any pre-configured scope."
+commands.allow = ["archive_character"]
+
+[[permission]]
+identifier = "deny-archive-character"
+description = "Denies the archive_character command without any pre-configured scope."
+commands.deny = ["archive_character"]
