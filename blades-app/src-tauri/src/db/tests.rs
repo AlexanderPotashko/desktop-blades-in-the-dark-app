@@ -487,3 +487,40 @@ fn tmp_files_are_ignored() {
     backup::rotate(dir.path(), 0, "");
     assert!(dir.path().join("blades-20260101-120000-x.db.tmp").exists());
 }
+
+fn with_rulebook(db: &Db) {
+    let pages = vec![crate::rulebook::ImportPage { pdf: 10, book: 5, text: "Испытания ослабляют последствия.".into() }];
+    db.with(|c| crate::rulebook::import_pages(c, db.backup_dir(), "T", "ru", &pages, &[]).map(|_| ())).unwrap();
+}
+
+#[test]
+fn backup_has_no_rulebook_but_keeps_characters() {
+    let dir = TempDir::new().unwrap();
+    let db = open(&dir);
+    db.with(|c| store::save_character(c, &doc("a", "A"), None).map(|_| ())).unwrap();
+    with_rulebook(&db);
+    let b = Connection::open(db.backup("manual").unwrap()).unwrap();
+    for t in ["rulebooks", "rb_pages", "rb_toc", "bookmarks"] {
+        assert_eq!(count(&b, t), 0, "{t}");
+    }
+    assert_eq!(count(&b, "characters"), 1);
+    // and no stray text left in the file
+    let bytes = std::fs::read(db.backup_dir().join(db.list_backups().unwrap()[0].name.clone())).unwrap();
+    assert!(!String::from_utf8_lossy(&bytes).contains("Испытания"));
+}
+
+#[test]
+fn restore_keeps_current_rulebook_and_search() {
+    let dir = TempDir::new().unwrap();
+    let db = open(&dir);
+    db.with(|c| store::save_character(c, &doc("a", "A"), None).map(|_| ())).unwrap();
+    let snap = db.backup("manual").unwrap().file_name().unwrap().to_string_lossy().into_owned();
+    with_rulebook(&db); // imported after the backup was made
+    db.restore(&snap).unwrap();
+    db.with(|c| {
+        assert_eq!(count(c, "rb_pages"), 1);
+        assert_eq!(crate::rulebook::search(c, "испытание", 5)?.len(), 1);
+        Ok(())
+    })
+    .unwrap();
+}

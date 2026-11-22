@@ -1,19 +1,6 @@
 // Thin typed wrappers over the rulebook commands in src-tauri/src/rulebook/commands.rs.
 // Errors arrive as `{ kind, message }` and reject with db.ts's DbError.
-import { invoke as tauriInvoke } from '@tauri-apps/api/core';
-import { DbError, type DbErrorKind } from './db';
-
-async function invoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
-  try {
-    return await tauriInvoke<T>(cmd, args);
-  } catch (e) {
-    if (typeof e === 'object' && e !== null && 'kind' in e && 'message' in e) {
-      const { kind, message } = e as { kind: DbErrorKind; message: string };
-      throw new DbError(kind, String(message));
-    }
-    throw new DbError('Unknown', e instanceof Error ? e.message : String(e));
-  }
-}
+import { invoke } from './db';
 
 export interface RulebookInfo {
   id: string;

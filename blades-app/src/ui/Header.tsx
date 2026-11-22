@@ -6,7 +6,7 @@ import { TABS, useUi, type Tab } from '../store/ui';
 
 export function Header() {
   const doc = useStore((s) => s.doc)!;
-  const { saveState, past, future } = useStore();
+  const { saveState, saveError, past, future } = useStore();
   const rules = useRules();
   const { tab, tips, set } = useUi();
   const go = (x: Tab) => set({ tab: x });
@@ -27,7 +27,7 @@ export function Header() {
       </nav>
       <button onClick={() => useStore.getState().undo()} disabled={!past.length} title={t('undo')} aria-label={t('undo')}>↶</button>
       <button onClick={() => useStore.getState().redo()} disabled={!future.length} title={t('redo')} aria-label={t('redo')}>↷</button>
-      <span className={`save ${saveState}`} data-testid="save-state">{t(`save.${saveState}`)}</span>
+      <span className={`save ${saveState}`} data-testid="save-state" title={saveError}>{t(`save.${saveState}`)}{saveError ? `: ${saveError.slice(0, 80)}` : ''}</span>
       <button className={tab === 'settings' ? 'on' : ''} onClick={() => go(tab === 'settings' ? 'sheet' : 'settings')} title={t('settings')} aria-label={t('settings')}>⚙</button>
       <button className={tips ? 'on' : ''} onClick={() => set({ tips: !tips })} title={t('tips.toggle')} aria-label={t('tips.toggle')} aria-pressed={tips}>?</button>
     </header>

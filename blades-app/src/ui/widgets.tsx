@@ -1,7 +1,13 @@
 import { t, type Key } from '../i18n';
+import { openBookPage } from '../rulebook/nav';
 
 /** Hover tip: shown by CSS on `body.tips [data-tip]` (the ? button in the header). */
 export const tip = (key: Key, vars?: Record<string, string | number>) => ({ 'data-tip': t(key, vars) });
+
+/** "📖 p. N": opens the Rulebook tab on that book page. */
+export const BookLink = ({ page }: { page: number }) => (
+  <button type="button" className="small" style={{ marginLeft: 8 }} onClick={() => openBookPage(page)}>{t('rb.openPage', { n: page })}</button>
+);
 
 /** Row of boxes; clicking the last filled one clears it (prototype behaviour). */
 export function Boxes({ n, value, onChange, red, label }: { n: number; value: number; onChange: (v: number) => void; red?: boolean; label?: string }) {

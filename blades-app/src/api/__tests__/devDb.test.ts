@@ -19,3 +19,10 @@ it('outside Tauri the wrappers run on the localStorage emulation: save, load, re
   await db.deleteCharacter(c.id);
   expect(await db.listCharacters()).toEqual([]);
 });
+
+it('saveCharacter refuses a document that fails the schema and writes nothing', async () => {
+  const c = newCharacter('leech', { name: 'Sandr' });
+  await db.saveCharacter(c);
+  await expect(db.saveCharacter({ ...c, stress: -1 })).rejects.toMatchObject({ kind: 'Invalid' });
+  expect((await db.getCharacter(c.id)).stress).toBe(0);
+});

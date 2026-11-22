@@ -58,7 +58,7 @@ export const setDay = (n: number) => edit((d) => void (d.day = Math.max(1, Math.
 
 // ---- actions and xp
 export const setAction = (id: string, v: number) => edit((d) => void (d.actions[id] = Math.max(0, Math.min(4, v))));
-export const setXp = (track: 'insight' | 'prowess' | 'resolve' | 'playbook', v: number) => edit((d) => void (d.xp[track] = v));
+export const setXp = (track: 'insight' | 'prowess' | 'resolve' | 'playbook', v: number) => edit((d) => void (d.xp[track] = Math.max(0, Math.floor(v) || 0)));
 
 // ---- talents
 export function addTalent(id: string, rules: TableRules) {
@@ -90,7 +90,7 @@ export const removeCustomTalent = (id: string) =>
   });
 
 // ---- stress, trauma, harm
-export const setStress = (v: number) => edit((d) => void (d.stress = v));
+export const setStress = (v: number) => edit((d) => void (d.stress = Math.max(0, Math.floor(v) || 0)));
 export const toggleTrauma = (id: string) =>
   edit((d) => {
     const i = d.trauma.indexOf(id);
@@ -116,7 +116,7 @@ export const setHarm = (row: 'l3' | 'l2' | 'l1', i: number, v: string) =>
 export const setHealing = (v: number) => edit((d) => void (d.healing = Math.max(0, Math.min(4, v))));
 
 // ---- protection
-export const setArmorUsed = (itemId: string, n: number) => edit((d) => void (d.armorUsed[itemId] = n));
+export const setArmorUsed = (itemId: string, n: number) => edit((d) => void (d.armorUsed[itemId] = Math.max(0, Math.floor(n) || 0)));
 export const toggleSpecialArmor = (talent: string | null) =>
   edit((d) => {
     if (talent === null) d.specialArmorShared = !d.specialArmorShared;
@@ -172,7 +172,10 @@ export const applyDowntime = (o: DowntimeOption) =>
 
 // ---- rules (sheet-level override over the campaign/book rules)
 export const setRule = <K extends keyof TableRules>(key: K, value: TableRules[K]) =>
-  edit((d) => void (d.rulesOverride = { ...d.rulesOverride, [key]: value }), `rule:${key}`);
+  edit((d) => {
+    if (JSON.stringify(d.rulesOverride?.[key]) === JSON.stringify(value)) return; // unchanged: no write, no undo step
+    d.rulesOverride = { ...d.rulesOverride, [key]: value };
+  }, `rule:${key}`);
 /** Name of a taken talent (book or custom). */
 export const talentName = (doc: Character, id: string): string =>
   doc.customTalents.find((c) => c.id === id)?.name || contentText(getLang(), id)?.name || id;

@@ -205,6 +205,8 @@
   "rest.optionHint": "Healing +{h}, stress −{s}",
   "armor.untilScore": "until the next score",
   "armor.special": "Special armor",
+  "armor.specialInline": "special armor",
+  "rb.openPage": "📖 p. {n}",
   "armor.untilDowntime": "until downtime",
   "armor.none": "No protection. Armor comes from gear, special armor from abilities.",
   "counters.drag": "drag",

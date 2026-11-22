@@ -145,6 +145,11 @@ impl Db {
             let _ = std::fs::remove_file(&tmp);
             return Err(DbError::Invalid("could not checkpoint the database; restore aborted, nothing changed".into()));
         }
+        // 3b. A backup holds no rulebook text: keep the current one.
+        if let Err(e) = backup::carry_rulebook(&tmp, &self.path) {
+            let _ = std::fs::remove_file(&tmp);
+            return Err(e);
+        }
         // 4. Swap. The slot stays empty (Unavailable) until a real file is open again.
         drop(guard.take());
         let swapped = rename(&tmp, &self.path);

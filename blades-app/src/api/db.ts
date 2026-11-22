@@ -25,7 +25,7 @@ function toDbError(e: unknown): DbError {
 }
 /** Plain browser / jsdom: no Tauri runtime, use the localStorage emulation (dev and tests only). */
 const inTauri = () => typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
-async function invoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
+export async function invoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
   try {
     if (!inTauri()) return await devInvoke<T>(cmd, args);
     return await tauriInvoke<T>(cmd, args);
@@ -73,8 +73,15 @@ export async function getCharacter(id: string): Promise<Character> {
 }
 
 /** Upsert by `doc.id`. `campaignId` undefined keeps the current link; use setCharacterCampaign to change it. */
-export const saveCharacter = (doc: Character, campaignId?: string) =>
-  invoke<string>('save_character', { docJson: JSON.stringify(doc), campaignId });
+export async function saveCharacter(doc: Character, campaignId?: string): Promise<string> {
+  let json: string;
+  try {
+    json = JSON.stringify(Character.parse(doc)); // never write a document that does not pass the schema
+  } catch (e) {
+    throw new DbError('Invalid', e instanceof Error ? e.message : String(e));
+  }
+  return invoke<string>('save_character', { docJson: json, campaignId });
+}
 
 export const setCharacterCampaign = (id: string, campaignId: string | null) =>
   invoke<void>('set_character_campaign', { id, campaignId });

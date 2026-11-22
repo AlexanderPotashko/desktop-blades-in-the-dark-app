@@ -215,6 +215,8 @@
   "rest.optionHint": "Лечение +{h}, стресс −{s}",
   "armor.untilScore": "до нового дела",
   "armor.special": "Особая защита",
+  "armor.specialInline": "особая защита",
+  "rb.openPage": "📖 стр. {n}",
   "armor.untilDowntime": "до передышки",
   "armor.none": "Защиты нет. Доспех — в снаряжении, особая защита — от талантов.",
   "counters.drag": "перетащить",

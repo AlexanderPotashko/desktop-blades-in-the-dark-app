@@ -1,7 +1,7 @@
 // Which character is open: start-up (last opened, else any, else a sample Leech), create, import from the prototype.
 import * as db from '../api/db';
 import { importPrototype } from '../engine/importPrototype';
-import type { Character, TableRules } from '../model';
+import { Character, type TableRules } from '../model';
 import { t } from '../i18n';
 import { newCharacter } from './actions';
 import { useStore } from './store';
@@ -38,7 +38,7 @@ export const createCharacter = (playbookId: string) => open(newCharacter(playboo
 /** Reads a charsheet.html JSON export and opens it; the prototype's table rules become the sheet's own. Returns warnings. */
 export async function importFromPrototype(text: string): Promise<string[]> {
   const r = importPrototype(JSON.parse(text));
-  const doc: Character = { ...r.character, rulesOverride: r.rules satisfies TableRules };
+  const doc = Character.parse({ ...r.character, rulesOverride: r.rules satisfies TableRules }); // fails here, not at the first save
   await open(doc);
   return r.warnings;
 }

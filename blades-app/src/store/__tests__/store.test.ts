@@ -5,7 +5,7 @@ const saveRevision = vi.fn(async (_id?: string, _reason?: string) => 1);
 vi.mock('../../api/db', () => ({ saveCharacter, saveRevision }));
 
 const { useStore, installShortcuts, SAVE_DELAY, REVISION_EVERY } = await import('../store');
-const { newCharacter, setAction, setStress, setField, addTalent } = await import('../actions');
+const { newCharacter, setAction, setStress, setField, addTalent, setRule, setXp } = await import('../actions');
 const { BOOK_RULES } = await import('../../model');
 const get = () => useStore.getState();
 
@@ -48,6 +48,16 @@ describe('undo / redo', () => {
     expect(get().saveState).toBe('saved');
   });
 
+  it('setRule with an unchanged value is no step; stress and xp are clamped', () => {
+    setRule('mode', 'custom');
+    setRule('mode', 'custom');
+    expect(get().past).toHaveLength(1);
+    setStress(-3);
+    setXp('insight', -1);
+    expect(get().doc!.stress).toBe(0);
+    expect(get().doc!.xp.insight).toBe(0);
+  });
+
   it('taking a talent with a preset adds its counter once; undo takes both back', () => {
     addTalent('analyst', BOOK_RULES);
     expect(get().doc!.counters.map((c) => c.fromTalent)).toEqual(['analyst']);
@@ -70,6 +80,20 @@ describe('undo / redo', () => {
     expect(get().doc!.stress).toBe(2);
     key({ key: 'z' }); // no modifier: ignored
     expect(get().doc!.stress).toBe(2);
+    off();
+  });
+});
+
+describe('undo shortcut in text fields', () => {
+  it('leaves Ctrl+Z to inputs, textareas, selects, contenteditable; checkboxes still undo the sheet', () => {
+    const handlers: Array<(e: Event) => void> = [];
+    const off = installShortcuts({ addEventListener: (_t: string, h: never) => void handlers.push(h), removeEventListener: () => {} } as never);
+    const press = (target: object) => handlers[0]({ preventDefault() {}, altKey: false, ctrlKey: true, metaKey: false, shiftKey: false, key: 'z', target } as unknown as Event);
+    setStress(2);
+    for (const t of [{ tagName: 'INPUT', type: 'text' }, { tagName: 'INPUT', type: 'number' }, { tagName: 'TEXTAREA' }, { tagName: 'SELECT' }, { tagName: 'DIV', isContentEditable: true }]) press(t);
+    expect(get().doc!.stress).toBe(2);
+    press({ tagName: 'INPUT', type: 'checkbox' });
+    expect(get().doc!.stress).toBe(0);
     off();
   });
 });
@@ -108,6 +132,24 @@ describe('autosave', () => {
     setStress(2); // the next edit retries
     await vi.advanceTimersByTimeAsync(SAVE_DELAY);
     expect(get().saveState).toBe('saved');
+  });
+
+  it('a failed revision keeps the flag so the next flush retries it', async () => {
+    setStress(1);
+    saveRevision.mockRejectedValueOnce(new Error('disk'));
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    await get().flush('close');
+    expect(get().saveState).toBe('error');
+    await get().flush('close');
+    expect(saveRevision).toHaveBeenCalledTimes(2);
+  });
+
+  it('shows why a save failed', async () => {
+    saveCharacter.mockRejectedValueOnce(new Error('bad doc'));
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    setStress(1);
+    await vi.advanceTimersByTimeAsync(SAVE_DELAY);
+    expect(get().saveError).toBe('bad doc');
   });
 
   it('a revision after 10 minutes of editing, none before', async () => {

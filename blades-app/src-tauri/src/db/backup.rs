@@ -51,6 +51,7 @@ pub fn backup(conn: &Connection, dir: &Path, reason: &str) -> Result<PathBuf> {
     let made = conn
         .execute("VACUUM INTO ?1", [tmp.to_string_lossy().as_ref()])
         .map_err(DbError::from)
+        .and_then(|_| strip_rulebook(&tmp))
         .and_then(|_| std::fs::rename(&tmp, &path).map_err(DbError::from));
     if let Err(e) = made {
         let _ = std::fs::remove_file(&tmp);
@@ -61,6 +62,46 @@ pub fn backup(conn: &Connection, dir: &Path, reason: &str) -> Result<PathBuf> {
         rotate(dir, KEEP, name);
     }
     Ok(path)
+}
+
+fn has_rulebook(c: &Connection) -> Result<bool> {
+    Ok(c.query_row("SELECT EXISTS(SELECT 1 FROM sqlite_master WHERE name = 'rb_fts')", [], |r| r.get(0))?)
+}
+
+/// The rulebook text is the user's own copy and must never leave the app's data folder: backups carry none of it.
+fn strip_rulebook(file: &Path) -> Result<()> {
+    let c = Connection::open(file)?;
+    if !has_rulebook(&c)? {
+        return Ok(()); // pre-migration snapshot of an old schema
+    }
+    c.pragma_update(None, "foreign_keys", "ON")?;
+    c.execute_batch(
+        "DELETE FROM rulebooks; INSERT INTO rb_fts(rb_fts) VALUES('delete-all');
+         DELETE FROM rb_pages; DELETE FROM rb_toc; DELETE FROM bookmarks; VACUUM;",
+    )?;
+    Ok(())
+}
+
+/// Restore helper: backups hold no rulebook, so copy the live one into `file` (the restored copy) and rebuild its FTS.
+pub fn carry_rulebook(file: &Path, live: &Path) -> Result<()> {
+    let c = Connection::open(file)?;
+    if !has_rulebook(&c)? {
+        return Ok(());
+    }
+    c.pragma_update(None, "foreign_keys", "ON")?;
+    c.execute("ATTACH DATABASE ?1 AS live", [live.to_string_lossy().as_ref()])?;
+    c.execute_batch(
+        "BEGIN;
+         DELETE FROM rulebooks; DELETE FROM rb_pages; DELETE FROM rb_toc; DELETE FROM bookmarks;
+         INSERT INTO rulebooks SELECT * FROM live.rulebooks;
+         INSERT INTO rb_pages SELECT * FROM live.rb_pages;
+         INSERT INTO rb_toc SELECT * FROM live.rb_toc;
+         INSERT INTO bookmarks SELECT * FROM live.bookmarks;
+         COMMIT;",
+    )?;
+    crate::rulebook::rebuild_fts(&c)?;
+    c.execute_batch("DETACH DATABASE live")?;
+    Ok(())
 }
 
 /// Keeps the `keep` newest backups AND the newest backup of each of the last `keep` calendar days

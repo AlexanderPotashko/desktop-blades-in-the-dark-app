@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 import { t } from './i18n';
 import { boot } from './store/session';
 import { installShortcuts, useStore } from './store/store';
@@ -22,13 +23,32 @@ export default function App() {
     const off = installShortcuts();
     // "p. N" links from tips switch to the Rulebook tab
     const offRb = subscribeOpenBookPage(() => useUi.getState().set({ tab: 'rulebook' }));
-    // best effort on close: write pending edits and a closing revision
-    const bye = () => void useStore.getState().flush('close');
-    window.addEventListener('beforeunload', bye);
+    // On close: hold the window until pending edits and a closing revision are written.
+    const flushClose = () => useStore.getState().flush('close');
+    let offClose: (() => void) | undefined;
+    let gone = false;
+    if ('__TAURI_INTERNALS__' in window) {
+      const w = getCurrentWindow();
+      void w
+        .onCloseRequested(async (e) => {
+          e.preventDefault();
+          try {
+            await flushClose();
+          } finally {
+            await w.destroy(); // close even if the save failed: the error is already shown and the doc is on disk as of the last good save
+          }
+        })
+        .then((un) => (gone ? un() : (offClose = un)));
+    } else {
+      // dev browser fallback: best effort, cannot await
+      window.addEventListener('beforeunload', flushClose);
+      offClose = () => window.removeEventListener('beforeunload', flushClose);
+    }
     return () => {
       off();
       offRb();
-      window.removeEventListener('beforeunload', bye);
+      gone = true;
+      offClose?.();
     };
   }, []);
   useEffect(() => void document.body.classList.toggle('tips', tips), [tips]);

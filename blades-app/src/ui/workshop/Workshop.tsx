@@ -5,7 +5,7 @@ import { bookName } from '../../store/content';
 import { addCustomItem, removeItem, setItemName, setLoad, setQty, toggleOpen } from '../../store/gearActions';
 import { addProject, gearToProject, moveItem, projectToGear, removeProject, setProject } from '../../store/workshopActions';
 import { useRules, useStore } from '../../store/store';
-import { Boxes, tip } from '../widgets';
+import { Boxes, BookLink, tip } from '../widgets';
 import { Contents, ItemDialog, PropLine, hasContents, thingName, type Item } from '../gear/ItemParts';
 
 type Project = WorkItem;
@@ -94,7 +94,7 @@ export function Workshop() {
         </select>
       </section>
       <section>
-        <h2 {...tip('tip.wsProjects')}>{t('ws.projects')}</h2>
+        <h2 {...tip('tip.wsProjects')}>{t('ws.projects')}<BookLink page={270} /></h2>
         <div data-testid="projects">
           {doc.workshop.length > 0 && <div className="inv prodrow head"><span /><span>{t('ws.col.project')}</span><span>{t('ws.col.progress')}</span><span>{t('ws.col.qty')}</span><span /><span /><span /></div>}
           {doc.workshop.map((w) => <ProjectRow key={w.id} w={w} onNote={() => setNote(w.id)} />)}

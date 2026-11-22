@@ -10,7 +10,7 @@ import {
 } from '../../store/gearActions';
 import { gearToProject, moveItem } from '../../store/workshopActions';
 import { useRules, useStore } from '../../store/store';
-import { Boxes, tip } from '../widgets';
+import { Boxes, BookLink, tip } from '../widgets';
 import { Contents, ItemDialog, PropLine, hasContents, type Item } from './ItemParts';
 
 const fmt = (n: number) => String(Math.round(n * 100) / 100);
@@ -105,7 +105,7 @@ export function Gear() {
       <section>
         <h2>{t('tab.gear')}</h2>
         <h3 {...tip('tip.money')}>
-          {t('money')}
+          {t('money')}<BookLink page={54} />
           {!rules.money.book && <span className="small">1 = {rules.money.rate}</span>}
         </h3>
         <Money />

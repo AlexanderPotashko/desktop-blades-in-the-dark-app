@@ -70,7 +70,7 @@ export function Protection() {
           <div key={s.talents.join()} className="spec" data-special={s.shared ? 'shared' : s.talents[0]}>
             <span role="checkbox" aria-checked={s.used} aria-label={t('armor.special')} tabIndex={0} className={`box${s.used ? ' on' : ''}`}
               onClick={() => toggleSpecialArmor(s.shared ? null : s.talents[0])} />
-            <b>{s.shared ? t('armor.special') : talentName(doc, s.talents[0])}{!s.shared && <span className="small"> ({t('armor.special').toLowerCase()})</span>}</b>
+            <b>{s.shared ? t('armor.special') : talentName(doc, s.talents[0])}{!s.shared && <span className="small"> ({t('armor.specialInline')})</span>}</b>
             <span className="small">{s.shared ? `${s.talents.map((x) => talentName(doc, x)).join(', ')} · ` : ''}{t('armor.untilDowntime')}</span>
           </div>
         ))}

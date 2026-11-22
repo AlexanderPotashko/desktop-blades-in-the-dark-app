@@ -24,6 +24,8 @@ interface State {
   past: Entry[];
   future: Entry[];
   saveState: SaveState;
+  /** Why the last save failed (shown in the header). */
+  saveError?: string;
   open: (doc: Character, opts?: { rules?: TableRules; campaignId?: string }) => void;
   /** `key` merges consecutive edits of one field into one undo step. */
   edit: (recipe: (d: Draft<Character>) => void, key?: string) => void;
@@ -54,20 +56,26 @@ export const useStore = create<State>()((set, get) => {
       if (!doc) return;
       try {
         if (saveState !== 'saved') {
-          set({ saveState: 'saving' });
+          set({ saveState: 'saving', saveError: undefined });
           await db.saveCharacter(doc, campaignId);
           // an edit during the await re-armed the timer and set 'dirty'; keep that
           if (get().doc === doc) set({ saveState: 'saved' });
         }
         const due = Date.now() - lastRevisionAt >= REVISION_EVERY;
         if (editsSinceRevision && (revisionReason || due)) {
-          await db.saveRevision(doc.id, revisionReason ?? 'autosave');
-          lastRevisionAt = Date.now();
+          // clear before the await: an edit made meanwhile sets the flag again and must not be lost
           editsSinceRevision = false;
+          try {
+            await db.saveRevision(doc.id, revisionReason ?? 'autosave');
+            lastRevisionAt = Date.now();
+          } catch (e) {
+            editsSinceRevision = true;
+            throw e;
+          }
         }
       } catch (e) {
         console.error('save failed', e);
-        set({ saveState: 'error' });
+        set({ saveState: 'error', saveError: e instanceof Error ? e.message : String(e) });
       }
     });
     return saving;
@@ -93,7 +101,7 @@ export const useStore = create<State>()((set, get) => {
       clearTimeout(timer);
       lastRevisionAt = Date.now();
       editsSinceRevision = false;
-      set({ doc, baseRules: opts.rules ?? BOOK_RULES, campaignId: opts.campaignId, past: [], future: [], saveState: 'saved' });
+      set({ doc, baseRules: opts.rules ?? BOOK_RULES, campaignId: opts.campaignId, past: [], future: [], saveState: 'saved', saveError: undefined });
     },
     edit(recipe, key) {
       const { doc, past } = get();
@@ -126,10 +134,20 @@ export function useRawRules(): TableRules {
   return resolveRules(base, over);
 }
 
+/** Text fields keep the browser's own undo; checkboxes and radios are not text. */
+function nativeUndo(t: EventTarget | null): boolean {
+  const el = t as HTMLElement | null;
+  if (!el || !el.tagName) return false;
+  if (el.isContentEditable) return true;
+  if (el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') return true;
+  return el.tagName === 'INPUT' && !['checkbox', 'radio', 'button', 'submit', 'reset', 'range'].includes((el as HTMLInputElement).type);
+}
+
 /** Ctrl/Cmd+Z undo, Ctrl+Y or Ctrl/Cmd+Shift+Z redo. Returns the unsubscribe. */
 export function installShortcuts(target: Pick<Window, 'addEventListener' | 'removeEventListener'> = window): () => void {
   const on = (e: Event) => {
     const k = e as KeyboardEvent;
+    if (nativeUndo(k.target)) return;
     if (!(k.ctrlKey || k.metaKey) || k.altKey) return;
     const key = k.key.toLowerCase();
     const redo = key === 'y' || (key === 'z' && k.shiftKey);

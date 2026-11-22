@@ -136,6 +136,23 @@ pub fn import_pages(
     list(conn)?.into_iter().find(|r| r.id == id).ok_or_else(|| bad("import vanished"))
 }
 
+/// Re-stems every stored page into `rb_fts` (the FTS table cannot be copied between databases).
+pub fn rebuild_fts(conn: &Connection) -> Result<()> {
+    let st = Stemmers::new();
+    let tx = conn.unchecked_transaction()?;
+    tx.execute("INSERT INTO rb_fts(rb_fts) VALUES('delete-all')", [])?;
+    {
+        let mut q = tx.prepare("SELECT id, text FROM rb_pages")?;
+        let rows: Vec<(i64, String)> = q.query_map([], |r| Ok((r.get(0)?, r.get(1)?)))?.collect::<rusqlite::Result<_>>()?;
+        let mut ins = tx.prepare("INSERT INTO rb_fts(rowid, stemmed) VALUES (?1, ?2)")?;
+        for (id, text) in rows {
+            ins.execute(params![id, st.stem_text(&text)])?;
+        }
+    }
+    tx.commit()?;
+    Ok(())
+}
+
 pub fn list(conn: &Connection) -> Result<Vec<RulebookInfo>> {
     let mut q = conn.prepare(
         "SELECT r.id, r.title, r.imported_at, (SELECT count(*) FROM rb_pages p WHERE p.rulebook_id = r.id)
@@ -176,7 +193,8 @@ pub fn page(conn: &Connection, n: i64, by_book: bool) -> Result<Page> {
 pub fn search(conn: &Connection, query: &str, limit: usize) -> Result<Vec<Hit>> {
     let st = Stemmers::new();
     let mut stems = st.stem_words(query);
-    stems.dedup();
+    let mut seen = std::collections::HashSet::new();
+    stems.retain(|s| seen.insert(s.clone()));
     stems.truncate(12);
     let Some(id) = current(conn)? else { return Ok(vec![]) };
     if stems.is_empty() {

@@ -154,12 +154,12 @@ export function RulebookView() {
     }
   }
 
-  if (books === null) return <main className="rb">{err && <p className="rb-error">{err}</p>}</main>;
-  if (!books.length) return <main className="rb"><ImportPanel onDone={reload} />{err && <p className="rb-error">{err}</p>}</main>;
+  if (books === null) return <div className="rb">{err && <p className="rb-error">{err}</p>}</div>;
+  if (!books.length) return <div className="rb"><ImportPanel onDone={reload} />{err && <p className="rb-error">{err}</p>}</div>;
 
   const mark = marks.find((m) => page && m.page === page.book);
   return (
-    <main className="rb">
+    <div className="rb">
       <aside className="rb-side">
         <h3>{t('rb.toc')}</h3>
         <ul>
@@ -229,6 +229,6 @@ export function RulebookView() {
           </article>
         )}
       </section>
-    </main>
+    </div>
   );
 }

@@ -121,6 +121,14 @@ describe('armor', () => {
       { itemId: vest, boxes: 2, used: 2 },
     ]);
   });
+  it('heavy armor gives a box only together with carried Armor (p. 104)', () => {
+    const a = id(), h = id();
+    const heavy = { id: h, bookId: 'heavy-armor', load: 3 };
+    const book = { armor: 1, 'heavy-armor': 1 };
+    expect(armorAvailable(doc({ items: [heavy] }), book)).toEqual([]);
+    expect(armorAvailable(doc({ items: [heavy, { id: a, bookId: 'armor', load: 2, carried: 0 }] }), book)).toEqual([]);
+    expect(armorAvailable(doc({ items: [heavy, { id: a, bookId: 'armor', load: 2 }] }), book).map(r => r.boxes)).toEqual([1, 1]);
+  });
   it('book armor overridden to 0 gives none', () => {
     const d = doc({ items: [{ id: id(), bookId: 'armor', load: 2, props: { armor: 0 } }] });
     expect(armorAvailable(d, { armor: 1 })).toEqual([]);

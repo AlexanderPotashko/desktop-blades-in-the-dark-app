@@ -5,7 +5,11 @@ export interface ArmorRow { itemId: string; boxes: number; used: number }
 
 /** Armor boxes from every carried gear item that has them (book Armor/Heavy: 1 each unless overridden). */
 export function armorAvailable(doc: Character, bookArmor: Record<string, number | undefined>): ArmorRow[] {
+  const carried = (i: Character['items'][number]) => i.place === 'gear' && i.carried >= 1;
+  // book p. 104: "+Heavy" adds to Armor, so it gives nothing on its own
+  const hasArmor = doc.items.some(i => i.bookId === 'armor' && carried(i));
   return doc.items.flatMap(i => {
+    if (i.bookId === 'heavy-armor' && !hasArmor && i.props.armor === undefined) return [];
     const boxes = i.props.armor ?? (i.bookId ? bookArmor[i.bookId] ?? 0 : 0);
     if (i.place !== 'gear' || i.carried < 1 || boxes < 1) return [];
     return [{ itemId: i.id, boxes, used: Math.min(doc.armorUsed[i.id] ?? 0, boxes) }];

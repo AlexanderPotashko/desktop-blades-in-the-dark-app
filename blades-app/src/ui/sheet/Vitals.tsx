@@ -5,7 +5,7 @@ import { t } from '../../i18n';
 import { bookName, bookText, commonContent, playbooks, talentDefs } from '../../store/content';
 import { addCustomTrauma, removeCustomTrauma, setHarm, setHealing, setStress, toggleTrauma } from '../../store/actions';
 import { useRules, useStore } from '../../store/store';
-import { Boxes, Clock, tip } from '../widgets';
+import { Boxes, BookLink, Clock, tip } from '../widgets';
 
 function Traumas() {
   const doc = useStore((s) => s.doc)!;
@@ -41,13 +41,13 @@ export function Vitals() {
   const full = doc.stress >= max;
   return (
     <section>
-      <h2 {...tip('tip.stress')}>{t('stressAndTrauma')}</h2>
+      <h2 {...tip('tip.stress')}>{t('stressAndTrauma')}<BookLink page={18} /></h2>
       <div className="row" data-testid="stress">
         <Boxes n={max} value={doc.stress} red onChange={setStress} label={t('stress')} />
       </div>
       <div className="small" data-testid="stress-msg">{full && <span className="warn">{t('stress.full')}</span>}</div>
       <Traumas />
-      <h2 style={{ marginTop: 14 }} {...tip('tip.harm')}>{t('harm')}</h2>
+      <h2 style={{ marginTop: 14 }} {...tip('tip.harm')}>{t('harm')}<BookLink page={40} /></h2>
       <div className="harm l3">
         <b>3</b>
         <input aria-label={t('harm.level', { n: 3 })} value={doc.harm.l3} onChange={(e) => setHarm('l3', 0, e.target.value)} />
