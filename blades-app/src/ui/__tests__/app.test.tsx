@@ -101,8 +101,10 @@ describe('Бланк', () => {
     expect(qa('.tabs button')[0].textContent).toBe('Sheet');
   });
 
-  it('other tabs are placeholders', async () => {
-    await click(qa('.tabs button')[5]);
-    expect(host.textContent).toContain('появится позже');
+  it('every tab is implemented (no placeholder)', async () => {
+    for (let i = 0; i < qa('.tabs button').length; i++) {
+      await click(qa('.tabs button')[i]);
+      expect(host.textContent).not.toContain('появится позже');
+    }
   });
 });
