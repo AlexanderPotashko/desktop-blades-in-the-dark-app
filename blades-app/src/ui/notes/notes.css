@@ -32,6 +32,7 @@ button.on{border-color:var(--acc);color:var(--acc)}
 .imgbig{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:50}
 .imgbig>div{background:var(--panel);border:1px solid var(--acc);border-radius:8px;padding:14px}.imgbig img{max-width:90vw;max-height:78vh;display:block;margin:0 auto 10px}
 input[type=search]{width:100%}
+.ed .row>.edt{width:auto;flex:1;min-width:0}.ed .row>button{white-space:nowrap;flex:none}
 /* biography */
 .bio3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px 12px}.bio3>div{display:grid;gap:4px;align-content:start}
 textarea.grow{field-sizing:content;min-height:3lh;resize:none}
