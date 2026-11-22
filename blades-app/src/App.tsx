@@ -5,7 +5,9 @@ import { installShortcuts, useStore } from './store/store';
 import { useUi } from './store/ui';
 import { Header } from './ui/Header';
 import { Settings } from './ui/Settings';
+import { Gear } from './ui/gear/Gear';
 import { Sheet } from './ui/sheet/Sheet';
+import { Workshop } from './ui/workshop/Workshop';
 import { RulebookView, subscribeOpenBookPage } from './rulebook/RulebookView';
 
 export default function App() {
@@ -35,7 +37,7 @@ export default function App() {
   return (
     <>
       <Header />
-      {tab === 'sheet' ? <Sheet /> : tab === 'settings' ? <Settings /> : tab === 'rulebook' ? <main><RulebookView /></main> : (
+      {tab === 'sheet' ? <Sheet /> : tab === 'gear' ? <Gear /> : tab === 'workshop' ? <Workshop /> : tab === 'settings' ? <Settings /> : tab === 'rulebook' ? <main><RulebookView /></main> : (
         <main><section><h2>{t(`tab.${tab}`)}</h2><p className="small">{t('tab.soon')}</p></section></main>
       )}
     </>

@@ -1,0 +1,34 @@
+/* Gear and Workshop tabs: same look as the prototype (charsheet.html). */
+.inv{display:grid;grid-template-columns:24px 1fr 52px 84px 52px 34px 34px;gap:6px;align-items:center;margin:3px 0}
+.inv.noload{grid-template-columns:24px 1fr 52px 84px 34px 34px}
+.inv.off{opacity:.55}.inv .on{border-color:var(--acc);color:var(--acc)}
+.inv.head{font-size:11px;color:var(--dim);margin-bottom:0}.inv.head span{text-align:center}.inv.head span:nth-child(2){text-align:left}
+.inv .take{border-color:var(--acc);color:var(--acc)}
+.inv.grp input[data-f=name]{border-left:3px solid var(--acc);font-weight:bold}
+.inv.prodrow{grid-template-columns:24px 1fr 130px 56px 34px 34px 34px}
+.inv.wsrow{grid-template-columns:24px 1fr 56px 34px 34px 34px}
+.inv.prodrow.done input[data-f=name]{border-color:var(--ok);color:var(--ok)}
+#workshop,#gear{grid-template-columns:minmax(0,1fr)}
+.prog{display:flex;gap:4px;align-items:center}.prog input{width:56px}
+.prog-boxes{margin:-2px 0 4px 30px;gap:3px}.prog-boxes .box{width:14px;height:14px}
+.money{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin-bottom:8px}
+.money label{display:flex;align-items:center;gap:6px;margin:0;font-size:13px;color:var(--ink)}.money input{width:80px}
+.money,#moneyBook{padding:8px 10px;border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:6px;background:rgba(201,162,74,.05)}
+.money label input{font-weight:bold;font-size:15px;color:var(--acc)}
+.lbl{width:70px}
+.calc{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;padding:3px 10px;border:1px solid var(--acc);border-radius:6px;background:rgba(201,162,74,.08)}
+.fold{padding:2px 0}.fold.empty{opacity:.35}
+.note.has{color:var(--acc);border-color:var(--acc)}
+.subrow{display:grid;grid-template-columns:64px 1fr 34px;gap:4px}.subrow.band{grid-template-columns:64px 1fr}
+.subrow input{font-size:13px;padding:2px 8px}
+.subadd{justify-self:start;font-size:12px;padding:2px 8px}
+.sub{border-left:1px dashed var(--acc);padding-left:8px;margin:0 0 6px 30px;display:grid;gap:3px}.sub.off{opacity:.55}
+.propline{margin:-2px 0 4px 30px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:grid;place-items:center;z-index:50}
+.dlg{background:var(--panel);color:var(--ink);border:1px solid var(--acc);border-radius:8px;width:min(640px,92vw);max-height:92vh;overflow:auto;padding:14px}
+.dlg h3{margin:0 0 8px;color:var(--acc)}.dlg textarea{min-height:260px}
+.dlg .on{border-color:var(--acc);color:var(--acc)}
+.props{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 10px;border:1px solid var(--line);border-radius:6px;padding:10px}
+.props label{display:grid;gap:3px;margin:0;color:var(--dim)}.props .wide{grid-column:1/-1}
+.props .chk{display:flex;align-items:center;gap:6px;color:var(--ink)}
+.props .row{gap:4px 14px}.props .row input:not([type=checkbox]){width:70px}

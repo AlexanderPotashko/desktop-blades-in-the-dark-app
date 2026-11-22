@@ -102,7 +102,7 @@ describe('Бланк', () => {
   });
 
   it('other tabs are placeholders', async () => {
-    await click(qa('.tabs button')[1]);
+    await click(qa('.tabs button')[5]);
     expect(host.textContent).toContain('появится позже');
   });
 });
