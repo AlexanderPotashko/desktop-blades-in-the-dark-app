@@ -1,8 +1,34 @@
 // The only place that calls `invoke`. Thin typed wrappers over the Rust commands in src-tauri/src/db/commands.rs.
-// Errors from Rust arrive as plain message strings (rejected promise).
-import { invoke } from '@tauri-apps/api/core';
-import { Character } from '../model';
+// Errors from Rust arrive as `{ kind, message }`; every call here rejects with a DbError.
+import { invoke as tauriInvoke } from '@tauri-apps/api/core';
+import { Campaign as CampaignSchema, Character, Ruling as RulingSchema } from '../model';
 import type { Campaign, Ruling, TableRules } from '../model';
+
+export type DbErrorKind = 'TooNew' | 'NotFound' | 'Invalid' | 'Io' | 'Db' | 'Unavailable';
+export class DbError extends Error {
+  constructor(
+    public kind: DbErrorKind | 'Unknown',
+    message: string,
+  ) {
+    super(message);
+    this.name = 'DbError';
+  }
+}
+function toDbError(e: unknown): DbError {
+  if (e instanceof DbError) return e;
+  if (typeof e === 'object' && e !== null && 'kind' in e && 'message' in e) {
+    const { kind, message } = e as { kind: DbErrorKind; message: string };
+    return new DbError(kind, String(message));
+  }
+  return new DbError('Unknown', e instanceof Error ? e.message : String(e));
+}
+async function invoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
+  try {
+    return await tauriInvoke<T>(cmd, args);
+  } catch (e) {
+    throw toDbError(e);
+  }
+}
 
 export interface CharacterRow {
   id: string;
@@ -28,8 +54,8 @@ export interface CampaignRow {
   rules: TableRules;
   updatedAt: string;
 }
+/** `name` is a bare file name in the backups folder; it is what restoreBackup takes. */
 export interface BackupInfo {
-  path: string;
   name: string;
   size: number;
 }
@@ -63,26 +89,36 @@ export async function getRevision(id: number): Promise<Revision> {
 }
 
 // campaigns
-export const listCampaigns = () => invoke<CampaignRow[]>('list_campaigns');
-export const saveCampaign = (c: Campaign) => invoke<string>('save_campaign', { json: JSON.stringify(c) });
+export async function listCampaigns(): Promise<CampaignRow[]> {
+  const rows = await invoke<Array<CampaignRow>>('list_campaigns');
+  return rows.map((r) => ({ ...CampaignSchema.parse(r), updatedAt: r.updatedAt }));
+}
+export const saveCampaign = (c: Campaign) =>
+  invoke<string>('save_campaign', { json: JSON.stringify(CampaignSchema.parse(c)) });
 /** Copies the rules into each member sheet's rulesOverride in one transaction, then deletes. */
 export const deleteCampaign = (id: string) => invoke<void>('delete_campaign', { id });
 
 // rulings
-export const addRuling = (r: Ruling) => invoke<string>('add_ruling', { json: JSON.stringify(r) });
-export const listRulings = (campaignId: string) => invoke<Ruling[]>('list_rulings', { campaignId });
+export const addRuling = (r: Ruling) => invoke<string>('add_ruling', { json: JSON.stringify(RulingSchema.parse(r)) });
+/** Rust sends `topic: null` for no topic; normalized to absent before parsing. */
+export async function listRulings(campaignId: string): Promise<Ruling[]> {
+  const rows = await invoke<Array<Record<string, unknown>>>('list_rulings', { campaignId });
+  return rows.map((r) => RulingSchema.parse({ ...r, topic: r.topic ?? undefined }));
+}
 
 // settings (values are JSON)
 export async function getSetting<T = unknown>(key: string): Promise<T | undefined> {
   const v = await invoke<string | null>('get_setting', { key });
   return v === null ? undefined : (JSON.parse(v) as T);
 }
-export const setSetting = (key: string, value: unknown) =>
-  invoke<void>('set_setting', { key, valueJson: JSON.stringify(value) });
+export function setSetting(key: string, value: unknown): Promise<void> {
+  if (value === undefined) return Promise.reject(new DbError('Invalid', `setting ${key}: undefined is not JSON`));
+  return invoke<void>('set_setting', { key, valueJson: JSON.stringify(value) });
+}
 
 // backups
-/** Returns the new backup's file path. */
+/** Returns the new backup's file name. */
 export const backupNow = () => invoke<string>('backup_now');
 export const listBackups = () => invoke<BackupInfo[]>('list_backups');
-/** Returns the path of the automatic "pre-restore" backup. The app should reload its state afterwards. */
-export const restoreBackup = (path: string) => invoke<string>('restore_backup', { path });
+/** `name` comes from listBackups. Returns the name of the automatic "pre-restore" backup. Reload app state afterwards. */
+export const restoreBackup = (name: string) => invoke<string>('restore_backup', { name });

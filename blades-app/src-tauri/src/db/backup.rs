@@ -9,12 +9,11 @@ pub const KEEP: usize = 14;
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct BackupInfo {
-    pub path: String,
     pub name: String,
     pub size: u64,
 }
 
-/// `blades-YYYYMMDD-HHMMSS-<reason>[-n].db`; returns the `YYYYMMDD-HHMMSS` stamp.
+/// `blades-YYYYMMDD-HHMMSS-<reason>[-n].db`; returns the `YYYYMMDD-HHMMSS` stamp. `*.tmp` never matches.
 fn stamp(name: &str) -> Option<&str> {
     let s = name.strip_prefix("blades-")?;
     if !name.ends_with(".db") || s.len() < 16 {
@@ -45,23 +44,50 @@ pub fn backup(conn: &Connection, dir: &Path, reason: &str) -> Result<PathBuf> {
         path = dir.join(format!("blades-{ts}-{reason}-{n}.db"));
         n += 1;
     }
+    // Write beside the final name, then rename: a half-written backup never looks like a real one.
+    let tmp = PathBuf::from(format!("{}.tmp", path.display()));
+    let _ = std::fs::remove_file(&tmp);
     // The path is bound as a parameter, so no SQL escaping is needed.
-    if let Err(e) = conn.execute("VACUUM INTO ?1", [path.to_string_lossy().as_ref()]) {
-        let _ = std::fs::remove_file(&path);
-        return Err(e.into());
+    let made = conn
+        .execute("VACUUM INTO ?1", [tmp.to_string_lossy().as_ref()])
+        .map_err(DbError::from)
+        .and_then(|_| std::fs::rename(&tmp, &path).map_err(DbError::from));
+    if let Err(e) = made {
+        let _ = std::fs::remove_file(&tmp);
+        return Err(e);
     }
-    rotate(dir, KEEP)?;
+    // Rotation is housekeeping: a locked old file must not fail the backup or the user's action.
+    if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+        rotate(dir, KEEP, name);
+    }
     Ok(path)
 }
 
-/// Deletes all but the `keep` newest backup files (timestamp order).
-pub fn rotate(dir: &Path, keep: usize) -> Result<()> {
-    let mut names = backup_names(dir)?;
+/// Keeps the `keep` newest backups AND the newest backup of each of the last `keep` calendar days
+/// (the stamp is local time), so a burst of manual backups cannot push out the dailies.
+/// Never deletes `just_made`. Errors are logged, not returned.
+pub fn rotate(dir: &Path, keep: usize, just_made: &str) {
+    let mut names = match backup_names(dir) {
+        Ok(n) => n,
+        Err(e) => return eprintln!("backup rotation: {e}"),
+    };
     names.sort_unstable_by(|a, b| b.cmp(a));
-    for n in names.into_iter().skip(keep) {
-        std::fs::remove_file(dir.join(n))?;
+    let mut keep_set: std::collections::HashSet<&str> = names.iter().take(keep).map(String::as_str).collect();
+    let mut days: Vec<&str> = vec![];
+    for n in &names {
+        let day = &n["blades-".len()..][..8]; // backup_names only returns names that passed stamp()
+        if !days.contains(&day) && days.len() < keep {
+            days.push(day);
+            keep_set.insert(n); // newest of its day: names are sorted newest first
+        }
     }
-    Ok(())
+    for n in &names {
+        if n != just_made && !keep_set.contains(n.as_str()) {
+            if let Err(e) = std::fs::remove_file(dir.join(n)) {
+                eprintln!("backup rotation: cannot delete {n}: {e}");
+            }
+        }
+    }
 }
 
 fn backup_names(dir: &Path) -> Result<Vec<String>> {
@@ -92,14 +118,23 @@ pub fn list_backups(dir: &Path) -> Result<Vec<BackupInfo>> {
     names.sort_unstable_by(|a, b| b.cmp(a));
     names
         .into_iter()
-        .map(|name| {
-            let path = dir.join(&name);
-            Ok(BackupInfo { size: std::fs::metadata(&path)?.len(), path: path.to_string_lossy().into_owned(), name })
-        })
+        .map(|name| Ok(BackupInfo { size: std::fs::metadata(dir.join(&name))?.len(), name }))
         .collect()
 }
 
-/// A file may be installed as the database only if it is intact and not newer than this app.
+/// A backup is addressed by bare file name; it must exist in `dir`. Anything with a path in it is refused.
+pub fn resolve(dir: &Path, name: &str) -> Result<PathBuf> {
+    if stamp(name).is_none() || name.contains(['/', '\\', ':']) || name.contains("..") {
+        return Err(DbError::Invalid(format!("not a backup name: {name}")));
+    }
+    let p = dir.join(name);
+    if !p.is_file() {
+        return Err(DbError::NotFound(format!("backup {name}")));
+    }
+    Ok(p)
+}
+
+/// A file may be installed as the database only if it is intact, not newer than this app, and has our tables.
 pub fn validate(file: &Path) -> Result<()> {
     let bad = |why: &str| DbError::Invalid(format!("not a usable backup: {why}"));
     let c = Connection::open_with_flags(file, OpenFlags::SQLITE_OPEN_READ_ONLY).map_err(|e| bad(&e.to_string()))?;
@@ -114,6 +149,14 @@ pub fn validate(file: &Path) -> Result<()> {
     }
     if v == 0 {
         return Err(bad("empty database"));
+    }
+    let has: bool = c.query_row(
+        "SELECT EXISTS(SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'characters')",
+        [],
+        |r| r.get(0),
+    )?;
+    if !has {
+        return Err(bad("no characters table"));
     }
     Ok(())
 }

@@ -3,7 +3,6 @@
 use super::backup::BackupInfo;
 use super::store::{self, CampaignRow, CharacterRow, Revision, RevisionRow, Ruling};
 use super::{Db, Result};
-use std::path::Path;
 use tauri::State;
 
 /// Keep in sync with `commands(...)` in build.rs and the permissions in capabilities/default.json.
@@ -89,7 +88,7 @@ pub async fn set_setting(db: State<'_, Db>, key: String, value_json: String) -> 
 
 #[tauri::command]
 pub async fn backup_now(db: State<'_, Db>) -> Result<String> {
-    Ok(db.backup("manual")?.to_string_lossy().into_owned())
+    Ok(file_name(&db.backup("manual")?))
 }
 
 #[tauri::command]
@@ -97,8 +96,12 @@ pub async fn list_backups(db: State<'_, Db>) -> Result<Vec<BackupInfo>> {
     db.list_backups()
 }
 
-/// Returns the path of the automatic "pre-restore" backup.
+/// `name` is a file name from `list_backups`. Returns the name of the automatic "pre-restore" backup.
 #[tauri::command]
-pub async fn restore_backup(db: State<'_, Db>, path: String) -> Result<String> {
-    Ok(db.restore(Path::new(&path))?.to_string_lossy().into_owned())
+pub async fn restore_backup(db: State<'_, Db>, name: String) -> Result<String> {
+    Ok(file_name(&db.restore(&name)?))
+}
+
+fn file_name(p: &std::path::Path) -> String {
+    p.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default()
 }

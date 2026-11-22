@@ -40,7 +40,7 @@ fn migration_makes_pre_migration_backup_and_applies_in_order() {
     let backups = backup::list_backups(&bdir).unwrap();
     assert_eq!(backups.len(), 1);
     assert!(backups[0].name.ends_with("-pre-migration.db"));
-    let old = Connection::open(&backups[0].path).unwrap();
+    let old = Connection::open(bdir.join(&backups[0].name)).unwrap();
     assert_eq!(version(&old), 1); // backup holds the pre-migration state
     assert_eq!(count(&old, "a"), 1);
 }
@@ -99,7 +99,7 @@ fn rotation_keeps_14_newest() {
         std::fs::write(dir.path().join(format!("blades-202601{:02}-120000-daily.db", i + 1)), b"x").unwrap();
     }
     std::fs::write(dir.path().join("notes.txt"), b"keep me").unwrap();
-    backup::rotate(dir.path(), backup::KEEP).unwrap();
+    backup::rotate(dir.path(), backup::KEEP, "");
     let list = backup::list_backups(dir.path()).unwrap();
     assert_eq!(list.len(), 14);
     assert_eq!(list[0].name, "blades-20260120-120000-daily.db");
@@ -196,7 +196,7 @@ fn revision_pruning_last_50_plus_newest_per_day() {
             for h in 0..3 {
                 c.execute(
                     "INSERT INTO revisions (character_id, created_at, reason, doc) VALUES ('a', ?1, 'old', '{}')",
-                    [format!("2026-01-{day:02}T{h:02}:00:00.000Z")],
+                    [format!("2026-01-{day:02}T{:02}:00:00.000Z", h + 10)],
                 )?;
             }
         }
@@ -218,7 +218,7 @@ fn revision_pruning_last_50_plus_newest_per_day() {
         // the kept old ones are the 3rd (newest) of each day
         let old: Vec<_> = revs.iter().filter(|r| r.reason == "old").collect();
         assert_eq!(old.len(), 10);
-        assert!(old.iter().all(|r| r.created_at.contains("T02:")));
+        assert!(old.iter().all(|r| r.created_at.contains("T12:")));
         assert_eq!(store::list_revisions(c, "b")?.len(), 3);
         // get_revision returns the snapshot
         let r = store::get_revision(c, revs[0].id)?;
@@ -245,7 +245,7 @@ fn delete_character_backs_up_and_cascades_revisions() {
     let list = db.list_backups().unwrap();
     assert_eq!(list.len(), 1);
     assert!(list[0].name.contains("pre-delete"));
-    let b = Connection::open(&list[0].path).unwrap();
+    let b = Connection::open(db.backup_dir().join(&list[0].name)).unwrap();
     assert_eq!(count(&b, "characters"), 1); // the backup still has the sheet
 }
 
@@ -310,7 +310,7 @@ fn restore_replaces_content_and_makes_pre_restore_backup() {
     let dir = TempDir::new().unwrap();
     let db = open(&dir);
     db.with(|c| store::save_character(c, &doc("a", "A"), None).map(|_| ())).unwrap();
-    let snap = db.backup("manual").unwrap();
+    let snap = db.backup("manual").unwrap().file_name().unwrap().to_string_lossy().into_owned();
     db.with(|c| {
         store::save_character(c, &doc("b", "B"), None)?;
         store::save_character(c, &doc("a", "A changed"), None).map(|_| ())
@@ -339,17 +339,23 @@ fn restore_rejects_garbage_and_newer_and_keeps_live_db() {
     let dir = TempDir::new().unwrap();
     let db = open(&dir);
     db.with(|c| store::save_character(c, &doc("a", "A"), None).map(|_| ())).unwrap();
+    let bdir = dir.path().join("backups");
+    std::fs::create_dir_all(&bdir).unwrap();
 
-    let junk = dir.path().join("junk.db");
-    std::fs::write(&junk, b"this is not sqlite at all, really not").unwrap();
-    assert!(db.restore(&junk).is_err());
+    std::fs::write(bdir.join("blades-20200101-000000-junk.db"), b"this is not sqlite at all, really not").unwrap();
+    assert!(db.restore("blades-20200101-000000-junk.db").is_err());
 
-    let newer = dir.path().join("newer.db");
     {
-        let c = Connection::open(&newer).unwrap();
+        let c = Connection::open(bdir.join("blades-20200102-000000-newer.db")).unwrap();
         c.execute_batch("CREATE TABLE t(x); PRAGMA user_version = 99;").unwrap();
     }
-    assert!(matches!(db.restore(&newer), Err(DbError::TooNew { .. })));
+    assert!(matches!(db.restore("blades-20200102-000000-newer.db"), Err(DbError::TooNew { .. })));
+
+    {
+        let c = Connection::open(bdir.join("blades-20200103-000000-nochar.db")).unwrap();
+        c.execute_batch("CREATE TABLE t(x); PRAGMA user_version = 1;").unwrap();
+    }
+    assert!(matches!(db.restore("blades-20200103-000000-nochar.db"), Err(DbError::Invalid(_))));
 
     db.with(|c| {
         assert_eq!(store::list_characters(c, true)?.len(), 1);
@@ -358,4 +364,126 @@ fn restore_rejects_garbage_and_newer_and_keeps_live_db() {
     })
     .unwrap();
     assert!(!dir.path().join("blades.db.restoring").exists());
+}
+
+#[test]
+fn restore_accepts_only_backup_names() {
+    let dir = TempDir::new().unwrap();
+    let db = open(&dir);
+    let snap = db.backup("manual").unwrap();
+    let outside = dir.path().join("blades-20200101-000000-x.db");
+    std::fs::copy(&snap, &outside).unwrap();
+    let abs = snap.to_string_lossy().into_owned();
+    for bad in [
+        abs.as_str(),
+        r"..\blades-20200101-000000-x.db",
+        "../blades-20200101-000000-x.db",
+        "sub/blades-20200101-000000-x.db",
+        "blades.db",
+        "blades-20200101-000000-x.db", // well-formed but not in the backups folder
+    ] {
+        assert!(db.restore(bad).is_err(), "{bad}");
+    }
+    assert!(matches!(db.restore("blades-20200101-000000-x.db"), Err(DbError::NotFound(_))));
+}
+
+#[test]
+fn restoring_the_oldest_of_14_backups_works() {
+    let dir = TempDir::new().unwrap();
+    let db = open(&dir);
+    db.with(|c| store::save_character(c, &doc("a", "A"), None).map(|_| ())).unwrap();
+    let snap = db.backup("manual").unwrap();
+    let bdir = dir.path().join("backups");
+    for d in 1..=14 {
+        std::fs::copy(&snap, bdir.join(format!("blades-202001{d:02}-120000-daily.db"))).unwrap();
+    }
+    std::fs::remove_file(&snap).unwrap();
+    db.with(|c| store::save_character(c, &doc("b", "B"), None).map(|_| ())).unwrap();
+    let oldest = backup::list_backups(&bdir).unwrap().pop().unwrap().name;
+    assert_eq!(backup::list_backups(&bdir).unwrap().len(), 14);
+
+    db.restore(&oldest).unwrap(); // the pre-restore backup rotates the oldest file out; the restore must not care
+    assert!(!bdir.join(&oldest).exists());
+    db.with(|c| {
+        assert_eq!(store::list_characters(c, true)?.len(), 1);
+        Ok(())
+    })
+    .unwrap();
+}
+
+#[test]
+fn failed_swap_keeps_original_and_stays_usable() {
+    let dir = TempDir::new().unwrap();
+    let db = open(&dir);
+    db.with(|c| store::save_character(c, &doc("a", "A"), None).map(|_| ())).unwrap();
+    let snap = db.backup("manual").unwrap();
+    db.with(|c| store::save_character(c, &doc("b", "B"), None).map(|_| ())).unwrap();
+    let name = snap.file_name().unwrap().to_string_lossy().into_owned();
+
+    let r = db.restore_with(&name, |_, _| Err(std::io::Error::other("locked")));
+    assert!(matches!(r, Err(DbError::Io(_))));
+    db.with(|c| {
+        assert_eq!(store::list_characters(c, true)?.len(), 2); // untouched
+        Ok(())
+    })
+    .unwrap();
+    assert!(!dir.path().join("blades.db.restoring").exists());
+}
+
+#[test]
+fn unavailable_slot_reports_it() {
+    let dir = TempDir::new().unwrap();
+    let db = Db::unavailable(dir.path().join("blades.db"), dir.path().join("backups"));
+    let e = db.with(|c| store::list_characters(c, true)).unwrap_err();
+    assert!(matches!(e, DbError::Unavailable));
+    assert!(db.restore("blades-20200101-000000-x.db").is_err());
+    let j = serde_json::to_value(&e).unwrap();
+    assert_eq!(j["kind"], "Unavailable");
+}
+
+#[test]
+fn rotation_failure_does_not_fail_backup() {
+    let dir = TempDir::new().unwrap();
+    let db = open(&dir);
+    let bdir = dir.path().join("backups");
+    // 20 old "files"; the oldest is a non-empty directory, so remove_file on it fails
+    for i in 1..=20 {
+        let p = bdir.join(format!("blades-202001{i:02}-120000-daily.db"));
+        if i == 1 {
+            std::fs::create_dir_all(p.join("x")).unwrap();
+        } else {
+            std::fs::write(&p, b"x").unwrap();
+        }
+    }
+    let new = db.backup("manual").unwrap();
+    assert!(new.exists());
+}
+
+#[test]
+fn rotation_keeps_newest_of_each_recent_day_and_the_new_one() {
+    let dir = TempDir::new().unwrap();
+    // 14 days of dailies, then 20 manual backups on the last day
+    for d in 1..=14 {
+        std::fs::write(dir.path().join(format!("blades-202601{d:02}-090000-daily.db")), b"x").unwrap();
+    }
+    for h in 0..20 {
+        std::fs::write(dir.path().join(format!("blades-20260114-{:02}0000-manual.db", h + 10)), b"x").unwrap();
+    }
+    backup::rotate(dir.path(), backup::KEEP, "blades-20260114-100000-manual.db");
+    let names: Vec<_> = backup::list_backups(dir.path()).unwrap().into_iter().map(|b| b.name).collect();
+    for d in 1..=13 {
+        assert!(names.contains(&format!("blades-202601{d:02}-090000-daily.db")), "daily {d} lost");
+    }
+    assert!(names.contains(&"blades-20260114-100000-manual.db".to_string())); // the one just made
+    assert!(names.contains(&"blades-20260114-290000-manual.db".to_string())); // newest
+    assert!(!names.contains(&"blades-20260114-110000-manual.db".to_string()));
+}
+
+#[test]
+fn tmp_files_are_ignored() {
+    let dir = TempDir::new().unwrap();
+    std::fs::write(dir.path().join("blades-20260101-120000-x.db.tmp"), b"half").unwrap();
+    assert!(backup::list_backups(dir.path()).unwrap().is_empty());
+    backup::rotate(dir.path(), 0, "");
+    assert!(dir.path().join("blades-20260101-120000-x.db.tmp").exists());
 }

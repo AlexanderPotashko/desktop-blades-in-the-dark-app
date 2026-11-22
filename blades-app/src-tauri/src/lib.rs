@@ -2,6 +2,7 @@ mod db;
 
 use db::{commands, Db};
 use tauri::Manager;
+use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
 
 pub fn run() {
     tauri::Builder::default()
@@ -11,10 +12,24 @@ pub fn run() {
             std::fs::create_dir_all(&data)?;
             let backups = app.path().document_dir()?.join("Blades").join("backups");
             // Fails with a clear message if the database is newer than this app: nothing is touched then.
-            let db = Db::open(data.join("blades.db"), backups)?;
-            if let Err(e) = db.daily_backup() {
-                eprintln!("daily backup failed: {e}");
-            }
+            let db = match Db::open(data.join("blades.db"), backups.clone()) {
+                Ok(db) => {
+                    if let Err(e) = db.daily_backup() {
+                        eprintln!("daily backup failed: {e}");
+                    }
+                    db
+                }
+                Err(e) => {
+                    // Tell the user, then exit; until then every command answers "unavailable".
+                    let handle = app.handle().clone();
+                    app.dialog()
+                        .message(e.to_string())
+                        .title("Blades")
+                        .kind(MessageDialogKind::Error)
+                        .show(move |_| handle.exit(1));
+                    Db::unavailable(data.join("blades.db"), backups)
+                }
+            };
             app.manage(db);
             Ok(())
         })

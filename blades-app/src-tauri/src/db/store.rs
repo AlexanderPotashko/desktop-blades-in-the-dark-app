@@ -142,7 +142,7 @@ pub fn delete_character(conn: &Connection, backup_dir: &Path, id: &str) -> Resul
 
 // ---------- revisions ----------
 
-/// Snapshots the current document, then prunes: keep the last 50 plus the newest of each calendar day (UTC).
+/// Snapshots the current document, then prunes: keep the last 50 plus the newest of each calendar day (local time).
 pub fn save_revision(conn: &Connection, character_id: &str, reason: &str) -> Result<i64> {
     let tx = conn.unchecked_transaction()?;
     let n = tx.execute(
@@ -162,7 +162,7 @@ pub fn prune_revisions(conn: &Connection, character_id: &str) -> Result<usize> {
     Ok(conn.execute(
         "DELETE FROM revisions WHERE character_id = ?1
            AND id NOT IN (SELECT id FROM revisions WHERE character_id = ?1 ORDER BY id DESC LIMIT ?2)
-           AND id NOT IN (SELECT max(id) FROM revisions WHERE character_id = ?1 GROUP BY substr(created_at, 1, 10))",
+           AND id NOT IN (SELECT max(id) FROM revisions WHERE character_id = ?1 GROUP BY date(created_at, 'localtime'))",
         params![character_id, REVISIONS_KEEP_LAST],
     )?)
 }
