@@ -16,3 +16,5 @@ node_modules/
 **/src-tauri/gen/
 **/dist/
 tools/test/node_modules/
+.claude/worktrees/
+.claude/settings.local.json
