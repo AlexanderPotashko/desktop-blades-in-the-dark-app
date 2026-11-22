@@ -171,6 +171,21 @@ check('8. load off in settings hides selector, "занято" and the load colum
   assert.ok(!book.w.document.body.classList.contains('noload'), '«По книге» must force load on');
 });
 
+check('9. notes: drag a card above another reorders; dropping on a pinned card pins it', () => {
+  const o = open({ cards: [{ t: 'A', x: '' }, { t: 'B', x: '' }, { t: 'C', x: '' }, { t: 'P', x: '', pin: true }] });
+  const doc = o.w.document;
+  const fire = (type, el) => { const ev = new o.w.Event(type, { bubbles: true, cancelable: true }); ev.clientY = 0; el.dispatchEvent(ev); };
+  const item = t => [...doc.querySelectorAll('#cardList [data-cardsel]')].find(b => b.querySelector('.ct').textContent === t);
+  const order = () => [...doc.querySelectorAll('#cardList .ct')].map(x => x.textContent).join('');
+  assert.equal(order(), 'PCBA', 'pinned first, then newest first');
+  fire('dragstart', item('A')); fire('dragover', item('C')); fire('drop', item('C'));
+  assert.equal(order(), 'PACB', 'A should land above C');
+  fire('dragstart', item('B')); fire('drop', item('P'));
+  assert.equal(order(), 'BPAC', 'B dropped above pinned P becomes pinned');
+  assert.equal(o.state().cards.find(c => c.t === 'B').pin, true);
+  assert.deepEqual(o.errors, []);
+});
+
 // ---------- 7. export / import round-trip ----------
 check('7. export JSON -> loadRaw -> same state; storage reload keeps keys', () => {
   const o = open();
