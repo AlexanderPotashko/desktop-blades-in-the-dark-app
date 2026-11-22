@@ -1,0 +1,152 @@
+{
+  "leech": {
+    "name": "Leech",
+    "short": "A specialist in technology and sabotage",
+    "text": "Makes drugs, essences and bombs, treats wounds, builds tools, and knows how to break things.",
+    "page": 101,
+    "xpTrigger": "Gain xp when you address a challenge with your expertise or by causing a commotion.",
+    "list": [
+      "What are they about to do?",
+      "How can I get them to [X]?",
+      "Are they telling the truth?",
+      "What could I tinker with here?",
+      "What might happen if I [X]?",
+      "How can I find [X]?",
+      "What's really going on here?"
+    ]
+  },
+  "alchemist": {
+    "name": "Alchemist",
+    "page": 102,
+    "text": "+1 effect for alchemical creations; start with one free recipe."
+  },
+  "analyst": {
+    "name": "Analyst",
+    "page": 102,
+    "text": "In downtime, two extra advances between projects for investigations or new recipes and plans.",
+    "counter": {
+      "name": "Extra project segments",
+      "hint": "+2 segments for investigations, recipes and plans"
+    }
+  },
+  "physicker": {
+    "name": "Physicker",
+    "page": 102,
+    "text": "Tinker to treat wounds and work with the body; the whole crew gets +1d to healing rolls; first aid."
+  },
+  "tinker": {
+    "name": "Artificer",
+    "page": 102,
+    "text": "+1 effect for spark-craft creations; start with one free plan."
+  },
+  "ghost-ward": {
+    "name": "Ghost Ward",
+    "page": 102,
+    "text": "Make an area anathema or enticing to ghosts for several days."
+  },
+  "saboteur": {
+    "name": "Saboteur",
+    "page": 102,
+    "text": "Wreck quietly; the damage is unnoticeable at a casual glance."
+  },
+  "fortitude": {
+    "name": "Fortitude",
+    "page": 103,
+    "text": "Special armor: resist consequences of fatigue, weakness or chemicals, or push yourself with tech and chemistry for free."
+  },
+  "venomous": {
+    "name": "Venomous",
+    "page": 103,
+    "text": "Immune to one poison or drug from your bandolier; can exude it through skin, saliva or vapor (by pushing yourself)."
+  },
+  "fine-tinkering-tools": {
+    "name": "Fine Tinkering Tools",
+    "page": 103,
+    "text": "A kit for working with mechanisms; loupe, measuring devices."
+  },
+  "fine-wrecking-tools": {
+    "name": "Fine Wrecking Tools",
+    "page": 103,
+    "text": "A demolition kit: drill, hammer and wedges, crowbar, acid, spark-cutter."
+  },
+  "blowgun-and-darts": {
+    "name": "Blowgun & Darts, Syringes",
+    "page": 103,
+    "text": "A tube and darts for alchemical substances; empty syringes."
+  },
+  "alchemists-bandolier": {
+    "name": "Alchemist's Bandolier",
+    "page": 103,
+    "text": "Three pockets for alchemical substances or bombs; refills in downtime with access to a supplier or workshop.",
+    "list": [
+      "Alkahest",
+      "Headache Fumes (poison)",
+      "Grenade",
+      "Smoke Bomb",
+      "Spark (drug)",
+      "Levitation Oil",
+      "Fire Oil",
+      "Drowner's Powder",
+      "Quicksilver",
+      "Binding Oil",
+      "Blinding Powder (poison)",
+      "Paralytic Powder (poison)",
+      "Trance Powder"
+    ]
+  },
+  "gadgets": {
+    "name": "Gadgets",
+    "page": 103,
+    "text": "Made in downtime with Tinker; load 1+ for each gadget."
+  },
+  "stazia": {
+    "name": "Stazia",
+    "short": "an apothecary",
+    "text": "A former criminal gone into legitimate alchemy, or the other way round.",
+    "page": 101
+  },
+  "veldren": {
+    "name": "Veldren",
+    "short": "a psychonaut",
+    "text": "An addict or an explorer of psychedelic worlds.",
+    "page": 101
+  },
+  "eckerd": {
+    "name": "Eckerd",
+    "short": "a corpse thief",
+    "text": "Perhaps a source of raw materials.",
+    "page": 101
+  },
+  "jul": {
+    "name": "Jul",
+    "short": "a blood dealer",
+    "text": "What other unusual clients make use of his services?",
+    "page": 101
+  },
+  "malista": {
+    "name": "Malista",
+    "short": "a priestess",
+    "text": "Which forgotten god does she serve?",
+    "page": 101
+  },
+  "build.physician": {
+    "name": "Physicker",
+    "text": "Study +2, Consort +1, Finesse +1",
+    "page": 101
+  },
+  "build.sapper": {
+    "name": "Sapper",
+    "text": "Study +1, Survey +2, Wreck +1",
+    "page": 101
+  },
+  "build.viper": {
+    "name": "Viper",
+    "text": "Sway +2, Prowl +2",
+    "page": 101
+  },
+  "build.herbalist": {
+    "name": "Herbalist",
+    "text": "Study +2, Attune +2",
+    "page": 101
+  }
+}

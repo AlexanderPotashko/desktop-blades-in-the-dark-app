@@ -1,0 +1,128 @@
+{
+  "id": "leech",
+  "kind": "standard",
+  "startingActions": {
+    "tinker": 2,
+    "wreck": 1
+  },
+  "talents": [
+    {
+      "id": "alchemist",
+      "owner": "leech",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "analyst",
+      "owner": "leech",
+      "group": "ability",
+      "specialArmor": false,
+      "counter": {
+        "max": 2,
+        "reset": "downtime"
+      }
+    },
+    {
+      "id": "physicker",
+      "owner": "leech",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "tinker",
+      "owner": "leech",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "ghost-ward",
+      "owner": "leech",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "saboteur",
+      "owner": "leech",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "fortitude",
+      "owner": "leech",
+      "group": "ability",
+      "specialArmor": true
+    },
+    {
+      "id": "venomous",
+      "owner": "leech",
+      "group": "ability",
+      "specialArmor": false
+    }
+  ],
+  "items": [
+    {
+      "id": "fine-tinkering-tools",
+      "load": 1
+    },
+    {
+      "id": "fine-wrecking-tools",
+      "load": 2
+    },
+    {
+      "id": "blowgun-and-darts",
+      "load": 0
+    },
+    {
+      "id": "alchemists-bandolier",
+      "load": 1,
+      "bandolierSlots": 3
+    },
+    {
+      "id": "gadgets",
+      "load": 1
+    }
+  ],
+  "friends": [
+    "stazia",
+    "veldren",
+    "eckerd",
+    "jul",
+    "malista"
+  ],
+  "builds": [
+    {
+      "id": "build.physician",
+      "actions": {
+        "study": 2,
+        "consort": 1,
+        "finesse": 1
+      },
+      "talent": "physicker"
+    },
+    {
+      "id": "build.sapper",
+      "actions": {
+        "study": 1,
+        "survey": 2,
+        "wreck": 1
+      },
+      "talent": "saboteur"
+    },
+    {
+      "id": "build.viper",
+      "actions": {
+        "sway": 2,
+        "prowl": 2
+      },
+      "talent": "venomous"
+    },
+    {
+      "id": "build.herbalist",
+      "actions": {
+        "study": 2,
+        "attune": 2
+      },
+      "talent": "alchemist"
+    }
+  ]
+}

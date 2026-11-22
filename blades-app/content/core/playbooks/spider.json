@@ -1,0 +1,127 @@
+{
+  "id": "spider",
+  "kind": "standard",
+  "startingActions": {
+    "consort": 2,
+    "study": 1
+  },
+  "talents": [
+    {
+      "id": "foresight",
+      "owner": "spider",
+      "group": "ability",
+      "specialArmor": false,
+      "counter": {
+        "max": 2,
+        "reset": "score"
+      }
+    },
+    {
+      "id": "calculating",
+      "owner": "spider",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "connected",
+      "owner": "spider",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "functioning-vice",
+      "owner": "spider",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "ghost-contract",
+      "owner": "spider",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "jail-bird",
+      "owner": "spider",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "mastermind",
+      "owner": "spider",
+      "group": "ability",
+      "specialArmor": true
+    },
+    {
+      "id": "weaving-the-web",
+      "owner": "spider",
+      "group": "ability",
+      "specialArmor": false
+    }
+  ],
+  "items": [
+    {
+      "id": "fine-cover-identity",
+      "load": 0
+    },
+    {
+      "id": "fine-bottle-of-whiskey",
+      "load": 1
+    },
+    {
+      "id": "blueprints",
+      "load": 1
+    },
+    {
+      "id": "vial-of-slumber-essence",
+      "load": 0
+    },
+    {
+      "id": "concealed-palm-pistol",
+      "load": 0
+    }
+  ],
+  "friends": [
+    "salia",
+    "augus",
+    "jenna",
+    "riven",
+    "jeren"
+  ],
+  "builds": [
+    {
+      "id": "spider-broker",
+      "actions": {
+        "study": 1,
+        "sway": 1,
+        "attune": 2
+      },
+      "talent": "ghost-contract"
+    },
+    {
+      "id": "spider-coordinator",
+      "actions": {
+        "command": 2,
+        "survey": 2
+      },
+      "talent": "foresight"
+    },
+    {
+      "id": "spider-convict",
+      "actions": {
+        "skirmish": 2,
+        "sway": 1,
+        "command": 1
+      },
+      "talent": "jail-bird"
+    },
+    {
+      "id": "spider-operator",
+      "actions": {
+        "prowl": 2,
+        "tinker": 2
+      },
+      "talent": "mastermind"
+    }
+  ]
+}

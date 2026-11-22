@@ -1,0 +1,133 @@
+{
+  "whisper": {
+    "name": "Whisper",
+    "short": "A specialist in arcane theory and practice",
+    "text": "Solves problems with knowledge and magic, bending strange forces at the cost of their own integrity.",
+    "page": 93,
+    "xpTrigger": "Gain xp when you address a challenge with knowledge or arcane power.",
+    "list": [
+      "What is arcane here?",
+      "What echoes in the ghost field?",
+      "What is hidden or lost here?",
+      "What are they about to do?",
+      "What makes them do this?",
+      "How can I detect [X]?",
+      "What's really going on here?"
+    ]
+  },
+  "compel": {
+    "name": "Compel",
+    "text": "Through Attune, summon a ghost and command it; your authority lasts until it fulfills the order or the day ends.",
+    "page": 94
+  },
+  "tempest": {
+    "name": "Tempest",
+    "text": "By pushing yourself, strike with lightning or call a storm around you.",
+    "page": 94
+  },
+  "iron-will": {
+    "name": "Iron Will",
+    "text": "Immune to the terror of seeing creatures; +1d to Resolve resistance rolls.",
+    "page": 94
+  },
+  "warded": {
+    "name": "Warded",
+    "text": "Special armor: resist supernatural consequences, or push yourself when using magic for free.",
+    "page": 94
+  },
+  "ghost-mind": {
+    "name": "Ghost Mind",
+    "text": "You sense the supernatural nearby; +1d when gathering information about it.",
+    "page": 94
+  },
+  "occultist": {
+    "name": "Occultist",
+    "text": "After communing with an entity, +1d when commanding its worshippers.",
+    "page": 95
+  },
+  "ritual": {
+    "name": "Ritual",
+    "text": "You can perform ritual magic; start knowing one ritual.",
+    "page": 95
+  },
+  "strange-methods": {
+    "name": "Strange Methods",
+    "text": "+1 effect for arcane creations; start with one free arcane recipe.",
+    "page": 95
+  },
+  "fine-electroplasmic-hook": {
+    "name": "Fine Electroplasmic Hook",
+    "text": "A collapsible two-handed pole that catches ghosts for the bottle; load 1.",
+    "page": 95
+  },
+  "fine-spirit-mask": {
+    "name": "Fine Spirit Mask",
+    "text": "Lets you see the supernatural and protects against possession.",
+    "page": 95
+  },
+  "spirit-bottles": {
+    "name": "Spirit Bottles (2)",
+    "text": "Magical containers for trapping spirits.",
+    "page": 95
+  },
+  "ghost-key": {
+    "name": "Ghost Key",
+    "text": "Opens ghost doors in the ghost field.",
+    "page": 95
+  },
+  "demon-ward": {
+    "name": "Demon Ward",
+    "text": "A magical object demons avoid.",
+    "page": 95
+  },
+  "nyryx-ghost": {
+    "name": "Nyryx",
+    "short": "a possessing ghost",
+    "text": "A good tipster, or a runaway subordinate.",
+    "page": 93
+  },
+  "scarlock": {
+    "name": "Scurlock",
+    "short": "a vampire",
+    "text": "A teacher, or a dangerous enemy.",
+    "page": 93
+  },
+  "setarra": {
+    "name": "Setarra",
+    "short": "a demon",
+    "text": "A partner in dark experiments, or an enemy who slipped out of control.",
+    "page": 93
+  },
+  "quellyn": {
+    "name": "Quellyn",
+    "short": "a witch",
+    "text": "A healer and seer, or an apprentice who left in a scandal.",
+    "page": 93
+  },
+  "pebbles": {
+    "name": "Flint",
+    "short": "a spirit trafficker",
+    "text": "A source of arcane resources, or a rival in the occult world.",
+    "page": 93
+  },
+  "whisper-summoner": {
+    "name": "Summoner",
+    "text": "Study +1, Command +1, Survey +2. Compel.",
+    "page": 93
+  },
+  "whisper-cultist": {
+    "name": "Cultist",
+    "text": "Consort +2, Command +2. Occultist.",
+    "page": 93
+  },
+  "whisper-battle-mage": {
+    "name": "Battle Mage",
+    "text": "Skirmish +2, Wreck +2. Tempest.",
+    "page": 93
+  },
+  "whisper-warlock": {
+    "name": "Warlock",
+    "text": "Study +1, Consort +1, Tinker +2. Ritual.",
+    "page": 93
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "hound": {
+    "name": "Hound",
+    "short": "A sharpshooter and tracker",
+    "text": "Finds what others hide: debtors, snitches, treasure. Tracks prey and strikes when the time is right.",
+    "page": 85,
+    "xpTrigger": "Gain xp when you address a challenge with tracking or violence.",
+    "list": [
+      "What are they about to do?",
+      "How can I get them to [X]?",
+      "What do they really feel?",
+      "Where is their weak spot?",
+      "Where did [X] go?",
+      "How can I find [X]?",
+      "What's really going on here?"
+    ]
+  },
+  "sharpshooter": {
+    "name": "Sharpshooter",
+    "page": 86,
+    "text": "Push yourself to make a shot at incredible distance or to suppress a small gang with covering fire."
+  },
+  "focused": {
+    "name": "Focused",
+    "page": 87,
+    "text": "Special armor: resist consequences of surprise, mental harm or losing the trail, or push yourself when shooting or tracking for free."
+  },
+  "ghost-hound": {
+    "name": "Ghost Hound",
+    "page": 86,
+    "text": "Your pet gains potency against the supernatural and one arcane trait; can be taken twice."
+  },
+  "scout": {
+    "name": "Scout",
+    "page": 86,
+    "text": "+1 effect when you hunt for a target; +1d to avoid detection from a prepared position or in disguise."
+  },
+  "survivor": {
+    "name": "Survivor",
+    "page": 87,
+    "text": "Immune to the poisonous fumes of the deathlands; +1 stress box."
+  },
+  "tenacious": {
+    "name": "Tenacious",
+    "page": 86,
+    "text": "Penalties from harm are reduced by one category; level 4 harm is still fatal."
+  },
+  "vengeful": {
+    "name": "Vengeful",
+    "page": 86,
+    "text": "An extra xp trigger: payback for harm done to you or someone close; the crew gains xp too if they helped."
+  },
+  "pair-of-fine-pistols": {
+    "name": "Pair of Fine Pistols",
+    "page": 87,
+    "text": "Double-barreled pistols: each can fire again without reloading."
+  },
+  "fine-long-rifle": {
+    "name": "Fine Long Rifle",
+    "page": 87,
+    "text": "A long-range hunting weapon, awkward up close."
+  },
+  "electroplasmic-ammunition": {
+    "name": "Electroplasmic Ammunition",
+    "page": 87,
+    "text": "Good against spirits, stuns people; in the book it carries a Spirit Wardens clock of 4 segments."
+  },
+  "trained-hunting-pet": {
+    "name": "Trained Hunting Pet",
+    "page": 87,
+    "text": "A cohort (expert: hunter)."
+  },
+  "spyglass": {
+    "name": "Spyglass",
+    "page": 87,
+    "text": "Collapsible; can be mounted on a rifle as a scope."
+  },
+  "steiner": {
+    "name": "Steiner",
+    "short": "an assassin",
+    "text": "An old rival or former partner.",
+    "page": 85
+  },
+  "celene": {
+    "name": "Celene",
+    "short": "a sentinel",
+    "text": "A guard or bodyguard: whom does she protect?",
+    "page": 85
+  },
+  "melvir": {
+    "name": "Melvir",
+    "short": "a physicker",
+    "text": "Perhaps an old friend who has patched you up many times.",
+    "page": 85
+  },
+  "veleris": {
+    "name": "Veleris",
+    "short": "a spy",
+    "text": "Who does he send information to?",
+    "page": 85
+  },
+  "casta": {
+    "name": "Casta",
+    "short": "a bounty hunter",
+    "text": "Perhaps she taught you to shoot and hunt.",
+    "page": 85
+  },
+  "build.bounty-hunter": {
+    "name": "Bounty Hunter",
+    "text": "Skirmish +2, Consort +1, Prowl +1",
+    "page": 85
+  },
+  "build.deadlands-scout": {
+    "name": "Deadlands Scout",
+    "text": "Prowl +1, Survey +1, Attune +2",
+    "page": 85
+  },
+  "build.sniper": {
+    "name": "Sniper",
+    "text": "Study +1, Prowl +2, Survey +1",
+    "page": 85
+  },
+  "build.veteran": {
+    "name": "Veteran",
+    "text": "Skirmish +2, Command +1, Wreck +1",
+    "page": 85
+  }
+}

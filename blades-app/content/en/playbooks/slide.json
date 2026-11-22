@@ -1,0 +1,133 @@
+{
+  "slide": {
+    "name": "Slide",
+    "short": "A subtle manipulator and spy",
+    "text": "Solves problems through deception and influence; people are tools.",
+    "page": 77,
+    "xpTrigger": "Gain xp when you address a challenge with deception or social manipulation.",
+    "list": [
+      "What are they about to do?",
+      "How can I get them to [X]?",
+      "Are they telling the truth?",
+      "What do they really feel?",
+      "What do they really care about?",
+      "How can I blend in here?",
+      "What's really going on here?"
+    ]
+  },
+  "rooks-gambit": {
+    "name": "Rook's Gambit",
+    "text": "For 2 stress, use your best action rating instead of another, describing how.",
+    "page": 78
+  },
+  "mesmerism": {
+    "name": "Mesmerism",
+    "text": "The target forgets your conversation until you next meet, noticing no gap in memory.",
+    "page": 78
+  },
+  "trust-in-me": {
+    "name": "Trust in Me",
+    "text": "+1d to any action against someone you have a close relationship with.",
+    "page": 78
+  },
+  "subterfuge": {
+    "name": "Subterfuge",
+    "text": "Special armor: resist consequences of suspicion and negotiation, or push yourself when deceiving for free.",
+    "page": 78
+  },
+  "like-looking-into-a-mirror": {
+    "name": "Like Looking into a Mirror",
+    "text": "You always know whether you are being lied to or told the truth.",
+    "page": 78
+  },
+  "cloak-and-dagger": {
+    "name": "Cloak & Dagger",
+    "text": "+1d when in disguise to avoid suspicion and deceive; dropping the disguise gives surprise.",
+    "page": 78
+  },
+  "ghost-voice": {
+    "name": "Ghost Voice",
+    "text": "You can speak with ghosts and demons as with people; potency when dealing with the supernatural.",
+    "page": 79
+  },
+  "a-little-something-on-the-side": {
+    "name": "A Little Something on the Side",
+    "text": "At the end of each downtime, +2 coin to your stash.",
+    "page": 79
+  },
+  "fine-clothes-and-jewelry": {
+    "name": "Fine Clothes & Jewelry",
+    "text": "Lets you pass as an aristocrat; load 2 if carried to change into.",
+    "page": 79
+  },
+  "fine-disguise-kit": {
+    "name": "Fine Disguise Kit",
+    "text": "Improves the effect of deception and disguise.",
+    "page": 79
+  },
+  "fine-loaded-dice-and-trick-cards": {
+    "name": "Fine Loaded Dice, Trick Cards",
+    "text": "Influence chance and improve the effect of cheating.",
+    "page": 79
+  },
+  "trance-powder": {
+    "name": "Trance Powder",
+    "text": "A drug: the user is sluggish and suggestible, almost as if hypnotized.",
+    "page": 79
+  },
+  "cane-sword": {
+    "name": "Cane Sword",
+    "text": "A blade hidden in a cane, invisible at a glance.",
+    "page": 79
+  },
+  "bryl": {
+    "name": "Bryl",
+    "short": "a drug dealer",
+    "text": "A reliable contact, or an old partner with a grudge.",
+    "page": 77
+  },
+  "bazso-baz": {
+    "name": "Bazso Baz",
+    "short": "a gang leader",
+    "text": "An admirer, or a despised former lover.",
+    "page": 77
+  },
+  "klyra": {
+    "name": "Klyra",
+    "short": "a tavern owner",
+    "text": "A good informant.",
+    "page": 77
+  },
+  "nyryx": {
+    "name": "Nyryx",
+    "short": "a prostitute",
+    "text": "An informant on suitable marks, or a rival swindler.",
+    "page": 77
+  },
+  "harker": {
+    "name": "Harker",
+    "short": "a convict",
+    "text": "A friend who helped you in prison, or an enemy who harmed you there.",
+    "page": 77
+  },
+  "slide-heartbreaker": {
+    "name": "Heartbreaker",
+    "text": "Consort +1, Prowl +1, Attune +2. Trust in Me.",
+    "page": 77
+  },
+  "slide-magician": {
+    "name": "Magician",
+    "text": "Prowl +2, Finesse +2. Mesmerism.",
+    "page": 77
+  },
+  "slide-swindler": {
+    "name": "Swindler",
+    "text": "Study +1, Consort +1, Finesse +2. A Little Something on the Side.",
+    "page": 77
+  },
+  "slide-spy": {
+    "name": "Spy",
+    "text": "Skirmish +1, Prowl +2, Finesse +1. Cloak & Dagger.",
+    "page": 77
+  }
+}

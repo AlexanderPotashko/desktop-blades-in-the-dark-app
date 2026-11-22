@@ -1,0 +1,123 @@
+{
+  "id": "whisper",
+  "kind": "standard",
+  "startingActions": {
+    "attune": 2,
+    "study": 1
+  },
+  "talents": [
+    {
+      "id": "compel",
+      "owner": "whisper",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "tempest",
+      "owner": "whisper",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "iron-will",
+      "owner": "whisper",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "warded",
+      "owner": "whisper",
+      "group": "ability",
+      "specialArmor": true
+    },
+    {
+      "id": "ghost-mind",
+      "owner": "whisper",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "occultist",
+      "owner": "whisper",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "ritual",
+      "owner": "whisper",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "strange-methods",
+      "owner": "whisper",
+      "group": "ability",
+      "specialArmor": false
+    }
+  ],
+  "items": [
+    {
+      "id": "fine-electroplasmic-hook",
+      "load": 1
+    },
+    {
+      "id": "fine-spirit-mask",
+      "load": 1
+    },
+    {
+      "id": "spirit-bottles",
+      "load": 1
+    },
+    {
+      "id": "ghost-key",
+      "load": 0
+    },
+    {
+      "id": "demon-ward",
+      "load": 0
+    }
+  ],
+  "friends": [
+    "nyryx-ghost",
+    "scarlock",
+    "setarra",
+    "quellyn",
+    "pebbles"
+  ],
+  "builds": [
+    {
+      "id": "whisper-summoner",
+      "actions": {
+        "study": 1,
+        "command": 1,
+        "survey": 2
+      },
+      "talent": "compel"
+    },
+    {
+      "id": "whisper-cultist",
+      "actions": {
+        "consort": 2,
+        "command": 2
+      },
+      "talent": "occultist"
+    },
+    {
+      "id": "whisper-battle-mage",
+      "actions": {
+        "skirmish": 2,
+        "wreck": 2
+      },
+      "talent": "tempest"
+    },
+    {
+      "id": "whisper-warlock",
+      "actions": {
+        "study": 1,
+        "consort": 1,
+        "tinker": 2
+      },
+      "talent": "ritual"
+    }
+  ]
+}

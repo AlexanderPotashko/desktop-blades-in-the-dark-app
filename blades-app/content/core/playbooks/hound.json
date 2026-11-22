@@ -1,0 +1,122 @@
+{
+  "id": "hound",
+  "kind": "standard",
+  "startingActions": {
+    "hunt": 2,
+    "survey": 1
+  },
+  "talents": [
+    {
+      "id": "sharpshooter",
+      "owner": "hound",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "focused",
+      "owner": "hound",
+      "group": "ability",
+      "specialArmor": true
+    },
+    {
+      "id": "ghost-hound",
+      "owner": "hound",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "scout",
+      "owner": "hound",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "survivor",
+      "owner": "hound",
+      "group": "ability",
+      "specialArmor": false,
+      "mods": {
+        "stressBoxes": 1
+      }
+    },
+    {
+      "id": "tenacious",
+      "owner": "hound",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "vengeful",
+      "owner": "hound",
+      "group": "ability",
+      "specialArmor": false
+    }
+  ],
+  "items": [
+    {
+      "id": "pair-of-fine-pistols",
+      "load": 1
+    },
+    {
+      "id": "fine-long-rifle",
+      "load": 2
+    },
+    {
+      "id": "electroplasmic-ammunition",
+      "load": 1
+    },
+    {
+      "id": "trained-hunting-pet",
+      "load": 0
+    },
+    {
+      "id": "spyglass",
+      "load": 1
+    }
+  ],
+  "friends": [
+    "steiner",
+    "celene",
+    "melvir",
+    "veleris",
+    "casta"
+  ],
+  "builds": [
+    {
+      "id": "build.bounty-hunter",
+      "actions": {
+        "skirmish": 2,
+        "consort": 1,
+        "prowl": 1
+      },
+      "talent": "scout"
+    },
+    {
+      "id": "build.deadlands-scout",
+      "actions": {
+        "prowl": 1,
+        "survey": 1,
+        "attune": 2
+      },
+      "talent": "survivor"
+    },
+    {
+      "id": "build.sniper",
+      "actions": {
+        "study": 1,
+        "prowl": 2,
+        "survey": 1
+      },
+      "talent": "sharpshooter"
+    },
+    {
+      "id": "build.veteran",
+      "actions": {
+        "skirmish": 2,
+        "command": 1,
+        "wreck": 1
+      },
+      "talent": "tenacious"
+    }
+  ]
+}

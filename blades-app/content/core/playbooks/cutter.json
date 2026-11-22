@@ -1,0 +1,131 @@
+{
+  "id": "cutter",
+  "kind": "standard",
+  "startingActions": {
+    "skirmish": 2,
+    "command": 1
+  },
+  "talents": [
+    {
+      "id": "battleborn",
+      "owner": "cutter",
+      "group": "ability",
+      "specialArmor": true
+    },
+    {
+      "id": "bodyguard",
+      "owner": "cutter",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "ghost-fighter",
+      "owner": "cutter",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "leader",
+      "owner": "cutter",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "mule",
+      "owner": "cutter",
+      "group": "ability",
+      "specialArmor": false,
+      "mods": {
+        "load": {
+          "light": 5,
+          "normal": 7,
+          "heavy": 8
+        }
+      }
+    },
+    {
+      "id": "not-to-be-trifled-with",
+      "owner": "cutter",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "savage",
+      "owner": "cutter",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "vigorous",
+      "owner": "cutter",
+      "group": "ability",
+      "specialArmor": false
+    }
+  ],
+  "items": [
+    {
+      "id": "fine-small-weapon",
+      "load": 1
+    },
+    {
+      "id": "fine-heavy-weapon",
+      "load": 2
+    },
+    {
+      "id": "scary-weapon-or-tool",
+      "load": 1
+    },
+    {
+      "id": "manacles-and-chain",
+      "load": 0
+    },
+    {
+      "id": "essence-of-rage",
+      "load": 0
+    }
+  ],
+  "friends": [
+    "marlane",
+    "chael",
+    "mercy",
+    "grace",
+    "sawtooth"
+  ],
+  "builds": [
+    {
+      "id": "build.commander",
+      "actions": {
+        "study": 1,
+        "command": 1,
+        "survey": 2
+      },
+      "talent": "leader"
+    },
+    {
+      "id": "build.extortionist",
+      "actions": {
+        "sway": 1,
+        "consort": 2,
+        "command": 1
+      },
+      "talent": "not-to-be-trifled-with"
+    },
+    {
+      "id": "build.destroyer",
+      "actions": {
+        "prowl": 2,
+        "wreck": 2
+      },
+      "talent": "savage"
+    },
+    {
+      "id": "build.ghost-hunter",
+      "actions": {
+        "study": 1,
+        "hunt": 1,
+        "attune": 2
+      },
+      "talent": "ghost-fighter"
+    }
+  ]
+}

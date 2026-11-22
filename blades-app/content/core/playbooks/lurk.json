@@ -1,0 +1,123 @@
+{
+  "id": "lurk",
+  "kind": "standard",
+  "startingActions": {
+    "prowl": 2,
+    "finesse": 1
+  },
+  "talents": [
+    {
+      "id": "infiltrator",
+      "owner": "lurk",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "reflexes",
+      "owner": "lurk",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "devils-footsteps",
+      "owner": "lurk",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "ambush",
+      "owner": "lurk",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "ghost-veil",
+      "owner": "lurk",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "daredevil",
+      "owner": "lurk",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "shadow",
+      "owner": "lurk",
+      "group": "ability",
+      "specialArmor": true
+    },
+    {
+      "id": "expertise",
+      "owner": "lurk",
+      "group": "ability",
+      "specialArmor": false
+    }
+  ],
+  "items": [
+    {
+      "id": "fine-lockpicks",
+      "load": 0
+    },
+    {
+      "id": "fine-shadow-cloak",
+      "load": 1
+    },
+    {
+      "id": "light-climbing-gear",
+      "load": 1
+    },
+    {
+      "id": "silence-potion",
+      "load": 0
+    },
+    {
+      "id": "dark-vision-goggles",
+      "load": 1
+    }
+  ],
+  "friends": [
+    "telda",
+    "darmot",
+    "frake",
+    "roslyn-kellis",
+    "petra"
+  ],
+  "builds": [
+    {
+      "id": "build.acrobat",
+      "actions": {
+        "sway": 1,
+        "consort": 2,
+        "finesse": 1
+      },
+      "talent": "devils-footsteps"
+    },
+    {
+      "id": "build.assassin",
+      "actions": {
+        "skirmish": 2,
+        "hunt": 2
+      },
+      "talent": "ambush"
+    },
+    {
+      "id": "build.burglar",
+      "actions": {
+        "survey": 2,
+        "tinker": 1,
+        "finesse": 1
+      },
+      "talent": "infiltrator"
+    },
+    {
+      "id": "build.rogue",
+      "actions": {
+        "skirmish": 2,
+        "consort": 2
+      },
+      "talent": "daredevil"
+    }
+  ]
+}

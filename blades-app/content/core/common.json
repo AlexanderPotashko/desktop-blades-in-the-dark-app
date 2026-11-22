@@ -1,0 +1,619 @@
+{
+  "actions": [
+    {
+      "id": "skirmish",
+      "attribute": "prowess"
+    },
+    {
+      "id": "study",
+      "attribute": "insight"
+    },
+    {
+      "id": "sway",
+      "attribute": "resolve"
+    },
+    {
+      "id": "consort",
+      "attribute": "resolve"
+    },
+    {
+      "id": "hunt",
+      "attribute": "insight"
+    },
+    {
+      "id": "command",
+      "attribute": "resolve"
+    },
+    {
+      "id": "prowl",
+      "attribute": "prowess"
+    },
+    {
+      "id": "survey",
+      "attribute": "insight"
+    },
+    {
+      "id": "wreck",
+      "attribute": "prowess"
+    },
+    {
+      "id": "attune",
+      "attribute": "resolve"
+    },
+    {
+      "id": "tinker",
+      "attribute": "insight"
+    },
+    {
+      "id": "finesse",
+      "attribute": "prowess"
+    }
+  ],
+  "items": [
+    {
+      "id": "blade-or-two",
+      "load": 1
+    },
+    {
+      "id": "throwing-knives",
+      "load": 1
+    },
+    {
+      "id": "pistol",
+      "load": 1
+    },
+    {
+      "id": "large-weapon",
+      "load": 2
+    },
+    {
+      "id": "unusual-weapon",
+      "load": 1
+    },
+    {
+      "id": "armor",
+      "load": 2,
+      "armor": 1
+    },
+    {
+      "id": "heavy-armor",
+      "load": 3,
+      "armor": 1
+    },
+    {
+      "id": "documents",
+      "load": 1
+    },
+    {
+      "id": "demolition-tools",
+      "load": 2
+    },
+    {
+      "id": "tinkering-tools",
+      "load": 1
+    },
+    {
+      "id": "arcane-implements",
+      "load": 1
+    },
+    {
+      "id": "lantern",
+      "load": 1
+    },
+    {
+      "id": "climbing-gear",
+      "load": 2
+    },
+    {
+      "id": "lockpicks",
+      "load": 1
+    },
+    {
+      "id": "disguise-kit",
+      "load": 1
+    },
+    {
+      "id": "spirit-bane-charm",
+      "load": 0
+    }
+  ],
+  "traumas": [
+    {
+      "id": "haunted"
+    },
+    {
+      "id": "obsessed"
+    },
+    {
+      "id": "paranoid"
+    },
+    {
+      "id": "unstable"
+    },
+    {
+      "id": "reckless"
+    },
+    {
+      "id": "vicious"
+    },
+    {
+      "id": "cold"
+    },
+    {
+      "id": "soft"
+    }
+  ],
+  "heritages": [
+    {
+      "id": "akoros"
+    },
+    {
+      "id": "iruvia"
+    },
+    {
+      "id": "the-dagger-isles"
+    },
+    {
+      "id": "severos"
+    },
+    {
+      "id": "skovlan"
+    },
+    {
+      "id": "tycheros"
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "noble"
+    },
+    {
+      "id": "military"
+    },
+    {
+      "id": "law"
+    },
+    {
+      "id": "labor"
+    },
+    {
+      "id": "trade"
+    },
+    {
+      "id": "academic"
+    },
+    {
+      "id": "underworld"
+    }
+  ],
+  "vices": [
+    {
+      "id": "gambling"
+    },
+    {
+      "id": "stupor"
+    },
+    {
+      "id": "obligation"
+    },
+    {
+      "id": "pleasure"
+    },
+    {
+      "id": "weird"
+    },
+    {
+      "id": "faith"
+    },
+    {
+      "id": "luxury"
+    }
+  ],
+  "flaws": [
+    {
+      "id": "unreliable"
+    },
+    {
+      "id": "dangerous"
+    },
+    {
+      "id": "suspicious"
+    },
+    {
+      "id": "consumable"
+    },
+    {
+      "id": "rare"
+    },
+    {
+      "id": "complex"
+    }
+  ],
+  "creations": [
+    {
+      "id": "big-bomb",
+      "kind": "standard",
+      "category": "bomb",
+      "type": "spark-craft",
+      "quality": 5,
+      "uses": 1,
+      "flaws": [
+        "suspicious",
+        "consumable"
+      ]
+    },
+    {
+      "id": "grenade",
+      "kind": "standard",
+      "category": "bomb",
+      "type": "spark-craft",
+      "quality": 3,
+      "uses": 2,
+      "flaws": [
+        "suspicious",
+        "consumable"
+      ]
+    },
+    {
+      "id": "smoke-bomb",
+      "kind": "standard",
+      "category": "bomb",
+      "type": "spark-craft",
+      "quality": 2,
+      "uses": 2,
+      "flaws": [
+        "suspicious",
+        "consumable"
+      ]
+    },
+    {
+      "id": "spark",
+      "kind": "standard",
+      "category": "drug",
+      "type": "alchemical",
+      "quality": 1,
+      "uses": 3,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "blood-needle",
+      "kind": "standard",
+      "category": "drug",
+      "type": "alchemical",
+      "quality": 1,
+      "uses": 3,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "quicksilver",
+      "kind": "standard",
+      "category": "drug",
+      "type": "alchemical",
+      "quality": 4,
+      "uses": 1,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "sleeping-smoke",
+      "kind": "standard",
+      "category": "drug",
+      "type": "alchemical",
+      "quality": 1,
+      "uses": 3,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "trance-powder",
+      "kind": "standard",
+      "category": "drug",
+      "type": "alchemical",
+      "quality": 1,
+      "uses": 3,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "black-lotus",
+      "kind": "standard",
+      "category": "drug",
+      "type": "alchemical",
+      "quality": 1,
+      "uses": 1,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "viper-potion",
+      "kind": "standard",
+      "category": "potion",
+      "type": "arcane",
+      "quality": 4,
+      "uses": 1,
+      "flaws": [
+        "consumable"
+      ]
+    },
+    {
+      "id": "silence-potion",
+      "kind": "standard",
+      "category": "potion",
+      "type": "arcane",
+      "quality": 3,
+      "uses": 1,
+      "flaws": [
+        "consumable"
+      ]
+    },
+    {
+      "id": "shadow-essence",
+      "kind": "standard",
+      "category": "potion",
+      "type": "arcane",
+      "quality": 3,
+      "uses": 1,
+      "flaws": [
+        "consumable"
+      ]
+    },
+    {
+      "id": "alkahest",
+      "kind": "standard",
+      "category": "oil",
+      "type": "alchemical",
+      "quality": 3,
+      "uses": 1,
+      "flaws": [
+        "consumable"
+      ]
+    },
+    {
+      "id": "fire-oil",
+      "kind": "standard",
+      "category": "oil",
+      "type": "alchemical",
+      "quality": 3,
+      "uses": 3,
+      "flaws": [
+        "consumable"
+      ]
+    },
+    {
+      "id": "binding-oil",
+      "kind": "standard",
+      "category": "oil",
+      "type": "alchemical",
+      "quality": 3,
+      "uses": 1,
+      "flaws": [
+        "consumable"
+      ]
+    },
+    {
+      "id": "headache-fumes",
+      "kind": "standard",
+      "category": "poison",
+      "type": "alchemical",
+      "quality": 3,
+      "uses": 1,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "drowners-powder",
+      "kind": "standard",
+      "category": "poison",
+      "type": "alchemical",
+      "quality": 3,
+      "uses": 2,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "blinding-powder",
+      "kind": "standard",
+      "category": "poison",
+      "type": "alchemical",
+      "quality": 3,
+      "uses": 3,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "paralytic-powder",
+      "kind": "standard",
+      "category": "poison",
+      "type": "alchemical",
+      "quality": 4,
+      "uses": 1,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "devils-root",
+      "kind": "recipe",
+      "category": "poison",
+      "type": "alchemical",
+      "quality": 6,
+      "uses": 1,
+      "flaws": [
+        "unreliable",
+        "consumable"
+      ]
+    },
+    {
+      "id": "potion-of-vitality",
+      "kind": "recipe",
+      "category": "potion",
+      "type": "alchemical",
+      "quality": 3,
+      "uses": 1,
+      "flaws": [
+        "rare",
+        "consumable"
+      ]
+    },
+    {
+      "id": "potion-of-insight",
+      "kind": "recipe",
+      "category": "potion",
+      "type": "arcane",
+      "quality": 3,
+      "uses": 1,
+      "flaws": [
+        "consumable"
+      ]
+    },
+    {
+      "id": "levitation-oil",
+      "kind": "recipe",
+      "category": "oil",
+      "type": "arcane",
+      "quality": 3,
+      "uses": 1,
+      "flaws": [
+        "consumable"
+      ]
+    },
+    {
+      "id": "ghost-oil",
+      "kind": "recipe",
+      "category": "oil",
+      "type": "arcane",
+      "quality": 4,
+      "uses": 1,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "slow-death",
+      "kind": "recipe",
+      "category": "poison",
+      "type": "alchemical",
+      "quality": 4,
+      "uses": 1,
+      "flaws": [
+        "unreliable",
+        "consumable"
+      ]
+    },
+    {
+      "id": "life-essence",
+      "kind": "recipe",
+      "category": "potion",
+      "type": "arcane",
+      "quality": 6,
+      "uses": 1,
+      "flaws": [
+        "unreliable",
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "mind-essence",
+      "kind": "recipe",
+      "category": "potion",
+      "type": "arcane",
+      "quality": 6,
+      "uses": 1,
+      "flaws": [
+        "rare",
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "dream-essence",
+      "kind": "recipe",
+      "category": "potion",
+      "type": "arcane",
+      "quality": 2,
+      "uses": 1,
+      "flaws": [
+        "rare",
+        "consumable"
+      ]
+    },
+    {
+      "id": "spirit-whip",
+      "kind": "schematic",
+      "category": "device",
+      "type": "arcane",
+      "quality": 4,
+      "flaws": [
+        "suspicious"
+      ]
+    },
+    {
+      "id": "black-salt-bomb",
+      "kind": "schematic",
+      "category": "bomb",
+      "type": "spark-craft",
+      "quality": 4,
+      "uses": 2,
+      "flaws": [
+        "dangerous",
+        "consumable"
+      ]
+    },
+    {
+      "id": "flare-bomb",
+      "kind": "schematic",
+      "category": "bomb",
+      "type": "spark-craft",
+      "quality": 2,
+      "uses": 2,
+      "flaws": [
+        "unreliable",
+        "consumable"
+      ]
+    },
+    {
+      "id": "grappling-gun",
+      "kind": "schematic",
+      "category": "device",
+      "type": "spark-craft",
+      "quality": 2,
+      "flaws": []
+    },
+    {
+      "id": "spirit-lantern",
+      "kind": "schematic",
+      "category": "device",
+      "type": "arcane",
+      "quality": 4,
+      "flaws": []
+    }
+  ],
+  "creation": {
+    "freeActionDots": 4,
+    "maxRatingAtCreation": 2,
+    "talents": 1
+  }
+}

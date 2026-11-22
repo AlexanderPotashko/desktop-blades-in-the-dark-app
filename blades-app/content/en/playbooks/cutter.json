@@ -1,0 +1,133 @@
+{
+  "cutter": {
+    "name": "Cutter",
+    "short": "A dangerous and intimidating fighter",
+    "text": "Solves problems with violence or coercion: muscle, collector, killer, bone-breaker. Where subtle methods fail, swift brutal action or a threat works.",
+    "page": 81,
+    "xpTrigger": "Gain xp when you address a challenge with violence or coercion.",
+    "list": [
+      "How can I hurt them?",
+      "Who is most afraid of me?",
+      "Who is the most dangerous here?",
+      "What are they about to do?",
+      "How can I get them to [X]?",
+      "Are they telling the truth?",
+      "What's really going on here?"
+    ]
+  },
+  "battleborn": {
+    "name": "Battleborn",
+    "page": 82,
+    "text": "Special armor: reduce harm from a fight by 1, or push yourself in combat for free."
+  },
+  "bodyguard": {
+    "name": "Bodyguard",
+    "page": 83,
+    "text": "+1d to resist when you protect a teammate; +1 effect when sizing up threats."
+  },
+  "ghost-fighter": {
+    "name": "Ghost Fighter",
+    "page": 82,
+    "text": "Imbue your hands, weapons or tools with arcane energy: potency against the supernatural, and you can grab ghosts."
+  },
+  "leader": {
+    "name": "Leader",
+    "page": 82,
+    "text": "Your gang fights on your command until they take level 4 harm; +1 effect and 1 armor box."
+  },
+  "mule": {
+    "name": "Mule",
+    "page": 82,
+    "text": "Higher load limits: light 5, normal 7, heavy 8."
+  },
+  "not-to-be-trifled-with": {
+    "name": "Not to Be Trifled With",
+    "page": 82,
+    "text": "Push yourself for a feat of physical force at the edge of human capability, or to engage a small gang on equal footing."
+  },
+  "savage": {
+    "name": "Savage",
+    "page": 83,
+    "text": "+1d when you Command a creature that is already frightened."
+  },
+  "vigorous": {
+    "name": "Vigorous",
+    "page": 82,
+    "text": "The first healing clock segment is permanently filled; +1d to healing treatment rolls."
+  },
+  "fine-small-weapon": {
+    "name": "Fine Small Weapon",
+    "page": 83,
+    "text": "A superbly made one-handed melee weapon."
+  },
+  "fine-heavy-weapon": {
+    "name": "Fine Heavy Weapon",
+    "page": 83,
+    "text": "A two-handed weapon: potency where reach and striking power matter."
+  },
+  "scary-weapon-or-tool": {
+    "name": "Scary Weapon or Tool",
+    "page": 83,
+    "text": "Improves the effect of intimidation, but not of harm."
+  },
+  "manacles-and-chain": {
+    "name": "Manacles & Chain",
+    "page": 83,
+    "text": "A restraint set."
+  },
+  "essence-of-rage": {
+    "name": "Essence of Rage",
+    "page": 83,
+    "text": "A dose: strength and pain tolerance rise, but you lose control for minutes (two consequences)."
+  },
+  "marlane": {
+    "name": "Marlane",
+    "short": "a pugilist",
+    "text": "Perhaps a familiar from the dockside arena, or a boxing trainer.",
+    "page": 81
+  },
+  "chael": {
+    "name": "Chael",
+    "short": "a thug",
+    "text": "Perhaps a member of your former gang, or an independent hired gun.",
+    "page": 81
+  },
+  "mercy": {
+    "name": "Mercy",
+    "short": "a killer",
+    "text": "Perhaps a mercenary or a deadly adventurer.",
+    "page": 81
+  },
+  "grace": {
+    "name": "Grace",
+    "short": "an extortionist",
+    "text": "Perhaps a former partner in robbery, or a rival.",
+    "page": 81
+  },
+  "sawtooth": {
+    "name": "Sawtooth",
+    "short": "a physicker",
+    "text": "Perhaps an acquaintance from the war years, or the butcher who ruined your health.",
+    "page": 81
+  },
+  "build.commander": {
+    "name": "Commander",
+    "text": "Study +1, Command +1, Survey +2",
+    "page": 81
+  },
+  "build.extortionist": {
+    "name": "Extortionist",
+    "text": "Sway +1, Consort +2, Command +1",
+    "page": 81
+  },
+  "build.destroyer": {
+    "name": "Destroyer",
+    "text": "Prowl +2, Wreck +2",
+    "page": 81
+  },
+  "build.ghost-hunter": {
+    "name": "Ghost Hunter",
+    "text": "Study +1, Hunt +1, Attune +2",
+    "page": 81
+  }
+}

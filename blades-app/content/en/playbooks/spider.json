@@ -1,0 +1,137 @@
+{
+  "spider": {
+    "name": "Spider",
+    "short": "A cunning schemer",
+    "text": "Solves problems through calculation and secret deals, holding the threads of contacts and favors.",
+    "page": 89,
+    "xpTrigger": "Gain xp when you address a challenge with calculation or conspiracy.",
+    "list": [
+      "What do they want most?",
+      "What should I look into more closely?",
+      "What can I pressure here?",
+      "How can I find out [X]?",
+      "What are they about to do?",
+      "How can I get them to [X]?",
+      "What's really going on here?"
+    ]
+  },
+  "foresight": {
+    "name": "Foresight",
+    "text": "Twice per score, assist a teammate for free, explaining how you anticipated the problem.",
+    "page": 90,
+    "counter": {
+      "name": "Foresight",
+      "hint": "twice per score"
+    }
+  },
+  "calculating": {
+    "name": "Calculating",
+    "text": "In downtime, +1 action for yourself or a teammate; if unused, you may flashback during a score.",
+    "page": 91
+  },
+  "connected": {
+    "name": "Connected",
+    "text": "In downtime, +1 result level when acquiring assets or reducing heat.",
+    "page": 91
+  },
+  "functioning-vice": {
+    "name": "Functioning Vice",
+    "text": "When you indulge your vice, shift the dice result by 1 or 2; an ally who joins you does too.",
+    "page": 90
+  },
+  "ghost-contract": {
+    "name": "Ghost Contract",
+    "text": "Parties to a contract are marked; a violator takes level 3 harm \"Cursed\".",
+    "page": 90
+  },
+  "jail-bird": {
+    "name": "Jail Bird",
+    "text": "In prison, wanted level is 1 lower, crew tier is 1 higher, +1 to your relationship with an organization.",
+    "page": 91
+  },
+  "mastermind": {
+    "name": "Mastermind",
+    "text": "Special armor: protect a teammate (without being present), or push yourself when gathering information and on projects.",
+    "page": 90
+  },
+  "weaving-the-web": {
+    "name": "Weaving the Web",
+    "text": "+1d to Consort when gathering information on a target and to the engagement roll for that score.",
+    "page": 90
+  },
+  "fine-cover-identity": {
+    "name": "Fine Cover Identity",
+    "text": "Documents, stories and rumors that let you pass as someone else.",
+    "page": 91
+  },
+  "fine-bottle-of-whiskey": {
+    "name": "Fine Bottle of Whiskey",
+    "text": "Excellent liquor from your collection.",
+    "page": 91
+  },
+  "blueprints": {
+    "name": "Blueprints",
+    "text": "City maps and building plans; you choose which structures.",
+    "page": 91
+  },
+  "vial-of-slumber-essence": {
+    "name": "Vial of Slumber Essence",
+    "text": "A sleeping draught, deep sleep for an hour; the sleeper can be woken with effort.",
+    "page": 91
+  },
+  "concealed-palm-pistol": {
+    "name": "Concealed Palm Pistol",
+    "text": "A tiny weapon with a range of a few paces, hard to find in a search.",
+    "page": 91
+  },
+  "salia": {
+    "name": "Salia",
+    "short": "an information broker",
+    "text": "A reliable contact on criminal matters, or a former partner who double-crossed you.",
+    "page": 89
+  },
+  "augus": {
+    "name": "Augus",
+    "short": "an architect",
+    "text": "A consultant on layouts and history, or an opponent who designs new defenses.",
+    "page": 89
+  },
+  "jenna": {
+    "name": "Jenna",
+    "short": "a servant",
+    "text": "An informant on the affairs of the nobility.",
+    "page": 89
+  },
+  "riven": {
+    "name": "Riven",
+    "short": "a chemist",
+    "text": "A source of useful concoctions.",
+    "page": 89
+  },
+  "jeren": {
+    "name": "Jeren",
+    "short": "a Bluecoat archivist",
+    "text": "A double agent in the watch, or a curious officer.",
+    "page": 89
+  },
+  "spider-broker": {
+    "name": "Broker",
+    "text": "Study +1, Sway +1, Attune +2. Ghost Contract.",
+    "page": 89
+  },
+  "spider-coordinator": {
+    "name": "Coordinator",
+    "text": "Command +2, Survey +2. Foresight.",
+    "page": 89
+  },
+  "spider-convict": {
+    "name": "Convict",
+    "text": "Skirmish +2, Sway +1, Command +1. Jail Bird.",
+    "page": 89
+  },
+  "spider-operator": {
+    "name": "Operator",
+    "text": "Prowl +2, Tinker +2. Mastermind.",
+    "page": 89
+  }
+}

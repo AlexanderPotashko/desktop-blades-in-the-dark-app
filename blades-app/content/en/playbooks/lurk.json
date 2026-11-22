@@ -1,0 +1,133 @@
+{
+  "lurk": {
+    "name": "Lurk",
+    "short": "An unseen saboteur and burglar",
+    "text": "Lives in the dark and gets in anywhere: burglar, spy, saboteur, secret killer.",
+    "page": 97,
+    "xpTrigger": "Gain xp when you address a challenge with stealth or evasion.",
+    "list": [
+      "What are they about to do?",
+      "How can I get them to [X]?",
+      "What should I look into more closely?",
+      "What is the best way in?",
+      "Where can I hide here?",
+      "How can I find [X]?",
+      "What's really going on here?"
+    ]
+  },
+  "infiltrator": {
+    "name": "Infiltrator",
+    "page": 98,
+    "text": "The quality and rank of security systems do not reduce your effect."
+  },
+  "reflexes": {
+    "name": "Reflexes",
+    "page": 98,
+    "text": "You act first in most situations and can interrupt an action already begun."
+  },
+  "devils-footsteps": {
+    "name": "The Devil's Footsteps",
+    "page": 98,
+    "text": "Push yourself for athletics at the edge of the superhuman, or a maneuver that makes enemies strike each other."
+  },
+  "ambush": {
+    "name": "Ambush",
+    "page": 98,
+    "text": "+1d when you attack from ambush or set a trap."
+  },
+  "ghost-veil": {
+    "name": "Ghost Veil",
+    "page": 98,
+    "text": "For 2 stress, briefly become intangible and shadow-like (+1 per extra boost)."
+  },
+  "daredevil": {
+    "name": "Daredevil",
+    "page": 99,
+    "text": "+1d to a desperate roll if you accept -1d to resist its consequences."
+  },
+  "shadow": {
+    "name": "Shadow",
+    "page": 99,
+    "text": "Special armor: resist consequences of guards and detection, or push yourself when leaping, running, climbing and hiding for free."
+  },
+  "expertise": {
+    "name": "Expertise",
+    "page": 99,
+    "text": "Choose an action: when you lead a group action with it, you suffer at most 1 stress."
+  },
+  "fine-lockpicks": {
+    "name": "Fine Lockpicks",
+    "page": 99,
+    "text": "Tools for opening and bypassing locks."
+  },
+  "fine-shadow-cloak": {
+    "name": "Fine Shadow Cloak",
+    "page": 99,
+    "text": "A cloak of Iruvian shadow silk improves the effect of stealth."
+  },
+  "light-climbing-gear": {
+    "name": "Light Climbing Gear",
+    "page": 99,
+    "text": "Lighter than standard (ordinary gear has load 2)."
+  },
+  "silence-potion": {
+    "name": "Silence Potion",
+    "page": 99,
+    "text": "Muffles sounds within 10 paces of the drinker for a few moments."
+  },
+  "dark-vision-goggles": {
+    "name": "Dark-Vision Goggles",
+    "page": 99,
+    "text": "A magical device: you see in the dark as in good light."
+  },
+  "telda": {
+    "name": "Telda",
+    "short": "a beggar",
+    "text": "Perhaps your teacher in thieving, or a rival.",
+    "page": 97
+  },
+  "darmot": {
+    "name": "Darmot",
+    "short": "a Bluecoat",
+    "text": "A veteran officer who got in your way, or an old friend on the law side.",
+    "page": 97
+  },
+  "frake": {
+    "name": "Frake",
+    "short": "a locksmith",
+    "text": "A lock consultant, or a craftsman who designs impregnable locks.",
+    "page": 97
+  },
+  "roslyn-kellis": {
+    "name": "Roslyn Kellis",
+    "short": "an aristocrat",
+    "text": "An old friend, or a victim of your spying thirsting for revenge.",
+    "page": 97
+  },
+  "petra": {
+    "name": "Petra",
+    "short": "a city clerk",
+    "text": "Perhaps a good source of information.",
+    "page": 97
+  },
+  "build.acrobat": {
+    "name": "Acrobat",
+    "text": "Sway +1, Consort +2, Finesse +1",
+    "page": 97
+  },
+  "build.assassin": {
+    "name": "Assassin",
+    "text": "Skirmish +2, Hunt +2",
+    "page": 97
+  },
+  "build.burglar": {
+    "name": "Burglar",
+    "text": "Survey +2, Tinker +1, Finesse +1",
+    "page": 97
+  },
+  "build.rogue": {
+    "name": "Rogue",
+    "text": "Skirmish +2, Consort +2",
+    "page": 97
+  }
+}

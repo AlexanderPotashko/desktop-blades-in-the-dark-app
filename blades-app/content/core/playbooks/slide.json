@@ -1,0 +1,124 @@
+{
+  "id": "slide",
+  "kind": "standard",
+  "startingActions": {
+    "sway": 2,
+    "consort": 1
+  },
+  "talents": [
+    {
+      "id": "rooks-gambit",
+      "owner": "slide",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "mesmerism",
+      "owner": "slide",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "trust-in-me",
+      "owner": "slide",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "subterfuge",
+      "owner": "slide",
+      "group": "ability",
+      "specialArmor": true
+    },
+    {
+      "id": "like-looking-into-a-mirror",
+      "owner": "slide",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "cloak-and-dagger",
+      "owner": "slide",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "ghost-voice",
+      "owner": "slide",
+      "group": "ability",
+      "specialArmor": false
+    },
+    {
+      "id": "a-little-something-on-the-side",
+      "owner": "slide",
+      "group": "ability",
+      "specialArmor": false
+    }
+  ],
+  "items": [
+    {
+      "id": "fine-clothes-and-jewelry",
+      "load": 0
+    },
+    {
+      "id": "fine-disguise-kit",
+      "load": 1
+    },
+    {
+      "id": "fine-loaded-dice-and-trick-cards",
+      "load": 0
+    },
+    {
+      "id": "trance-powder",
+      "load": 0
+    },
+    {
+      "id": "cane-sword",
+      "load": 1
+    }
+  ],
+  "friends": [
+    "bryl",
+    "bazso-baz",
+    "klyra",
+    "nyryx",
+    "harker"
+  ],
+  "builds": [
+    {
+      "id": "slide-heartbreaker",
+      "actions": {
+        "consort": 1,
+        "prowl": 1,
+        "attune": 2
+      },
+      "talent": "trust-in-me"
+    },
+    {
+      "id": "slide-magician",
+      "actions": {
+        "prowl": 2,
+        "finesse": 2
+      },
+      "talent": "mesmerism"
+    },
+    {
+      "id": "slide-swindler",
+      "actions": {
+        "study": 1,
+        "consort": 1,
+        "finesse": 2
+      },
+      "talent": "a-little-something-on-the-side"
+    },
+    {
+      "id": "slide-spy",
+      "actions": {
+        "skirmish": 1,
+        "prowl": 2,
+        "finesse": 1
+      },
+      "talent": "cloak-and-dagger"
+    }
+  ]
+}
